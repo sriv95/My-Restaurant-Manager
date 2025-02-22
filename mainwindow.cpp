@@ -42,6 +42,11 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
 {
     ui.setupUi(this);
     on_backtosetup_clicked();
+
+    if(!checkData()){
+        return;
+    }
+
     updateTablesStatus();
     for(int i=1;i<=Table_Count;++i){
         QString btnName = QString("Table_").append(QString::number(i));
@@ -537,19 +542,19 @@ void RestuarantManagement::on_Analysis_clicked()
 
 void RestuarantManagement::on_backtosetup_clicked()
 {
-    // static int Counter = 0;
-    // if (Counter > 2) {
-    //     this->close();
-    //     return;
-    // }
+    while(true){
+        jsoncheck jsonCheck(this);
+        jsonCheck.setWindowTitle("File Configuration");
+        jsonCheck.exec();
 
-    jsoncheck *jsonCheck = new jsoncheck(this);
-    jsonCheck->setWindowTitle("File Configuration");
-    jsonCheck->exec();
+        if(forcecloseTriggered){
+            QTimer::singleShot(0,qApp,SLOT(quit()));
+            return;
+        }
 
-    if (!checkData()) {
-        // Counter++;
-        on_backtosetup_clicked();
+        if(checkData()){
+            break;
+        }
     }
 }
 
