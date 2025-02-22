@@ -113,6 +113,18 @@ void RestuarantManagement::SetSelectingTable(QString no){
                               //"border:5px solid "
                               "font-size: 16px;"            // Font size
                               "}");
+
+        // อัปเดตสถานะปุ่ม ReserveBtn
+        json Tables;
+        ::getData(Tables, "Tables");
+
+        int tableNo = no.toInt();
+        if (tableNo > 0 && Tables[tableNo - 1]["Seats"].get<int>() == 0) {
+            ui.ReserveBtn->show();  // ถ้าโต๊ะว่าง = แสดงปุ่ม
+        } else {
+            ui.ReserveBtn->hide();  // ถ้ามีคนอยู่ที่โต๊ะ = ซ่อนปุ่ม
+        }
+
     }
     else {
         ui.SelectingTable->setText(QString('0'));
@@ -146,32 +158,45 @@ void RestuarantManagement::getData()
 void RestuarantManagement::updateTablesStatus()
 {
     json Tables;
-    ::getData(Tables,"Tables");
+    ::getData(Tables, "Tables");
 
-
-    for(int i=1;i<=Table_Count;++i){
-        int seat = Tables [i-1]["Seats"];
-        QString Reserved= QString::fromStdString(Tables[i-1]["Reserved"]);
+    for (int i = 1; i <= Table_Count; ++i) {
+        int seat = Tables[i - 1]["Seats"];
+        QString Reserved = QString::fromStdString(Tables[i - 1]["Reserved"]);
         QString btnName = QString("Table_").append(QString::number(i));
         QPushButton *button = this->findChild<QPushButton *>(btnName);
-        if(button){
-            if(seat != 0)button->setText("Table#"+ QString::number(i) + "\n" + QString::number(seat)+ "👤");
-            else if(Reserved !=""){
+
+        if (button) {
+            if (seat != 0) {
+                button->setText("Table#" + QString::number(i) + "\n" + QString::number(seat) + "👤");
+            } else if (Reserved != "") {
                 json Reservation;
-                ::getData(Reservation,"Reservation");
-                for(auto item : Reservation){
-                    if(item[0]==i&&item[1]==Reserved.toStdString()){
-                        button->setText("Table#"+ QString::number(i) + "\nReserved: "+ Reserved +"\n"+QString::fromStdString(item[2])+"\n"+QString::fromStdString(item[3]));
+                ::getData(Reservation, "Reservation");
+                for (auto item : Reservation) {
+                    if (item[0] == i && item[1] == Reserved.toStdString()) {
+                        button->setText("Table#" + QString::number(i) + "\nReserved: " + Reserved + "\n" +
+                                        QString::fromStdString(item[2]) + "\n" + QString::fromStdString(item[3]));
                         break;
                     }
                 }
+            } else {
+                button->setText("Table#" + QString::number(i) + "\nAvailable");
             }
-            else button->setText("Table#"+ QString::number(i) + "\nAvailable");
-
+        } else {
+            qDebug() << "Error: Button Not Found (Button Name: " << btnName << ")";
         }
-        else  qDebug()<<"Error: Button Not Found (Button Name: "<<btnName<<")";
+    }
+
+    // แสดงผลของปุ่ม ReserveBtn
+    int selectedTable = GetSelectingTableNo();
+    if (selectedTable > 0 && Tables[selectedTable - 1]["Seats"].get<int>() == 0) {
+        ui.ReserveBtn->show();
+    } else {
+        ui.ReserveBtn->hide();
     }
 }
+
+
 
 
 void RestuarantManagement::on_RefreshBtn_clicked()
@@ -356,6 +381,8 @@ bool RestuarantManagement::isTableReserved(int tableNo) {
     }
     return false;
 }
+
+
 
 void RestuarantManagement::updateReserveButtonText(int tableNo) {
     if (isTableReserved(tableNo)) {
