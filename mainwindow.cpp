@@ -650,6 +650,10 @@ void RestuarantManagement::on_Config_clicked()
 {
     configwindow *config = new configwindow(this,PalettesMap);
     config->setWindowTitle("Configuration");
+    connect(config, &configwindow::returnValue, this, &RestuarantManagement::on_Config_returnValue);
     config->exec();
 }
 
+void RestuarantManagement::on_Config_returnValue(const QString &data){
+    ui.label->setText(data);
+}

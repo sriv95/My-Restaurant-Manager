@@ -65,6 +65,7 @@ private slots:
 
     void on_Config_clicked();
 
+    void on_Config_returnValue(const QString &data);
 private:
 
     Ui::RestuarantManagementClass ui;

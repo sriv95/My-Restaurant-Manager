@@ -48,3 +48,9 @@ void configwindow::on_ThemeSelect_currentTextChanged(const QString &arg1)
     QApplication::setPalette(PalettesMap[arg1]);
 }
 
+void configwindow::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(button->text()=="Save") emit returnValue(ui->Title->text());
+    this->close();
+}
+
