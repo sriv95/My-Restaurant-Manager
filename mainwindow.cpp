@@ -18,6 +18,7 @@
 #include <ui/analysis.h>
 #include "ui/jsoncheck.h"
 #include "ui/orderstock.h"
+#include "ui/configwindow.h"
 #include <QSettings>
 
 json restaurantData;
@@ -682,5 +683,13 @@ void RestuarantManagement::on_OrderStock_clicked()
     OrderStock *orderstock = new OrderStock(this);
     orderstock->setWindowTitle("Order Stock");
     orderstock->exec();
+}
+
+
+void RestuarantManagement::on_Config_clicked()
+{
+    configwindow *config = new configwindow(this);
+    config->setWindowTitle("Configuration");
+    config->exec();
 }
 

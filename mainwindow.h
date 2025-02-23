@@ -63,6 +63,8 @@ private slots:
 
     void on_OrderStock_clicked();
 
+    void on_Config_clicked();
+
 private:
 
     Ui::RestuarantManagementClass ui;
