@@ -3,6 +3,8 @@
 #include "ui_configwindow.h"
 #include <QSettings>
 
+QSettings *settings = new QSettings(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
+
 configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     : QDialog(parent)
     , ui(new Ui::configwindow)
@@ -11,8 +13,7 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     ui->setupUi(this);
 
     //Initial Settings
-    QSettings settings(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
-    currentVersion = settings.value("version").toString();
+    currentVersion = settings->value("version").toString();
 
     //Set Initital Version
     ui->version->setText("Version: " + currentVersion);
