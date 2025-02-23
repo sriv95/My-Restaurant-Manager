@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QDesktopServices>
 
 namespace Ui {
 class configwindow;
@@ -21,6 +22,8 @@ private slots:
     void onVersionCheckFinished(QNetworkReply *reply);
     void on_ThemeSelect_currentTextChanged(const QString &arg1);
     void on_buttonBox_clicked(QAbstractButton *button);
+
+    void on_updateBtn_clicked();
 
 signals:
     void returnValue(const QString &data);

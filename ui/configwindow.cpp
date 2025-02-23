@@ -11,6 +11,7 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
 
     //Set Initital Version
     ui->version->setText("Version: " + currentVersion);
+    ui->updateBtn->hide();
 
     // Connect network reply signal
     connect(networkManager, &QNetworkAccessManager::finished, this, &configwindow::onVersionCheckFinished);
@@ -31,7 +32,10 @@ void configwindow::onVersionCheckFinished(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError) {
         json jsonResponse = json::parse(reply->readAll());
         QString latestVersion = QString::fromStdString(jsonResponse["tag_name"]);
-        if (!latestVersion.isEmpty() && currentVersion < latestVersion) ui->version->setText("Version: " + currentVersion + " (Outdated! " + latestVersion + "was released)");
+        if (!latestVersion.isEmpty() && currentVersion < latestVersion) {
+            ui->version->setText("Version: " + currentVersion + " (Outdated! " + latestVersion + " is released)");
+            ui->updateBtn->show();
+        }
         else if(currentVersion == latestVersion) ui->version->setText("Version: " + currentVersion + " (Up To Date)");
         else if(currentVersion > latestVersion) ui->version->setText("Version: " + currentVersion + " (Beta/Unreleased)");
     }
@@ -52,5 +56,10 @@ void configwindow::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(button->text()=="Save") emit returnValue(ui->Title->text());
     this->close();
+}
+
+void configwindow::on_updateBtn_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/sriv95/My-Restaurant-Manager/releases"));
 }
 
