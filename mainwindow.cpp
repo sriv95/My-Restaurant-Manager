@@ -39,7 +39,7 @@ void AddPalettesMap(QString ThemeName,QString Window,QString WindowText,QString 
     Palette.setColor(QPalette::Window, QColor(Window));
     Palette.setColor(QPalette::WindowText, QColor(WindowText));
     Palette.setColor(QPalette::Base, QColor(Base));
-    Palette.setColor(QPalette::Text, QColor(Text));
+    Palette.setColor(QPalette::Text, QColor(Text)); //สีโทนมืดเท่านั้น
     Palette.setColor(QPalette::Button, QColor(Button));
     Palette.setColor(QPalette::ButtonText, QColor(ButtonText));
     Palette.setColor(QPalette::Highlight, QColor(Highlight));
@@ -48,62 +48,23 @@ void AddPalettesMap(QString ThemeName,QString Window,QString WindowText,QString 
 }
 
 void SetPalette(bool darkmode_on){
-    AddPalettesMap("Dark","#381136","#ffffff","#ad7b07","#ffffff","#f77e28","#ffffff","#d9d9d9","#000000");
+    AddPalettesMap("Dark","#381136","#ffffff","#ad7b07","#000000","#f77e28","#ffffff","#d9d9d9","#000000");
 
-QPalette RedTheme;
-    RedTheme.setColor(QPalette::Window, QColor("#350a0e"));
-    RedTheme.setColor(QPalette::WindowText, QColor("#e9c5b5"));
-    RedTheme.setColor(QPalette::Base, QColor("#3c3c3c"));
-    RedTheme.setColor(QPalette::Text, QColor("#ffffff"));
-    RedTheme.setColor(QPalette::Button, QColor("#e1bb3e"));
-    RedTheme.setColor(QPalette::ButtonText,  QColor("#350a0e"));
-    RedTheme.setColor(QPalette::Highlight, QColor("#ffffff"));
-    RedTheme.setColor(QPalette::HighlightedText, QColor("#000000"));
+    AddPalettesMap("Red","#350a0e","#e9c5b5","#3c3c3c","#ffffff","#e1bb3e","#350a0e","#ffffff","#000000");
 
+    AddPalettesMap("CMU","#6b69b1","#000000","#ccd6d8","#000000","#faab1d","#000000","#faab1d","#000000"); //
 
-QPalette CMUTheme;
-    CMUTheme.setColor(QPalette::Window, QColor("#6b69b1"));
-    CMUTheme.setColor(QPalette::WindowText, QColor("#000000"));
-    CMUTheme.setColor(QPalette::Base, QColor("#ccd6d8"));
-    CMUTheme.setColor(QPalette::Text, QColor("#000000"));
-    CMUTheme.setColor(QPalette::Button, QColor("#faab1d"));
-    CMUTheme.setColor(QPalette::ButtonText, QColor("#000000"));
-    darkPalette.setColor(QPalette::Highlight, QColor("#838384"));
-    darkPalette.setColor(QPalette::HighlightedText, QColor("#000000"));
+    AddPalettesMap("light","#fe90f8","#ffffff","#f77e28","#000000","#fe90f8","#6b69b1","#ffffff","#000000");
+
+    AddPalettesMap("Orange","#d9531e","#442c1d","#fae0c3","#000000","#d9531e","#ffffff","#","#");
+
+    AddPalettesMap("Mule","#943D2C","#ffffff","#dfd0bb","#474344","#CC7952","#E5BD77","#474344","#CC7952");
+
+    // AddPalettesMap("","#","#","#","#","#","#","#","#");
 
 
-
-QPalette lightPalette;
-    lightPalette.setColor(QPalette::Window, QColor("#fe90f8"));
-    lightPalette.setColor(QPalette::WindowText, Qt::white);
-    lightPalette.setColor(QPalette::Base, QColor("#f77e28"));
-    lightPalette.setColor(QPalette::Text, Qt::white);
-    lightPalette.setColor(QPalette::Button, QColor("#fe90f8"));
-    lightPalette.setColor(QPalette::ButtonText, Qt::white);
-    lightPalette.setColor(QPalette::Highlight, QColor("#170117"));
-    lightPalette.setColor(QPalette::HighlightedText, Qt::black);
-
-
-QPalette orangeTheme;
-    orangeTheme.setColor(QPalette::Window, QColor("#d9531e"));
-    orangeTheme.setColor(QPalette::WindowText, QColor("#442c1d"));
-    orangeTheme.setColor(QPalette::Base, QColor("#fae0c3"));
-    orangeTheme.setColor(QPalette::Button, QColor("#d9531e"));
-    orangeTheme.setColor(QPalette::ButtonText, Qt::white);
-
-QPalette muleTheme;
-    muleTheme.setColor(QPalette::Window, QColor("#943D2C"));
-    muleTheme.setColor(QPalette::WindowText, QColor("##ffffff"));
-    muleTheme.setColor(QPalette::Base, QColor("#dfd0bb"));
-    muleTheme.setColor(QPalette::Text, QColor("#474344"));
-    muleTheme.setColor(QPalette::Button, QColor("#CC7952"));
-    muleTheme.setColor(QPalette::ButtonText, QColor("#E5BD77"));
-    muleTheme.setColor(QPalette::Highlight, QColor("#474344"));
-    muleTheme.setColor(QPalette::HighlightedText, QColor("#CC7952"));
-
-
-    if(darkmode_on == false) QApplication::setPalette(CMUTheme); // ตั้งค่า Palette ให้กับทั้งแอป
-    else QApplication::setPalette(RedTheme); // ตั้งค่า Palette ให้กับทั้งแอป
+    if(darkmode_on == false) QApplication::setPalette(PalettesMap["Red"]); // ตั้งค่า Palette ให้กับทั้งแอป
+    else QApplication::setPalette(PalettesMap["Dark"]); // ตั้งค่า Palette ให้กับทั้งแอป
 }
 
 
