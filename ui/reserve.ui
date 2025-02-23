@@ -31,16 +31,6 @@
     <string>Reserve Table</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="ReservationTime">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>150</y>
-     <width>191</width>
-     <height>41</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="CustomerName">
    <property name="geometry">
     <rect>
@@ -177,6 +167,16 @@
     <rect>
      <x>180</x>
      <y>80</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="ReservationTime">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>150</y>
      <width>191</width>
      <height>41</height>
     </rect>
