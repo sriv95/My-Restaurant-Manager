@@ -78,7 +78,6 @@ void jsoncheck::on_continueBtn_clicked()
 
 void jsoncheck::on_cancelBtn_clicked()
 {
+    forcecloseTriggered = true;
     this->close();
-    QApplication::quit();
-    makecrash();
 }

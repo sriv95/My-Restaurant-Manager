@@ -147,9 +147,10 @@ string getPATH(){
     return PATH;
 }
 
+bool forcecloseTriggered = false;
 
-void makecrash(){ //เพื่อบังคับปิดโปรแกรมทั้งหมดทันที
-    ifstream file("");
-    json j = json::parse(file);
-    file.close();
-}
+// void makecrash(){ //เพื่อบังคับปิดโปรแกรมทั้งหมดทันที
+//     ifstream file("");
+//     json j = json::parse(file);
+//     file.close();
+// }
