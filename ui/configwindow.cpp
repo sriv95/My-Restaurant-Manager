@@ -1,6 +1,7 @@
 #include "configwindow.h"
 #include "header/json.h"
 #include "ui_configwindow.h"
+#include <QSettings>
 
 configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     : QDialog(parent)
@@ -8,6 +9,10 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     , networkManager(new QNetworkAccessManager(this))
 {
     ui->setupUi(this);
+
+    //Initial Settings
+    QSettings settings(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
+    currentVersion = settings.value("version").toString();
 
     //Set Initital Version
     ui->version->setText("Version: " + currentVersion);

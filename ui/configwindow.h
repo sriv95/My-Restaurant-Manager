@@ -31,7 +31,7 @@ signals:
 private:
     Ui::configwindow *ui;
     QNetworkAccessManager *networkManager;
-    QString currentVersion = "v1.0";
+    QString currentVersion = "";
     QMap<QString,QPalette> PalettesMap = {};
 };
 
