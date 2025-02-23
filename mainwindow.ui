@@ -1076,9 +1076,6 @@ font: 800 10pt &quot;Segoe UI&quot;;</string>
     <property name="text">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap>C:/Users/worap/Downloads/cmu-sub-logo-1.png</pixmap>
-    </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
