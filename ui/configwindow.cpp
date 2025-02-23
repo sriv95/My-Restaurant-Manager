@@ -2,7 +2,7 @@
 #include "header/json.h"
 #include "ui_configwindow.h"
 
-configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> PalettesMap)
+configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     : QDialog(parent)
     , ui(new Ui::configwindow)
     , networkManager(new QNetworkAccessManager(this))
@@ -20,6 +20,10 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> PalettesMap)
     request.setHeader(QNetworkRequest::UserAgentHeader, "QtApp"); // GitHub requires a User-Agent
     networkManager->get(request);
     
+    PalettesMap = Map;
+    for (const QString &key : PalettesMap.keys()) {
+        ui->ThemeSelect->addItem(key);
+    }
 }
 
 void configwindow::onVersionCheckFinished(QNetworkReply *reply)
@@ -38,3 +42,9 @@ configwindow::~configwindow()
 {
     delete ui;
 }
+
+void configwindow::on_ThemeSelect_currentTextChanged(const QString &arg1)
+{
+    QApplication::setPalette(PalettesMap[arg1]);
+}
+

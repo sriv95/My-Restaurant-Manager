@@ -18,10 +18,13 @@ public:
     ~configwindow();
 private slots:
     void onVersionCheckFinished(QNetworkReply *reply);
+    void on_ThemeSelect_currentTextChanged(const QString &arg1);
+
 private:
     Ui::configwindow *ui;
     QNetworkAccessManager *networkManager;
     QString currentVersion = "v1.0";
+    QMap<QString,QPalette> PalettesMap = {};
 };
 
 #endif // CONFIGWINDOW_H

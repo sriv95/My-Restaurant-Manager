@@ -52,9 +52,9 @@ void SetPalette(bool darkmode_on){
 
     AddPalettesMap("Red","#350a0e","#e9c5b5","#3c3c3c","#ffffff","#e1bb3e","#350a0e","#ffffff","#000000");
 
-    AddPalettesMap("CMU","#6b69b1","#000000","#ccd6d8","#000000","#faab1d","#000000","#faab1d","#000000"); //
+    AddPalettesMap("CMU","#6b69b1","#000000","#ccd6d8","#000000","#faab1d","#000000","#faab1d","#000000");
 
-    AddPalettesMap("light","#fe90f8","#ffffff","#f77e28","#000000","#fe90f8","#6b69b1","#ffffff","#000000");
+    AddPalettesMap("Light","#fe90f8","#ffffff","#f77e28","#000000","#fe90f8","#6b69b1","#ffffff","#000000");
 
     AddPalettesMap("Orange","#d9531e","#442c1d","#fae0c3","#000000","#d9531e","#ffffff","#","#");
 
