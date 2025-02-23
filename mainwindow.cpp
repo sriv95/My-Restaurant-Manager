@@ -18,10 +18,95 @@
 #include <ui/analysis.h>
 #include "ui/jsoncheck.h"
 #include "ui/orderstock.h"
+#include <QSettings>
 
 json restaurantData;
 
 int Table_Count = 9;
+
+bool isDarkMode() {
+    QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)", QSettings::NativeFormat);
+    bool isDarkMode = settings.value("AppsUseLightTheme", 1).toInt() == 0;  // ถ้าเป็น 0 แสดงว่าใช้ Dark Mode
+    qDebug()<<"isDarkMode = "<<isDarkMode<<")";
+    return isDarkMode;
+}
+
+void SetPalette(bool darkmode_on){
+
+    vector <QPalette> Palette;
+
+
+QPalette darkPalette;
+    darkPalette.setColor(QPalette::Window, QColor("#381136"));        // สีพื้นหลังหลัก
+    darkPalette.setColor(QPalette::WindowText, Qt::white);            // สีตัวอักษร
+    darkPalette.setColor(QPalette::Base, QColor("#ad7b07"));         // สีพื้นหลังของ input
+    darkPalette.setColor(QPalette::Text, Qt::white);                  // สีข้อความใน input
+    darkPalette.setColor(QPalette::Button, QColor("#f77e28"));       // สีปุ่ม
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);            // สีข้อความบนปุ่ม
+    darkPalette.setColor(QPalette::Highlight, QColor("#d9d9d9"));  // สีไฮไลต์
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);       // สีข้อความที่ถูกไฮไลต์
+
+
+QPalette RedTheme;
+    RedTheme.setColor(QPalette::Window, QColor("#350a0e"));
+    RedTheme.setColor(QPalette::WindowText, QColor("#e9c5b5"));
+    RedTheme.setColor(QPalette::Base, QColor("#3c3c3c"));
+    RedTheme.setColor(QPalette::Text, QColor("#ffffff"));
+    RedTheme.setColor(QPalette::Button, QColor("#e1bb3e"));
+    RedTheme.setColor(QPalette::ButtonText,  QColor("#350a0e"));
+    RedTheme.setColor(QPalette::Highlight, QColor("#ffffff"));
+    RedTheme.setColor(QPalette::HighlightedText, QColor("#000000"));
+
+
+QPalette CMUTheme;
+    CMUTheme.setColor(QPalette::Window, QColor("#6b69b1"));
+    CMUTheme.setColor(QPalette::WindowText, QColor("#000000"));
+    CMUTheme.setColor(QPalette::Base, QColor("#ccd6d8"));
+    CMUTheme.setColor(QPalette::Text, QColor("#000000"));
+    CMUTheme.setColor(QPalette::Button, QColor("#faab1d"));
+    CMUTheme.setColor(QPalette::ButtonText, QColor("#000000"));
+    darkPalette.setColor(QPalette::Highlight, QColor("#838384"));
+    darkPalette.setColor(QPalette::HighlightedText, QColor("#000000"));
+
+
+
+QPalette lightPalette;
+    lightPalette.setColor(QPalette::Window, QColor("#fe90f8"));
+    lightPalette.setColor(QPalette::WindowText, Qt::white);
+    lightPalette.setColor(QPalette::Base, QColor("#f77e28"));
+    lightPalette.setColor(QPalette::Text, Qt::white);
+    lightPalette.setColor(QPalette::Button, QColor("#fe90f8"));
+    lightPalette.setColor(QPalette::ButtonText, Qt::white);
+    lightPalette.setColor(QPalette::Highlight, QColor("#170117"));
+    lightPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+
+QPalette orangeTheme;
+    orangeTheme.setColor(QPalette::Window, QColor("#d9531e"));
+    orangeTheme.setColor(QPalette::WindowText, QColor("#442c1d"));
+    orangeTheme.setColor(QPalette::Base, QColor("#fae0c3"));
+    orangeTheme.setColor(QPalette::Button, QColor("#d9531e"));
+    orangeTheme.setColor(QPalette::ButtonText, Qt::white);
+
+QPalette muleTheme;
+    muleTheme.setColor(QPalette::Window, QColor("#943D2C"));
+    muleTheme.setColor(QPalette::WindowText, QColor("##ffffff"));
+    muleTheme.setColor(QPalette::Base, QColor("#dfd0bb"));
+    muleTheme.setColor(QPalette::Text, QColor("#474344"));
+    muleTheme.setColor(QPalette::Button, QColor("#CC7952"));
+    muleTheme.setColor(QPalette::ButtonText, QColor("#E5BD77"));
+    muleTheme.setColor(QPalette::Highlight, QColor("#474344"));
+    muleTheme.setColor(QPalette::HighlightedText, QColor("#CC7952"));
+
+
+    if(darkmode_on == false) QApplication::setPalette(CMUTheme); // ตั้งค่า Palette ให้กับทั้งแอป
+    else QApplication::setPalette(RedTheme); // ตั้งค่า Palette ให้กับทั้งแอป
+
+
+
+}
+
+
 
 void RestuarantManagement::showError(QString text){
     QMessageBox Error;
@@ -41,6 +126,7 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    SetPalette(isDarkMode());
     on_backtosetup_clicked();
 
     if(!checkData()){
@@ -51,12 +137,12 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
     for(int i=1;i<=Table_Count;++i){
         QString btnName = QString("Table_").append(QString::number(i));
         QPushButton *button = this->findChild<QPushButton *>(btnName);
-        button->setStyleSheet("QPushButton {"                                   // sutup buttonTable-color
-                              "background-color: #535455;"  // background-color
-                              "color: white;"               // text-color
-                              "border-radius: 12px;"        // Rounded corners
-                              "font-size: 16px;"            // Font size
-                              "}");
+        // button->setStyleSheet("QPushButton {"                                   // sutup buttonTable-color
+        //                       "background-color: #535455;"  // background-color
+        //                       "color: white;"               // text-color
+        //                       "border-radius: 12px;"        // Rounded corners
+        //                       //"font-size: 16px;"            // Font size
+        //                       "}");
         if(button) connect(button, &QPushButton::clicked, this, &RestuarantManagement::on_TableBtn_clicked);
         else  qDebug()<<"Error: Button Not Found (Button Name: "<<btnName<<")";
     }
@@ -91,12 +177,19 @@ void RestuarantManagement::SetSelectingTable(QString no){
     {
         QString btnName = QString("Table_").append(QString::number(i));
         QPushButton *button = this->findChild<QPushButton *>(btnName);
-        button->setStyleSheet("QPushButton {"
-                              "background-color: #535455;"  // background-color
-                              "color: white;"               // text-color
-                              "border-radius: 12px;"        // Rounded corners
-                              "font-size: 16px;"            // Font size
-                              "}");
+
+        QPalette palette = QApplication::palette();
+        QColor buttonColor = palette.color(QPalette::Button);
+
+        palette.setColor(QPalette::Button, buttonColor);
+        button->setPalette(palette);
+
+        // button->setStyleSheet("QPushButton {"
+        //                       "background-color: #535455;"  // background-color
+        //                       "color: white;"               // text-color
+        //                       "border-radius: 12px;"        // Rounded corners
+        //                      // "font-size: 16px;"            // Font size
+        //                       "}");
     }
     if (ui.Receipt->isVisible() && ui.CheckBills->text() == "Confirm Payment") {
         ui.Receipt->hide();
@@ -111,13 +204,13 @@ void RestuarantManagement::SetSelectingTable(QString no){
         updateReserveButtonText(no.toInt()); //TT
         QString btnName = QString("Table_").append(no);
         QPushButton *button = this->findChild<QPushButton *>(btnName);
-        button->setStyleSheet("QPushButton {"
-                              "background-color: #4CAF50;"  // Green background
-                              "color: white;"               // White text
-                              "border-radius: 12px;"        // Rounded corners
-                              //"border:5px solid "
-                              "font-size: 16px;"            // Font size
-                              "}");
+
+        QPalette palette = QApplication::palette();
+        QColor buttonColor = palette.color(QPalette::Button);
+        QColor buttonColorpressed = buttonColor.darker(140);
+
+        palette.setColor(QPalette::Button, buttonColorpressed);
+        button->setPalette(palette);
 
         // อัปเดตสถานะปุ่ม ReserveBtn
         json Tables;
@@ -129,7 +222,6 @@ void RestuarantManagement::SetSelectingTable(QString no){
         } else {
             ui.ReserveBtn->hide();  // ถ้ามีคนอยู่ที่โต๊ะ = ซ่อนปุ่ม
         }
-
     }
     else {
         ui.SelectingTable->setText(QString('0'));
