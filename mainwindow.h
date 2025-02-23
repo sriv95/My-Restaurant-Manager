@@ -68,7 +68,14 @@ private:
 
     Ui::RestuarantManagementClass ui;
     OpenTableDialog *openTableDialog; // Declare OpenTableDialog as a member
+
     QMediaPlayer *buttonSound;
-    QAudioOutput *audioOutput;
+    QAudioOutput *buttonAudio;
+
+    QMediaPlayer *checkbillSound;
+    QAudioOutput *checkbillAudio;
+
+
     void playButtonSound();
+    void playCheckbillSound();
 };

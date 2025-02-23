@@ -60,4 +60,4 @@ DISTFILES += \
     data.json \
 
 RESOURCES += \
-    SFX.qrc
+    Sounds.qrc

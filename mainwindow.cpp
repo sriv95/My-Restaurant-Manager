@@ -61,10 +61,17 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
     ui.OrderFoodBtn->hide();
     setMainBtnVisible(false);
 
+    // ตั้งค่าเสียงปุ่ม
     buttonSound = new QMediaPlayer(this);
-    audioOutput = new QAudioOutput(this);
-    buttonSound->setAudioOutput(audioOutput);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
     buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
+
+    // ตั้งค่าเสียง check bill
+    checkbillSound = new QMediaPlayer(this);
+    checkbillAudio = new QAudioOutput(this);
+    checkbillSound->setAudioOutput(checkbillAudio);
+    checkbillSound->setSource(QUrl("qrc:/Sounds/checkBill.mp3"));
 
     QTimer *timer=new QTimer(this);
     connect (timer ,SIGNAL(timeout()),this,SLOT(showTime()));
@@ -79,6 +86,16 @@ void RestuarantManagement::playButtonSound()
         buttonSound->play();
     }
 }
+
+void RestuarantManagement::playCheckbillSound()
+{
+    if (checkbillSound->playbackState() == QMediaPlayer::PlayingState) {
+        checkbillSound->setPosition(0);
+    } else {
+        checkbillSound->play();
+    }
+}
+
 
 void  RestuarantManagement::showTime()
 {
@@ -138,7 +155,7 @@ void RestuarantManagement::SetSelectingTable(QString no){
 
 void RestuarantManagement::on_TableBtn_clicked()
 {
-
+    playButtonSound();
     if (ui.Receipt->isVisible() && ui.CheckBills->text() == "Confirm Payment") {
         ui.Receipt->hide();
         ui.CheckBills->setText("Check Bills");
@@ -191,6 +208,7 @@ void RestuarantManagement::updateTablesStatus()
 
 void RestuarantManagement::on_RefreshBtn_clicked()
 {
+    //playButtonSound();
     ui.SelectingTable->setText(QString('0'));
     QString table_no = "0";
     ui.Receipt->hide();
@@ -200,6 +218,17 @@ void RestuarantManagement::on_RefreshBtn_clicked()
 
 void RestuarantManagement::on_CheckBills_clicked()
 {
+    // ถ้าปุ่มเป็น "Check Bills" → เล่น button.mp3
+    if (ui.CheckBills->text() == "Check Bills")
+    {
+        playButtonSound();
+    }
+    // ถ้าปุ่มเป็น "Confirm Payment" → เล่น checkBill.mp3
+    else if (ui.CheckBills->text() == "Confirm Payment")
+    {
+        playCheckbillSound();
+    }
+
     getData();
 
     ui.Receipt_DateTime->setText(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
@@ -307,6 +336,7 @@ void RestuarantManagement::on_CheckBills_clicked()
 
 void RestuarantManagement::on_OpenTableBtn_clicked()
 {
+    playButtonSound();
     OpenTableDialog OpenTableDialog;
     OpenTableDialog.setModal(true);
     OpenTableDialog.setWindowTitle("Open Table");
@@ -347,6 +377,7 @@ void RestuarantManagement::Changeseats() //แก้บัค
 
 void RestuarantManagement::on_ReserveBtn_clicked()
 {
+    playButtonSound();
     int tableNo = GetSelectingTableNo();
     if (ui.ReserveBtn->text() == "Unreserve") {
         removeReservation(tableNo);
@@ -446,6 +477,7 @@ void RestuarantManagement::on_Statement_clicked()
 
 void RestuarantManagement::on_OrderFoodBtn_clicked()
 {
+    playButtonSound();
     int tableNo = GetSelectingTableNo();
 
     json restaurantData;
@@ -570,5 +602,6 @@ void RestuarantManagement::on_backtosetup_clicked()
     if (!checkData()) {
         // Counter++;
         on_backtosetup_clicked();
+
     }
 }
