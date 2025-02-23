@@ -12,7 +12,7 @@ class configwindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit configwindow(QWidget *parent = nullptr);
+    explicit configwindow(QWidget *parent = nullptr, QMap<QString, QPalette> = {});
     ~configwindow();
 
 private:

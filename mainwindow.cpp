@@ -21,6 +21,8 @@
 #include "ui/configwindow.h"
 #include <QSettings>
 
+QMap <QString,QPalette> PalettesMap;
+
 json restaurantData;
 
 int Table_Count = 9;
@@ -32,21 +34,21 @@ bool isDarkMode() {
     return isDarkMode;
 }
 
+void AddPalettesMap(QString ThemeName,QString Window,QString WindowText,QString Base,QString Text,QString Button,QString ButtonText,QString Highlight,QString HighlightedText){
+    QPalette Palette;
+    Palette.setColor(QPalette::Window, QColor(Window));
+    Palette.setColor(QPalette::WindowText, QColor(WindowText));
+    Palette.setColor(QPalette::Base, QColor(Base));
+    Palette.setColor(QPalette::Text, QColor(Text));
+    Palette.setColor(QPalette::Button, QColor(Button));
+    Palette.setColor(QPalette::ButtonText, QColor(ButtonText));
+    Palette.setColor(QPalette::Highlight, QColor(Highlight));
+    Palette.setColor(QPalette::HighlightedText, QColor(HighlightedText));
+    PalettesMap[ThemeName] = Palette;
+}
+
 void SetPalette(bool darkmode_on){
-
-    vector <QPalette> Palette;
-
-
-QPalette darkPalette;
-    darkPalette.setColor(QPalette::Window, QColor("#381136"));        // สีพื้นหลังหลัก
-    darkPalette.setColor(QPalette::WindowText, Qt::white);            // สีตัวอักษร
-    darkPalette.setColor(QPalette::Base, QColor("#ad7b07"));         // สีพื้นหลังของ input
-    darkPalette.setColor(QPalette::Text, Qt::white);                  // สีข้อความใน input
-    darkPalette.setColor(QPalette::Button, QColor("#f77e28"));       // สีปุ่ม
-    darkPalette.setColor(QPalette::ButtonText, Qt::white);            // สีข้อความบนปุ่ม
-    darkPalette.setColor(QPalette::Highlight, QColor("#d9d9d9"));  // สีไฮไลต์
-    darkPalette.setColor(QPalette::HighlightedText, Qt::black);       // สีข้อความที่ถูกไฮไลต์
-
+    AddPalettesMap("Dark","#381136","#ffffff","#ad7b07","#ffffff","#f77e28","#ffffff","#d9d9d9","#000000");
 
 QPalette RedTheme;
     RedTheme.setColor(QPalette::Window, QColor("#350a0e"));
@@ -102,9 +104,6 @@ QPalette muleTheme;
 
     if(darkmode_on == false) QApplication::setPalette(CMUTheme); // ตั้งค่า Palette ให้กับทั้งแอป
     else QApplication::setPalette(RedTheme); // ตั้งค่า Palette ให้กับทั้งแอป
-
-
-
 }
 
 
@@ -688,7 +687,7 @@ void RestuarantManagement::on_OrderStock_clicked()
 
 void RestuarantManagement::on_Config_clicked()
 {
-    configwindow *config = new configwindow(this);
+    configwindow *config = new configwindow(this,PalettesMap);
     config->setWindowTitle("Configuration");
     config->exec();
 }
