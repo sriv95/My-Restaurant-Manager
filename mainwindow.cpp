@@ -345,12 +345,6 @@ void RestuarantManagement::on_CheckBills_clicked()
     // ประกาศตัวแปรก่อนใช้งาน
     QString currentText = ui.CheckBills->text();
 
-    // ถ้าปุ่มเป็น "Check Bills" → เล่น button.mp3
-    if (currentText == "Check Bills")
-    {
-        playButtonSound();
-    }
-
     getData();
 
     ui.Receipt_DateTime->setText(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
@@ -449,7 +443,7 @@ void RestuarantManagement::on_CheckBills_clicked()
 
             ui.Receipt_Total->setText(QString::number(totalAmount) + " Baht");
         }
-
+        playButtonSound();
         ui.CheckBills->setText("Confirm Payment");
     } else {
         ui.CheckBills->setText("Check Bills");
