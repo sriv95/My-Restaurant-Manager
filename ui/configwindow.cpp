@@ -33,6 +33,7 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     for (const QString &key : PalettesMap.keys()) {
         ui->ThemeSelect->addItem(key);
     }
+    ui->ThemeSelect->setCurrentText(settings->value("theme").toString());
 }
 
 void configwindow::onVersionCheckFinished(QNetworkReply *reply)
