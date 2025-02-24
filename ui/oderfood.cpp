@@ -24,6 +24,9 @@ OrderFoodDialog::OrderFoodDialog(QWidget *parent) : QDialog(parent)
     setLayout(layout);
 
     connect(menuComboBox, &QComboBox::currentTextChanged, this, &OrderFoodDialog::updatePrice);
+    connect(confirmButton, &QPushButton::clicked, this, [](){
+        //play sound
+    });
     connect(confirmButton, &QPushButton::clicked, this, &QDialog::accept);
 
     buttonSound = new QMediaPlayer(this);
