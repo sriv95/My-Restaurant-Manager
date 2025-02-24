@@ -36,14 +36,14 @@ editmenu::editmenu(QWidget *parent)
     ingtable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ingtable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
-    on_RefreshBtn_clicked(false); //Refresh on setup
-
-    connect(menutable, &QTableWidget::itemChanged, this, &editmenu::onMenuTableItemChanged); //Connect item changed (Menu Name)
-
     buttonSound = new QMediaPlayer(this);
     buttonAudio = new QAudioOutput(this);
     buttonSound->setAudioOutput(buttonAudio);
     buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
+
+    on_RefreshBtn_clicked(false); //Refresh on setup
+    connect(menutable, &QTableWidget::itemChanged, this, &editmenu::onMenuTableItemChanged); //Connect item changed (Menu Name)
+
 }
 
 editmenu::~editmenu()
