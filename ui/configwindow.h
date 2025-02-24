@@ -30,6 +30,8 @@ private slots:
 
     void on_fontComboBox_currentFontChanged(const QFont &f);
 
+    void on_Reset_clicked();
+
 signals:
     void returnValue(const QString &data);
 
