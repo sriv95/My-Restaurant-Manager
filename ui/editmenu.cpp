@@ -116,7 +116,6 @@ void editmenu::RefreshIng(int i){
 
 void editmenu::on_RefreshBtn_clicked(bool NoGetdata=false)
 {
-    playButtonSound();
     menutable->setRowCount(0); //delete all rows
     ingtable->setRowCount(0); //delete all rows
 
@@ -124,7 +123,10 @@ void editmenu::on_RefreshBtn_clicked(bool NoGetdata=false)
     ui->ingLabel->setText("No Selected Menu");
     ui->ingNo->setText("0");
 
-    if(!NoGetdata) getData(Menus,"Menus");
+    if(!NoGetdata) {
+        playButtonSound();
+        getData(Menus,"Menus");
+    }
 
     //Create rows
     for (int i = 0; i < lenData(Menus); ++i) {
