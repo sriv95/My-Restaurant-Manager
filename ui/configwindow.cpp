@@ -85,3 +85,11 @@ void configwindow::on_fontComboBox_currentFontChanged(const QFont &f)
     QApplication::setFont(f);
 }
 
+
+void configwindow::on_Reset_clicked()
+{
+    ui->Title->setText("My Restaurant Manager");
+    ui->ThemeSelect->setCurrentText("Dark");
+    ui->fontComboBox->setCurrentText("Segoe UI");
+}
+
