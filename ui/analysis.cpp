@@ -22,15 +22,15 @@ analysis::analysis(QWidget *parent)
     startUI_setup();
     Show_Chart();
 
-    buttonSound = new QMediaPlayer(this);
-    buttonAudio = new QAudioOutput(this);
-    buttonSound->setAudioOutput(buttonAudio);
-    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
-
     AcceptSound = new QMediaPlayer(this);
     AcceptAudio = new QAudioOutput(this);
     AcceptSound->setAudioOutput(AcceptAudio);
     AcceptSound->setSource(QUrl("qrc:/Sounds/Accept.mp3"));
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
 
     OpenMenuSound = new QMediaPlayer(this);
     OpenMenuAudio = new QAudioOutput(this);
@@ -55,21 +55,21 @@ analysis::~analysis()
 }
 
 //=================== sound =====================//
-void analysis::playButtonSound()
-{
-    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
-        buttonSound->setPosition(0);
-    } else {
-        buttonSound->play();
-    }
-}
-
 void analysis::playAcceptSound()
 {
     if (AcceptSound->playbackState() == QMediaPlayer::PlayingState) {
         AcceptSound->setPosition(0);
     } else {
         AcceptSound->play();
+    }
+}
+
+void analysis::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
     }
 }
 

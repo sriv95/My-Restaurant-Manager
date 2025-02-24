@@ -27,11 +27,25 @@ employee::employee(QWidget *parent)
     ui->Table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     ui->Table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
     ui->Table->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
 }
 
 employee::~employee()
 {
     delete ui;
+}
+
+void employee::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
 }
 
 void employee::Refresh_TableData()
@@ -60,16 +74,19 @@ void employee::Refresh_TableData()
 
 void employee::on_Refresh_Button_clicked()
 {
+    playButtonSound();
     Refresh_TableData();
 }
 
 void employee::on_Add_Button_clicked()
 {
+    playButtonSound();
     ui->Table->insertRow(ui->Table->rowCount());
 }
 
 void employee::on_Delete_Button_clicked()
 {
+    playButtonSound();
     QModelIndexList selected_row_list = ui->Table->selectionModel()->selectedRows();
     int selected_size = selected_row_list.size();
 
@@ -146,6 +163,7 @@ bool employee::Check_Correct_DataType_in_cell() // return True ถ้า DataTyp
 
 void employee::on_Save_Button_clicked()
 {
+    playButtonSound();
     int Number_of_employee_OnTable = ui->Table->rowCount();
 
     if (Check_empty_cell_in_table() == false)
