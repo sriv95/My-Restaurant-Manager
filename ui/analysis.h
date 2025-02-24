@@ -65,11 +65,11 @@ private:
 
     void CloseUI();
 
-    QMediaPlayer *buttonSound;
-    QAudioOutput *buttonAudio;
-
     QMediaPlayer *AcceptSound;
     QAudioOutput *AcceptAudio;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
 
     QMediaPlayer *OpenMenuSound;
     QAudioOutput *OpenMenuAudio;
@@ -78,9 +78,9 @@ private:
     QAudioOutput *SelectAudio;
 
     void playButtonSound();
-    void playAcceptSound();
     void playOpenMenuSound();
     void playSelectSound();
+    void playAcceptSound();
 
 
 };
