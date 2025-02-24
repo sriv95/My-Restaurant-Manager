@@ -10,11 +10,6 @@ reserve::reserve(int tableNo,QWidget *parent)
 
     ui->TableNum->setText(QString::number(tableNo));
 
-    buttonSound = new QMediaPlayer(this);
-    buttonAudio = new QAudioOutput(this);
-    buttonSound->setAudioOutput(buttonAudio);
-    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
-
 }
 
 reserve::~reserve()
@@ -22,18 +17,9 @@ reserve::~reserve()
     delete ui;
 }
 
-void reserve::playButtonSound()
-{
-    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
-        buttonSound->setPosition(0);
-    } else {
-        buttonSound->play();
-    }
-}
 
 void reserve::on_btnReserve_clicked()
 {
-    playButtonSound();
     int tableNum = ui->TableNum->text().toInt();
 
     QString reservationTime = ui->ReservationTime->text();
@@ -78,7 +64,6 @@ void reserve::on_btnReserve_clicked()
 
 void reserve::on_Cancelbtn_clicked()
 {
-    playButtonSound();
     this->close();
 }
 

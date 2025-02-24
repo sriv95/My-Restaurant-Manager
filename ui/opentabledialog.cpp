@@ -14,24 +14,11 @@ OpenTableDialog::OpenTableDialog(QWidget *parent)
     connect(ui->three, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
     connect(ui->four, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
 
-    buttonSound = new QMediaPlayer(this);
-    buttonAudio = new QAudioOutput(this);
-    buttonSound->setAudioOutput(buttonAudio);
-    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
 }
 
 OpenTableDialog::~OpenTableDialog()
 {
     delete ui;
-}
-
-void OpenTableDialog::playButtonSound()
-{
-    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
-        buttonSound->setPosition(0);
-    } else {
-        buttonSound->play();
-    }
 }
 
 void OpenTableDialog::on_numBtn_clicked()
@@ -43,7 +30,6 @@ void OpenTableDialog::on_numBtn_clicked()
 
 void OpenTableDialog::on_buttonBox_accepted()
 {
-    playButtonSound();
     bool testvalue;
     int seat = ui->TextInput->toPlainText().trimmed().toInt(&testvalue);
     qDebug()<< testvalue;
@@ -59,7 +45,6 @@ void OpenTableDialog::on_buttonBox_accepted()
 
 void OpenTableDialog::on_buttonBox_rejected() //cansel
 {
-    playButtonSound();
     this->close();
     //QTimer::singleShot(300, this, &OpenTableDialog::close);
 }

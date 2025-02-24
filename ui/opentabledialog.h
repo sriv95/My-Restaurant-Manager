@@ -1,7 +1,5 @@
 #ifndef OPENTABLEDIALOG_H
 #define OPENTABLEDIALOG_H
-#include <QMediaPlayer>
-#include <QAudioOutput>
 
 #include <QDialog>
 
@@ -29,10 +27,6 @@ private slots:
 
 private:
     Ui::OpenTableDialog *ui;
-
-    QMediaPlayer *buttonSound;
-    QAudioOutput *buttonAudio;
-    void playButtonSound();
 };
 
 #endif // OPENTABLEDIALOG_H

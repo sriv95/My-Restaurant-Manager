@@ -3,8 +3,6 @@
 
 #include <QDialog>
 #include <QString>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 
 
 namespace Ui {
@@ -31,10 +29,6 @@ private slots:
 private:
     Ui::reserve *ui;
 
-    QMediaPlayer *buttonSound;
-    QAudioOutput *buttonAudio;
-
-    void playButtonSound();
 };
 
 #endif // RESERVE_H
