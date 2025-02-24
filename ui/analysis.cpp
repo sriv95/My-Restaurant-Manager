@@ -44,6 +44,8 @@ analysis::analysis(QWidget *parent)
 
     connect(ui->comboBox_search_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
     connect(ui->comboBox_search_mode, &QComboBox::activated, this, &analysis::playSelectSound);
+    connect(ui->comboBox_Scale_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
+    connect(ui->comboBox_Scale_mode, &QComboBox::activated, this, &analysis::playSelectSound);
 }
 
 analysis::~analysis()
