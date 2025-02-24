@@ -345,17 +345,6 @@ void RestuarantManagement::on_CheckBills_clicked()
     // ประกาศตัวแปรก่อนใช้งาน
     QString currentText = ui.CheckBills->text();
 
-    // ถ้าปุ่มเป็น "Check Bills" → เล่น button.mp3
-    if (currentText == "Check Bills")
-    {
-        playButtonSound();
-    }
-    // ถ้าปุ่มเป็น "Confirm Payment" → เล่น checkBill.mp3
-    else if (currentText == "Confirm Payment")
-    {
-        playCheckbillSound();
-    }
-
     getData();
 
     ui.Receipt_DateTime->setText(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
@@ -374,7 +363,7 @@ void RestuarantManagement::on_CheckBills_clicked()
             QMessageBox::warning(this, "No Orders", "No bills found for this table. Please add an order before confirming payment.");
             return;
         }
-
+        playCheckbillSound();
         vector<string> billNames;
         vector<int> billPrices;
         getBills(Bills, restaurantData["Menus"], billNames, billPrices);
@@ -454,7 +443,7 @@ void RestuarantManagement::on_CheckBills_clicked()
 
             ui.Receipt_Total->setText(QString::number(totalAmount) + " Baht");
         }
-
+        playButtonSound();
         ui.CheckBills->setText("Confirm Payment");
     } else {
         ui.CheckBills->setText("Check Bills");
