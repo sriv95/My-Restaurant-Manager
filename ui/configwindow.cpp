@@ -66,14 +66,22 @@ void configwindow::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(button->text()=="Save") {
         settings->setValue("theme",currentTheme);
+        settings->setValue("font",QApplication::font());
         emit returnValue(ui->Title->text());
     }
     QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
+    QApplication::setFont(settings->value("font").value<QFont>());
     this->close();
 }
 
 void configwindow::on_updateBtn_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/sriv95/My-Restaurant-Manager/releases"));
+}
+
+
+void configwindow::on_fontComboBox_currentFontChanged(const QFont &f)
+{
+    QApplication::setFont(f);
 }
 

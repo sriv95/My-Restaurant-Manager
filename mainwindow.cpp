@@ -94,6 +94,7 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
 {
     ui.setupUi(this);
     SetPalette(isDarkMode());
+    QApplication::setFont(settings->value("font").value<QFont>());
     on_backtosetup_clicked();
 
     if(!checkData()){

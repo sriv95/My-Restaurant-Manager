@@ -52,12 +52,22 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="ThemeSelect"/>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QCheckBox" name="Mute">
         <property name="text">
          <string>Mute Sound Effect</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Font: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QFontComboBox" name="fontComboBox"/>
       </item>
      </layout>
     </item>
