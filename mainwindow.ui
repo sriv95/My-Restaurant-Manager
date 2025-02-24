@@ -1061,26 +1061,26 @@ font: 800 10pt &quot;Segoe UI&quot;;</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QToolButton" name="Config">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>20</y>
-      <width>241</width>
-      <height>91</height>
+      <x>1210</x>
+      <y>50</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
     <property name="text">
-     <string/>
+     <string>...</string>
     </property>
-    <property name="pixmap">
-     <pixmap>C:/Users/worap/Downloads/cmu-sub-logo-1.png</pixmap>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
     </property>
-    <property name="scaledContents">
-     <bool>true</bool>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
     </property>
    </widget>
   </widget>
