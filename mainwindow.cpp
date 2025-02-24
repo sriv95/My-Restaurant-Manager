@@ -208,7 +208,7 @@ void RestuarantManagement::updateTablesStatus()
 
 void RestuarantManagement::on_RefreshBtn_clicked()
 {
-    //playButtonSound();
+    playButtonSound();
     ui.SelectingTable->setText(QString('0'));
     QString table_no = "0";
     ui.Receipt->hide();
@@ -218,13 +218,16 @@ void RestuarantManagement::on_RefreshBtn_clicked()
 
 void RestuarantManagement::on_CheckBills_clicked()
 {
+    // ประกาศตัวแปรก่อนใช้งาน
+    QString currentText = ui.CheckBills->text();
+
     // ถ้าปุ่มเป็น "Check Bills" → เล่น button.mp3
-    if (ui.CheckBills->text() == "Check Bills")
+    if (currentText == "Check Bills")
     {
         playButtonSound();
     }
     // ถ้าปุ่มเป็น "Confirm Payment" → เล่น checkBill.mp3
-    else if (ui.CheckBills->text() == "Confirm Payment")
+    else if (currentText == "Confirm Payment")
     {
         playCheckbillSound();
     }

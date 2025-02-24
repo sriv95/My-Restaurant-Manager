@@ -2,5 +2,8 @@
     <qresource prefix="/Sounds">
         <file>Button.mp3</file>
         <file>checkBill.mp3</file>
+        <file>Accept.mp3</file>
+        <file>Combobox_click.mp3</file>
+        <file>OpenCombobox.mp3</file>
     </qresource>
 </RCC>
