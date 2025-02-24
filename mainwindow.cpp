@@ -579,7 +579,7 @@ void RestuarantManagement::on_Stocks_clicked()
 
 void RestuarantManagement::on_EditMenu_clicked()
 {
-    playButtonSound();
+    //playButtonSound();
     editmenu editmenu(this);
     editmenu.exec();
 }
