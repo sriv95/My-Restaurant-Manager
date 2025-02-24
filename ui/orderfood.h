@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QMap>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "header/json.h"
 
 class OrderFoodDialog
@@ -35,6 +37,19 @@ private:
     QPushButton *confirmButton;
 
     QMap<QString, int> menuPrices;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    QMediaPlayer *OpenMenuSound;
+    QAudioOutput *OpenMenuAudio;
+
+    QMediaPlayer *SelectSound;
+    QAudioOutput *SelectAudio;
+
+    void playButtonSound();
+    void playOpenMenuSound();
+    void playSelectSound();
 };
 
 #endif

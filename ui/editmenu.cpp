@@ -39,11 +39,25 @@ editmenu::editmenu(QWidget *parent)
     on_RefreshBtn_clicked(false); //Refresh on setup
 
     connect(menutable, &QTableWidget::itemChanged, this, &editmenu::onMenuTableItemChanged); //Connect item changed (Menu Name)
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
 }
 
 editmenu::~editmenu()
 {
     delete ui;
+}
+
+void editmenu::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
 }
 
 void editmenu::RefreshIng(int i){
@@ -102,6 +116,7 @@ void editmenu::RefreshIng(int i){
 
 void editmenu::on_RefreshBtn_clicked(bool NoGetdata=false)
 {
+    playButtonSound();
     menutable->setRowCount(0); //delete all rows
     ingtable->setRowCount(0); //delete all rows
 
@@ -173,6 +188,7 @@ void editmenu::on_RefreshBtn_clicked(bool NoGetdata=false)
 
 void editmenu::on_AddMenuBtn_clicked()
 {
+    playButtonSound();
     int rowCount = menutable->rowCount(); //get last row position
     //Create Blank data
     Menus[rowCount][0]="";
@@ -185,6 +201,7 @@ void editmenu::on_AddMenuBtn_clicked()
 
 void editmenu::on_DelMenuBtn_clicked()
 {
+    playButtonSound();
     for(auto *item : menutable->selectedItems()) {
         //Delete row using iterator for loop
         int i = item->row(); //Get current row
@@ -195,6 +212,7 @@ void editmenu::on_DelMenuBtn_clicked()
 
 void editmenu::on_AddIngBtn_clicked()
 {
+    playButtonSound();
     int i = ui->ingNo->text().toInt()-1; //Find current editing
     if(i>=0){
         int rowCount = ingtable->rowCount(); //get last row position
@@ -207,6 +225,7 @@ void editmenu::on_AddIngBtn_clicked()
 
 void editmenu::on_SaveMenuBtn_clicked()
 {
+    playButtonSound();
     QMessageBox Save_successful_Message;
     Save_successful_Message.setWindowTitle("🎉🥳✅✅🥳🎉");
     Save_successful_Message.setText("✅🟢🥳🎉-Save successful-🎉🥳🟢✅");
