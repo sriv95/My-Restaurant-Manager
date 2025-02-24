@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QTableWidgetItem>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "header/json.h"
 
 
@@ -41,6 +43,11 @@ private:
     void loadfromjson();
     void savetojson();
     void on_tableWidget_itemChanged(QTableWidgetItem *item);
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    void playButtonSound();
 
 
 };
