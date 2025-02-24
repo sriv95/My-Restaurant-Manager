@@ -62,8 +62,11 @@ void SetPalette(bool darkmode_on){
     // AddPalettesMap("","#","#","#","#","#","#","#","#");
 
     QString theme;
-    if(darkmode_on == false) theme="Red";
-    else theme="Dark";
+    if(settings->value("theme").toString()!="") theme = settings->value("theme").toString();
+    else {
+        if(darkmode_on == false) theme="Red"; //Default Light mode
+        else theme="Dark"; //Default Dark mode
+    }
 
     settings->setValue("theme",theme); //save to config
     QApplication::setPalette(PalettesMap[theme]);
