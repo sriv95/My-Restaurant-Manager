@@ -350,11 +350,6 @@ void RestuarantManagement::on_CheckBills_clicked()
     {
         playButtonSound();
     }
-    // ถ้าปุ่มเป็น "Confirm Payment" → เล่น checkBill.mp3
-    else if (currentText == "Confirm Payment")
-    {
-        playCheckbillSound();
-    }
 
     getData();
 
@@ -374,7 +369,7 @@ void RestuarantManagement::on_CheckBills_clicked()
             QMessageBox::warning(this, "No Orders", "No bills found for this table. Please add an order before confirming payment.");
             return;
         }
-
+        playCheckbillSound();
         vector<string> billNames;
         vector<int> billPrices;
         getBills(Bills, restaurantData["Menus"], billNames, billPrices);
