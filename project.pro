@@ -20,6 +20,7 @@ SOURCES += \
     ui/jsoncheck.cpp \
     ui/oderfood.cpp \
     ui/opentabledialog.cpp \
+    ui/orderstock.cpp \
     ui/reserve.cpp \
     ui/statement.cpp \
     ui/stockwindow.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     ui/jsoncheck.h \
     ui/opentabledialog.h \
     ui/orderfood.h \
+    ui/orderstock.h \
     ui/reserve.h \
     ui/statement.h \
     ui/stockwindow.h \
@@ -46,6 +48,7 @@ FORMS += \
     mainwindow.ui \
     ui/jsoncheck.ui \
     ui/opentabledialog.ui \
+    ui/orderstock.ui \
     ui/reserve.ui \
     ui/statement.ui \
     ui/stockwindow.ui \
@@ -61,3 +64,4 @@ DISTFILES += \
 
 RESOURCES += \
     Sounds.qrc
+RC_FILE = app.rc

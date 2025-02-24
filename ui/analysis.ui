@@ -54,6 +54,25 @@
        </widget>
       </item>
       <item>
+       <widget class="QComboBox" name="comboBox_Scale_mode">
+        <item>
+         <property name="text">
+          <string>Auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Scale</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Not Scale</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="comboBox_search_mode">
         <item>
          <property name="text">
@@ -72,7 +91,7 @@
         </item>
         <item>
          <property name="text">
-          <string>Mouth</string>
+          <string>Month</string>
          </property>
         </item>
         <item>

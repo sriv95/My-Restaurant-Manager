@@ -34,6 +34,8 @@ private slots:
 
     void on_accept_clicked();
 
+    void on_comboBox_Scale_mode_currentIndexChanged(int index);
+
 private:
     Ui::analysis *ui;
 

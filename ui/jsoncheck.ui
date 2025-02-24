@@ -25,12 +25,12 @@
    <property name="font">
     <font>
      <pointsize>12</pointsize>
-     <bold>false</bold>
+     <bold>true</bold>
      <underline>false</underline>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(85, 255, 127);</string>
+    <string notr="true">color: rgb(0, 170, 0);</string>
    </property>
    <property name="text">
     <string>New</string>
@@ -48,6 +48,7 @@
    <property name="font">
     <font>
      <pointsize>12</pointsize>
+     <bold>true</bold>
     </font>
    </property>
    <property name="text">
@@ -92,9 +93,6 @@
      <pointsize>12</pointsize>
      <bold>true</bold>
     </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(0, 0, 0)</string>
    </property>
    <property name="text">
     <string>Continue -&gt;</string>

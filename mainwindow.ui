@@ -88,8 +88,11 @@
       <height>0</height>
      </size>
     </property>
-    <property name="styleSheet">
-     <string notr="true">font: 800 12pt &quot;Segoe UI&quot;;</string>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -113,7 +116,7 @@
       <item>
        <layout class="QVBoxLayout" name="LeftSide">
         <property name="spacing">
-         <number>0</number>
+         <number>5</number>
         </property>
         <item>
          <widget class="QPushButton" name="backtosetup">
@@ -128,7 +131,7 @@
            <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Policy::Fixed</enum>
+           <enum>QSizePolicy::Policy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -164,6 +167,19 @@
           </property>
           <property name="text">
            <string>Statement</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="OrderStock">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Order Stock</string>
           </property>
          </widget>
         </item>
@@ -229,8 +245,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="Table_4">
+        <item row="2" column="0">
+         <widget class="QPushButton" name="Table_2">
           <property name="minimumSize">
            <size>
             <width>150</width>
@@ -244,29 +260,30 @@
            </size>
           </property>
           <property name="text">
-           <string>Table#4</string>
+           <string>Table#2</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item row="4" column="3">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QPushButton" name="RefreshBtn">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
+           <widget class="QPushButton" name="OpenTableBtn">
             <property name="text">
-             <string>Refresh</string>
+             <string>Open Table</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ReserveBtn">
+            <property name="text">
+             <string>Reserve</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="Table_6">
+        <item row="3" column="0">
+         <widget class="QPushButton" name="Table_3">
           <property name="minimumSize">
            <size>
             <width>150</width>
@@ -280,7 +297,23 @@
            </size>
           </property>
           <property name="text">
-           <string>Table#6</string>
+           <string>Table#3</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QPushButton" name="OrderFoodBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Order Food</string>
           </property>
          </widget>
         </item>
@@ -322,6 +355,61 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="Table_6">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Table#6</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="Table_4">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Table#4</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="RefreshBtn">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item row="2" column="2">
          <widget class="QPushButton" name="Table_5">
           <property name="minimumSize">
@@ -355,104 +443,10 @@
             <height>150</height>
            </size>
           </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">/*
-QPushButton {
-background-color: rgb(0, 0, 0);
-color: white;              
-border-radius: 15px;
-border:5px solid  rgb(0, 0, 127);        
-font-size: 16px;            
-padding: 10px 10px;
-}
-
-</string>
-          </property>
           <property name="text">
            <string>Table#1</string>
           </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
          </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="Table_3">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>150</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>150</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Table#3</string>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="Table_2">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>150</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>150</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Table#2</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QPushButton" name="OrderFoodBtn">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>45</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Order Food</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="QPushButton" name="OpenTableBtn">
-            <property name="text">
-             <string>Open Table</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="ReserveBtn">
-            <property name="text">
-             <string>Reserve</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
        </layout>
       </item>
@@ -1041,6 +1035,53 @@ font: 800 10pt &quot;Segoe UI&quot;;</string>
       </item>
      </layout>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>10</y>
+      <width>108</width>
+      <height>108</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>C:/Users/worap/Downloads/Icon.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>20</y>
+      <width>241</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>C:/Users/worap/Downloads/cmu-sub-logo-1.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
  </widget>

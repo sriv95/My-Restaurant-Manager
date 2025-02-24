@@ -63,6 +63,7 @@ private slots:
 
     void showError(QString);
 
+    void on_OrderStock_clicked();
 
 private:
 

@@ -122,7 +122,10 @@ double Total_Income_in_selected_range = 0;
 double Total_Expenses_in_selected_range = 0;
 
 vector<double> chartData_income , chartData_expenses;
-vector<QDate> chartData_Date;
+vector<QDateTime> chartData_Date;
+
+vector<double> chartData_income_scaled_QDate , chartData_expenses_scaled_QDate;
+vector<QDateTime> chartData_Date_scaled_QDate;
 
 vector<QDate> week_dates , month_dates , year_dates;
 
@@ -181,7 +184,8 @@ void analysis::startUI_setup()
 
     for (unsigned int i = 0 ; i < statement.size() ; i++)
     {
-        QDate Date_ = QDate::fromString(QString::fromStdString(statement[i][3]) , "dd-MM-yyyy");
+        QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]);
+        QDateTime Date_ = QDateTime::fromString(String_DateTime , "dd-MM-yyyy HH:mm:ss.zzz"); // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
 
         auto it = std::find(chartData_Date.begin(), chartData_Date.end(), Date_);
         if (it == chartData_Date.end())
@@ -247,9 +251,9 @@ void analysis::startUI_setup()
         }
     }
 
+    //===================================================================//
 
-
-    vector<QDate> unSort_chartData_Date = ::chartData_Date;
+    vector<QDateTime> unSort_chartData_Date = ::chartData_Date;
     std::sort(chartData_Date.begin() , chartData_Date.end());
     vector<unsigned int> sorted_index;
 
@@ -287,26 +291,68 @@ void analysis::startUI_setup()
         }
     }
 
-    ui->comboBox_search_mode->setCurrentIndex(5);
+    // for (unsigned int i = 0 ; i < chartData_Date.size() ; i++)
+    // {
+    //     qDebug() << "Date : "<< chartData_Date[i].toString("dd-MM-yyyy HH:mm:ss.zzz") << "Income : " << QString::number(chartData_income[i]) << "expenses : " << QString::number(chartData_expenses[i]);
+
+    //     qDebug() << "Dishes";
+    //     for (int j = 0 ; j < Dishes_data[i].name.size() ; j++)
+    //     {
+    //         qDebug() << "name : " << Dishes_data[i].name[j] << "amount : " << Dishes_data[i].amount[j];
+    //     }
+
+    //     qDebug() << "Drinks";
+    //     for (int j = 0 ; j < Drinks_data[i].name.size() ; j++)
+    //     {
+    //         qDebug() << "name : " << Drinks_data[i].name[j] << "amount : " << Drinks_data[i].amount[j];
+    //     }
+
+    //     qDebug() << "\n";
+    // }
+
+    //===================================================================//
+
+    vector<QDateTime> Un_mergeData_chartData_Date_scaled_QDate;
 
     for (unsigned int i = 0 ; i < chartData_Date.size() ; i++)
     {
-        qDebug() << "Date : "<< chartData_Date[i].toString("dd-MM-yyyy") << "Income : " << QString::number(chartData_income[i]) << "expenses : " << QString::number(chartData_expenses[i]);
-
-        qDebug() << "Dishes";
-        for (int j = 0 ; j < Dishes_data[i].name.size() ; j++)
-        {
-            qDebug() << "name : " << Dishes_data[i].name[j] << "amount : " << Dishes_data[i].amount[j];
-        }
-
-        qDebug() << "Drinks";
-        for (int j = 0 ; j < Drinks_data[i].name.size() ; j++)
-        {
-            qDebug() << "name : " << Drinks_data[i].name[j] << "amount : " << Drinks_data[i].amount[j];
-        }
-
-        qDebug() << "\n";
+        Un_mergeData_chartData_Date_scaled_QDate.push_back(QDateTime(chartData_Date[i].date() , QTime(0,0,0,0)));
     }
+
+    for (unsigned int i = 0 ; i < Un_mergeData_chartData_Date_scaled_QDate.size() ; i++)
+    {
+        QDateTime Date_ = Un_mergeData_chartData_Date_scaled_QDate[i]; // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
+
+        auto it = std::find(chartData_Date_scaled_QDate.begin(), chartData_Date_scaled_QDate.end(), Date_);
+        if (it == chartData_Date_scaled_QDate.end())
+        {
+            chartData_Date_scaled_QDate.push_back(Date_);
+            chartData_income_scaled_QDate.push_back(0);
+            chartData_expenses_scaled_QDate.push_back(0);
+
+            int newindex = chartData_Date_scaled_QDate.size() - 1;
+
+            chartData_income_scaled_QDate[newindex] += abs(double(chartData_income[i]));
+            chartData_expenses_scaled_QDate[newindex] += abs(double(chartData_expenses[i]));
+
+        }
+        else
+        {
+            int index = std::distance(chartData_Date_scaled_QDate.begin() , it);
+
+            chartData_income_scaled_QDate[index] += abs(double(chartData_income[i]));
+            chartData_expenses_scaled_QDate[index] += abs(double(chartData_expenses[i]));
+        }
+    }
+
+    // for (unsigned int i = 0 ; i < chartData_Date_scaled_QDate.size() ; i++)
+    // {
+    //     qDebug() << "Date : "<< chartData_Date_scaled_QDate[i].toString("dd-MM-yyyy HH:mm:ss.zzz") << "Income : " << QString::number(chartData_income_scaled_QDate[i]) << "expenses : " << QString::number(chartData_expenses_scaled_QDate[i]);
+    // }
+
+    //===================================================================//
+
+    ui->comboBox_search_mode->setCurrentIndex(5);
 }
 
 
@@ -677,8 +723,43 @@ void analysis::Show_Chart()
     //==================================================================================//
 
     vector<QDate> Date_Range_now = Date_range_now();
-    QDate minDate_range = Date_Range_now[0];
-    QDate maxDate_range = Date_Range_now[1];
+    QDateTime minDate_range = Date_Range_now[0].startOfDay();
+    QDateTime maxDate_range = Date_Range_now[1].endOfDay();
+
+    int count_Day_in_range = Date_Range_now[0].daysTo(Date_Range_now[1]);
+
+    //==================================================================================//
+
+    vector<QDateTime> chartData_Date_For_CreateChart;
+    vector<double> chartData_income_For_CreateChart;
+    vector<double> chartData_expenses_For_CreateChart;
+
+    bool Scale_logic;
+    switch (ui->comboBox_Scale_mode->currentIndex())
+    {
+        case 0:
+            Scale_logic = count_Day_in_range >= 6;
+            break;
+        case 1:
+            Scale_logic = true;
+            break;
+        case 2:
+            Scale_logic = false;
+            break;
+    }
+
+    if (Scale_logic)
+    {
+        chartData_Date_For_CreateChart = chartData_Date_scaled_QDate;
+        chartData_income_For_CreateChart = chartData_income_scaled_QDate;
+        chartData_expenses_For_CreateChart = chartData_expenses_scaled_QDate;
+    }
+    else
+    {
+        chartData_Date_For_CreateChart = chartData_Date;
+        chartData_income_For_CreateChart = chartData_income;
+        chartData_expenses_For_CreateChart = chartData_expenses;
+    }
 
     //==================================================================================//
 
@@ -689,30 +770,32 @@ void analysis::Show_Chart()
     QScatterSeries *Dot_series_expenses = new QScatterSeries;
 
     int add_count = 0;
-    for (unsigned int i = 0; i < chartData_Date.size(); i++)
+    for (unsigned int i = 0; i < chartData_Date_For_CreateChart.size(); i++)
     {
-        if (chartData_Date[i] < minDate_range or chartData_Date[i] > maxDate_range) continue;
+        if (chartData_Date_For_CreateChart[i] < minDate_range or chartData_Date_For_CreateChart[i] > maxDate_range) continue;
 
         //---------------total-----------------//
-        Total_Income_in_selected_range += chartData_income[i];
-        Total_Expenses_in_selected_range += chartData_expenses[i];
+        Total_Income_in_selected_range += chartData_income_For_CreateChart[i];
+        Total_Expenses_in_selected_range += chartData_expenses_For_CreateChart[i];
         //---------------total-----------------//
 
-        qint64 xValue = chartData_Date[i].startOfDay().toMSecsSinceEpoch();
+        qint64 xValue = chartData_Date_For_CreateChart[i].toMSecsSinceEpoch();
 
         //---------------line series-----------------//
-        series_income->append(xValue, chartData_income[i]);
-        series_expenses->append(xValue, chartData_expenses[i]);
+        series_income->append(xValue, chartData_income_For_CreateChart[i]);
+        series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]);
         //---------------line series-----------------//
 
         //---------------Dot series-----------------//
-        Dot_series_income->append(xValue, chartData_income[i]);
-        Dot_series_expenses->append(xValue, chartData_expenses[i]);
+        if (chartData_income_For_CreateChart[i] != 0) Dot_series_income->append(xValue, chartData_income_For_CreateChart[i]);
+        if (chartData_expenses_For_CreateChart[i] != 0) Dot_series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]);
         //---------------Dot series-----------------//
         add_count++;
     }
 
     //==================================================================================//
+    // qDebug() << add_count;
+
     QPointF income_ONE_point , expenses_ONE_point;
     if (add_count == 1)
     {
@@ -720,12 +803,14 @@ void analysis::Show_Chart()
         expenses_ONE_point = series_expenses->at(0);
 
         series_income->clear();
-        series_income->append(income_ONE_point.x()+1 , income_ONE_point.y());
-        series_income->append(income_ONE_point.x()+2 , income_ONE_point.y());
+        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch()  , 0);
+        series_income->append(income_ONE_point.x() , income_ONE_point.y());
+        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0);
 
         series_expenses->clear();
-        series_expenses->append(expenses_ONE_point.x()+1 , expenses_ONE_point.y());
-        series_expenses->append(expenses_ONE_point.x()+2 , expenses_ONE_point.y());
+        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch() , 0);
+        series_expenses->append(expenses_ONE_point.x() , expenses_ONE_point.y());
+        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0);
     }
 
     //==========Line===========//
@@ -770,7 +855,9 @@ void analysis::Show_Chart()
             if (state)
             {
                 QString Income_at_the_cursor_position = QString::number(point.y());
-                QString DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
+                QString DateTime_at_the_cursor_position;
+                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
+                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss");
 
                 QString Text_Show_at_the_cursor_position_income = "📅Date: " + DateTime_at_the_cursor_position + "  📈Income: " + Income_at_the_cursor_position;
                 QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_income);
@@ -787,7 +874,10 @@ void analysis::Show_Chart()
             if (state)
             {
                 QString Expenses_at_the_cursor_position = QString::number(point.y());
-                QString DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
+                QString DateTime_at_the_cursor_position;
+                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
+                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss");
+
 
                 QString Text_Show_at_the_cursor_position_Expenses = "📅Date: " + DateTime_at_the_cursor_position + " 📉Expense: " + Expenses_at_the_cursor_position;
                 QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_Expenses);
@@ -805,33 +895,53 @@ void analysis::Show_Chart()
     //chart->createDefaultAxes(); //เป็นฟังก์ชันใน Qt Charts ที่ใช้ สร้างแกน X และแกน Y โดยอัตโนมัติ ตามข้อมูลที่เพิ่มเข้าไปในกราฟ
     // ใช้ QDateTimeAxis สำหรับแกน X
     QDateTimeAxis *axisX = new QDateTimeAxis;
-    axisX->setFormat("dd MMM yy"); // ตั้งค่าการแสดงผลวันที่
     axisX->setTitleText("Date");
-    if (add_count >= 10) axisX->setTickCount(10);
-    else if (add_count < 10 and add_count > 1) axisX->setTickCount(add_count);
-    else if (add_count == 1)
+    if (Scale_logic)
     {
-        axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()+1) , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()+2));
-        axisX->setTickCount(2);
+        axisX->setFormat("dd MMM yy"); // ตั้งค่าการแสดงผลวันที่
+        if (add_count >= 10) axisX->setTickCount(10);
+        else if (add_count < 10 and add_count > 1) axisX->setTickCount(add_count);
+        else if (add_count == 1)
+        {
+            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay());
+            axisX->setTickCount(2);
+        }
+        else
+        {
+            axisX->setRange(minDate_range , maxDate_range);
+            axisX->setTickCount(2);
+        }
     }
     else
     {
-        axisX->setRange(QDateTime(minDate_range , QTime(0,0,1)) , QDateTime(maxDate_range , QTime(0,0,2)));
-        axisX->setTickCount(2);
+        axisX->setFormat("dd MMM yy HH:mm");
+        if (add_count >= 7) axisX->setTickCount(7);
+        else if (add_count < 7 and add_count > 1) axisX->setTickCount(add_count);
+        else if (add_count == 1)
+        {
+            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay());
+            axisX->setTickCount(2);
+        }
+        else
+        {
+            axisX->setRange(minDate_range , maxDate_range);
+            axisX->setTickCount(2);
+        }
     }
+
 
 
     \
     vector<long double> max_y(2);
 
-    if (chartData_income.size() <= 0) max_y.push_back(0);
-    else max_y.push_back(*max_element(chartData_income.begin() , chartData_income.end()));
+    if (chartData_income_For_CreateChart.size() <= 0) max_y.push_back(0);
+    else max_y.push_back(*max_element(chartData_income_For_CreateChart.begin() , chartData_income_For_CreateChart.end()));
 
-    if (chartData_expenses.size() <= 0) max_y.push_back(0);
-    else max_y.push_back(*max_element(chartData_expenses.begin() , chartData_expenses.end()));
+    if (chartData_expenses_For_CreateChart.size() <= 0) max_y.push_back(0);
+    else max_y.push_back(*max_element(chartData_expenses_For_CreateChart.begin() , chartData_expenses_For_CreateChart.end()));
 
-    // max_y.push_back(*max_element(chartData_income.begin() , chartData_income.end()));
-    // max_y.push_back(*max_element(chartData_expenses.begin() , chartData_expenses.end()));
+    // max_y.push_back(*max_element(chartData_income_For_CreateChart.begin() , chartData_income_For_CreateChart.end()));
+    // max_y.push_back(*max_element(chartData_expenses_For_CreateChart.begin() , chartData_expenses_For_CreateChart.end()));
 
     QValueAxis *axisY = new QValueAxis;
     axisY->setRange(0, *max_element(max_y.begin() , max_y.end()));
@@ -894,14 +1004,14 @@ void analysis::Summary()
     //======================================================================================//
 
     vector<QDate> Date_Range_now = Date_range_now();
-    QDate minDate_range = Date_Range_now[0];
-    QDate maxDate_range = Date_Range_now[1];
+    QDateTime minDate_range = Date_Range_now[0].startOfDay();
+    QDateTime maxDate_range = Date_Range_now[1].endOfDay();
 
     //======================================================================================//
 
     vector<Dishes> Dishes_data_in_range;
     vector<Drinks> Drinks_data_in_range;
-    vector<QDate> Date_in_range;
+    vector<QDateTime> Date_in_range;
 
     for (unsigned int i = 0; i < chartData_Date.size(); i++)
     {
@@ -1106,3 +1216,10 @@ void analysis::Summary()
 
 
 }
+
+
+void analysis::on_comboBox_Scale_mode_currentIndexChanged(int scale_mode)
+{
+    Show_Chart();
+}
+
