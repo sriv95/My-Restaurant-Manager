@@ -208,7 +208,8 @@ void RestuarantManagement::updateTablesStatus()
 
 void RestuarantManagement::on_RefreshBtn_clicked()
 {
-    playButtonSound();
+    QPushButton* buttonSender = qobject_cast<QPushButton*>(sender()); // retrieve the button you have clicked
+    if(buttonSender->text()=="Refresh") playButtonSound();
     ui.SelectingTable->setText(QString('0'));
     QString table_no = "0";
     ui.Receipt->hide();
