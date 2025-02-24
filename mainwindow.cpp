@@ -19,7 +19,6 @@
 #include "ui/jsoncheck.h"
 #include "ui/orderstock.h"
 #include "ui/configwindow.h"
-#include <QSettings>
 
 QMap <QString,QPalette> PalettesMap;
 
@@ -28,9 +27,9 @@ json restaurantData;
 int Table_Count = 9;
 
 bool isDarkMode() {
-    QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)", QSettings::NativeFormat);
-    bool isDarkMode = settings.value("AppsUseLightTheme", 1).toInt() == 0;  // ถ้าเป็น 0 แสดงว่าใช้ Dark Mode
-    qDebug()<<"isDarkMode = "<<isDarkMode<<")";
+    QSettings WindowsSettings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)", QSettings::NativeFormat);
+    bool isDarkMode = WindowsSettings.value("AppsUseLightTheme", 1).toInt() == 0;  // ถ้าเป็น 0 แสดงว่าใช้ Dark Mode
+    // qDebug()<<"isDarkMode = "<<isDarkMode<<")";
     return isDarkMode;
 }
 
@@ -62,9 +61,12 @@ void SetPalette(bool darkmode_on){
 
     // AddPalettesMap("","#","#","#","#","#","#","#","#");
 
+    QString theme;
+    if(darkmode_on == false) theme="Red";
+    else theme="Dark";
 
-    if(darkmode_on == false) QApplication::setPalette(PalettesMap["Red"]); // ตั้งค่า Palette ให้กับทั้งแอป
-    else QApplication::setPalette(PalettesMap["Dark"]); // ตั้งค่า Palette ให้กับทั้งแอป
+    settings->setValue("theme",theme); //save to config
+    QApplication::setPalette(PalettesMap[theme]);
 }
 
 
@@ -85,6 +87,7 @@ void RestuarantManagement::setMainBtnVisible(bool tf){
 
 RestuarantManagement::RestuarantManagement(QWidget *parent)
     : QMainWindow(parent)
+
 {
     ui.setupUi(this);
     SetPalette(isDarkMode());
@@ -98,12 +101,7 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
     for(int i=1;i<=Table_Count;++i){
         QString btnName = QString("Table_").append(QString::number(i));
         QPushButton *button = this->findChild<QPushButton *>(btnName);
-        // button->setStyleSheet("QPushButton {"                                   // sutup buttonTable-color
-        //                       "background-color: #535455;"  // background-color
-        //                       "color: white;"               // text-color
-        //                       "border-radius: 12px;"        // Rounded corners
-        //                       //"font-size: 16px;"            // Font size
-        //                       "}");
+
         if(button) connect(button, &QPushButton::clicked, this, &RestuarantManagement::on_TableBtn_clicked);
         else  qDebug()<<"Error: Button Not Found (Button Name: "<<btnName<<")";
     }
@@ -144,13 +142,6 @@ void RestuarantManagement::SetSelectingTable(QString no){
 
         palette.setColor(QPalette::Button, buttonColor);
         button->setPalette(palette);
-
-        // button->setStyleSheet("QPushButton {"
-        //                       "background-color: #535455;"  // background-color
-        //                       "color: white;"               // text-color
-        //                       "border-radius: 12px;"        // Rounded corners
-        //                      // "font-size: 16px;"            // Font size
-        //                       "}");
     }
     if (ui.Receipt->isVisible() && ui.CheckBills->text() == "Confirm Payment") {
         ui.Receipt->hide();

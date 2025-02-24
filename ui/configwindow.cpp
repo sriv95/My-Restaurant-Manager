@@ -1,9 +1,10 @@
 #include "configwindow.h"
 #include "header/json.h"
 #include "ui_configwindow.h"
-#include <QSettings>
 
-QSettings *settings = new QSettings(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
+QSettings *settings = nullptr;
+
+QString currentTheme;
 
 configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
     : QDialog(parent)
@@ -14,6 +15,7 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
 
     //Initial Settings
     currentVersion = settings->value("version").toString();
+    currentTheme = settings->value("theme").toString();
 
     //Set Initital Version
     ui->version->setText("Version: " + currentVersion);
@@ -56,11 +58,16 @@ configwindow::~configwindow()
 void configwindow::on_ThemeSelect_currentTextChanged(const QString &arg1)
 {
     QApplication::setPalette(PalettesMap[arg1]);
+    currentTheme=arg1;
 }
 
 void configwindow::on_buttonBox_clicked(QAbstractButton *button)
 {
-    if(button->text()=="Save") emit returnValue(ui->Title->text());
+    if(button->text()=="Save") {
+        settings->setValue("theme",currentTheme);
+        emit returnValue(ui->Title->text());
+    }
+    QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
     this->close();
 }
 

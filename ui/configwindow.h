@@ -6,6 +6,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QDesktopServices>
+#include <QSettings>
+
+extern QSettings* settings;
 
 namespace Ui {
 class configwindow;
