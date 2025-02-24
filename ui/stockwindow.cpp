@@ -21,6 +21,11 @@ StockWindow::StockWindow(QWidget *parent)
     ui->tableStocks->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     connect(ui->tableStocks, &QTableWidget::itemChanged, this, &StockWindow::on_tableWidget_itemChanged);
     loadfromjson();
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
 }
 
 StockWindow::~StockWindow()
@@ -28,7 +33,14 @@ StockWindow::~StockWindow()
     delete ui;
 }
 
-
+void StockWindow::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
+}
 
 void StockWindow::loadfromjson()
 {
@@ -78,6 +90,7 @@ void StockWindow::refreshTable()
 
 void StockWindow::on_AddBtn_clicked()
 {
+    playButtonSound();
     stockJson["Stocks"].push_back({"New Stock", 0});
     refreshTable();
 }
@@ -86,6 +99,7 @@ void StockWindow::on_AddBtn_clicked()
 
 void StockWindow::on_DeleteBtn_clicked()
 {
+    playButtonSound();
     QList<QTableWidgetItem*> selectedItems = ui->tableStocks->selectedItems();
 
     if (selectedItems.isEmpty()) {
@@ -130,5 +144,6 @@ void StockWindow::savetojson()
 
 void StockWindow::on_SaveBtn_clicked()
 {
+    playButtonSound();
     savetojson();
 }

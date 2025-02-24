@@ -2,6 +2,8 @@
 #define EMPLOYEE_H
 
 #include <QDialog>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class employee;
@@ -33,6 +35,11 @@ private slots:
 
 private:
     Ui::employee *ui;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    void playButtonSound();
 };
 
 #endif // EMPLOYEE_H

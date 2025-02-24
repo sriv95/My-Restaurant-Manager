@@ -725,6 +725,7 @@ void RestuarantManagement::on_backtosetup_clicked()
 
 void RestuarantManagement::on_OrderStock_clicked()
 {
+    playButtonSound();
     OrderStock *orderstock = new OrderStock(this);
     orderstock->setWindowTitle("Order Stock");
     orderstock->exec();
