@@ -63,5 +63,5 @@ DISTFILES += \
     data.json \
 
 RESOURCES += \
-    Sounds.qrc
+    assets/sounds/Sounds.qrc
 RC_FILE = app.rc
