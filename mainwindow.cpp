@@ -257,6 +257,7 @@ void RestuarantManagement::on_RefreshBtn_clicked()
     ui.SelectingTable->setText(QString('0'));
     QString table_no = "0";
     ui.Receipt->hide();
+    ui.CheckBills->setText("Check Bills");
     SetSelectingTable(table_no);
     updateTablesStatus(); //
 }
