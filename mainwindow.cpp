@@ -65,7 +65,7 @@ void SetPalette(bool darkmode_on){
     if(settings->value("theme").toString()!="") theme = settings->value("theme").toString();
     else {
         if(darkmode_on == false) theme="Red"; //Default Light mode
-        else theme="Dark"; //Default Dark mode
+        else theme="CMU"; //Default Dark mode
     }
 
     settings->setValue("theme",theme); //save to config
