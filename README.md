@@ -31,6 +31,8 @@
 -  **📊Financial Statements**: `Generate` daily, weekly, or monthly sales reports, including expenses.
 
 -  **📈Business Analysis**: `Analyze` trends and performance to optimize operations.
+  
+-  **🔧UI Customization/Settings**: `Modify` the displayed title, font, and theme of the UI.
 
 ---
 
@@ -51,6 +53,7 @@
 This section opens the "File Configuration" window.
 
 #### **Features**
+`Create` or `Open` an existing `.json` file.
 
 - ##### **Status Text**: 
    - Displays whether the JSON file is present or missing at the default PATH.
@@ -76,6 +79,7 @@ This section opens the "File Configuration" window.
 The main UI displays 9 clickable table icons labeled "Table#1" to "Table#9" at the center.
 
 #### **Features**
+`Open` a table.
 
 - ##### **Table Selection**:
   - Clicking a `Table` icon reveals more buttons at the bottom:
@@ -104,6 +108,7 @@ The main UI displays 9 clickable table icons labeled "Table#1" to "Table#9" at t
 The `Reserve` button appears once a `Table` icon is selected.
 
 #### **Features**
+`Reserve` a table.
 
 - ##### **Main Buttons**:
   - `Reserve`: Opens the "Reserve" window where you fill in:
@@ -125,6 +130,7 @@ The `Reserve` button appears once a `Table` icon is selected.
 The `Check Bills` button appears once a `Table` icon is selected.
 
 #### **Features**
+`Display` the bill for the selected table.
 
 - ##### **Main Buttons**:
   - `Check Bills`: Displays a receipt for the selected table that includes:
@@ -141,6 +147,7 @@ The `Check Bills` button appears once a `Table` icon is selected.
 Accessed via the `Stocks` and `Order Stock` buttons in the main UI.
 
 #### **Features**
+`Edit` and `Order` stocks.
 
 - ##### **Main Buttons**:
   - `Stocks`: Opens the "Stock" window, which shows three columns:
@@ -172,6 +179,7 @@ Accessed via the `Stocks` and `Order Stock` buttons in the main UI.
 Access this feature through the `Employee` button in the main UI.
 
 #### **Features**
+`Edit` `Employee` data.
 
 - ##### **Main Buttons**:
   - `Employee`: Opens the "Employee" window, displaying six columns:
@@ -205,6 +213,7 @@ Access this feature through the `Employee` button in the main UI.
 This feature is available through the `Edit Menu` button in the main UI.
 
 #### **Features**
+`Edit` menus and their respective ingredients.
 
 - ##### **Main Buttons**:
   - `Edit Menu`: Opens the "Edit Menu" window.
@@ -228,7 +237,7 @@ This feature is available through the `Edit Menu` button in the main UI.
         
       - `Ingredients` (read-only)
         
-      - `Edit Ingredients` (opens the ingredients table)
+      - `Edit Ingredients` (shows the ingredients on the right-side table)
           
     - ###### **Feature Buttons**:
   
@@ -256,6 +265,7 @@ This feature is available through the `Edit Menu` button in the main UI.
 `Order Food` button appears after a `table` icon is selected and is active only if the table is open.
 
 #### **Features**
+`Manage` food and drink orders.
   
 - ##### **Main Buttons**:
   - `Order Food`: Opens the `Order Food` window.
@@ -268,9 +278,10 @@ This feature is available through the `Edit Menu` button in the main UI.
 ---
 
 ### 📊 **Financial Statements**
-Accessible via the `Statement` button in the main UI. Presents detailed financial data.
+Accessible via the `Statement` button in the main UI. 
 
 #### **Features**
+`Display` detailed financial data.
 
 - ##### **Main Buttons**:
   - `Statement`: Opens the `Statement` window, showing:
@@ -288,7 +299,7 @@ Accessible via the `Statement` button in the main UI. Presents detailed financia
 Accessible via the `Analysis` button in the main UI.
 
 #### **Features**
-Shows the trend of `Income` and `Expenses` of the time range chosen. Includes summaries of the top `dishes` and `drinks`, `total income`, `expenses`, and `total order`.
+`Visualize` `Income` and `Expenses` trends within a selected time range using a line graph. Includes summaries of the top `dishes` and `drinks`, `total income`, `expenses`, and `total order`.
 
 - ##### **Main Buttons**:
   - `Analysis`: Opens the `Analysis` window.
@@ -309,7 +320,7 @@ Shows the trend of `Income` and `Expenses` of the time range chosen. Includes su
           
         - `Scale`: Overview; Totals all dots in a day into one, which means all statements in a day are merged together.
           
-        - `Not Scale`: More detailed; Manys dots in a day, which means each time a statement is made, it got a dot of its own. 
+        - `Not Scale`: More detailed; Manys dots in a day, which means each time a statement is made, it gets a dot of its own. 
           
       - **The second box** / `Data Scope`: Filter data by `All`, `Range`, `Day`, `Week`, `Month`, `Year`:
           - `All`: Shows all entries (calendars are disabled).
@@ -321,4 +332,29 @@ Shows the trend of `Income` and `Expenses` of the time range chosen. Includes su
     - ###### **Feature Buttons**:
       - `Refresh`: Resets the selection to the current real-life date without changing the mode settings.
       
+---
+
+### 🔧 **UI Customization/Settings**
+Available via the `🔧` button on the top-right corner of the main UI.
+
+#### **Features**
+`Customize` the UI title, theme, and font.
+
+- ##### **Main Buttons**:
+  - `🔧`: Opens the `Configuration` window, showing:
+    - `Title` (editable)
+      
+    - `Theme` (choose from a list)
+      
+    - `Font` (editable; choose from a list)
+
+    - `Mute Sound Effect`: **Checkable box** to enable/disable sound effects.
+    
+    - ###### **Feature Buttons**:
+      - `Reset To Default`: Restores all settings to their original state.
+        
+      - `Save`: Saves any changes made.
+
+      - `Cancel`: Discards all unsaved changes.
+
 ---
