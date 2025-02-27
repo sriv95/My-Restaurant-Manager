@@ -622,7 +622,7 @@ void RestuarantManagement::on_backtosetup_clicked()
         jsoncheck jsonCheck(this);
         jsonCheck.setWindowTitle("File Configuration");
         jsonCheck.exec();
-
+        on_RefreshBtn_clicked();
         if(forcecloseTriggered){
             QTimer::singleShot(0,qApp,SLOT(quit()));
             return;
