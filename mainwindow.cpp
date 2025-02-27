@@ -696,6 +696,8 @@ void RestuarantManagement::on_Config_clicked()
     config->setWindowTitle("Configuration");
     connect(config, &configwindow::returnValue, this, &RestuarantManagement::on_Config_returnValue);
     config->exec();
+    QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
+    QApplication::setFont(settings->value("font").value<QFont>());
 }
 
 void RestuarantManagement::on_Config_returnValue(const QString &data){

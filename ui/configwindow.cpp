@@ -69,8 +69,6 @@ void configwindow::on_buttonBox_clicked(QAbstractButton *button)
         settings->setValue("font",QApplication::font());
         emit returnValue(ui->Title->text());
     }
-    QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
-    QApplication::setFont(settings->value("font").value<QFont>());
     this->close();
 }
 
