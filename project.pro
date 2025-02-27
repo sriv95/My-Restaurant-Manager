@@ -1,4 +1,4 @@
-QT       += core gui widgets charts network
+QT       += core gui widgets charts network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -64,5 +64,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     data.json \
+
+RESOURCES += \
+    assets/sounds/Sounds.qrc
 
 RC_FILE = app.rc

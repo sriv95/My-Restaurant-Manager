@@ -9,12 +9,14 @@ reserve::reserve(int tableNo,QWidget *parent)
     ui->setupUi(this);
 
     ui->TableNum->setText(QString::number(tableNo));
+
 }
 
 reserve::~reserve()
 {
     delete ui;
 }
+
 
 void reserve::on_btnReserve_clicked()
 {

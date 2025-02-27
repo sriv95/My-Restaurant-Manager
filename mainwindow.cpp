@@ -6,6 +6,8 @@
 #include <header/json.h>
 #include <QTimer>
 #include <QDateTime>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 #include <ui/reserve.h>
 #include <ui/employee.h>
@@ -114,10 +116,41 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
     ui.OrderFoodBtn->hide();
     setMainBtnVisible(false);
 
+    // ตั้งค่าเสียงปุ่ม
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
+
+    // ตั้งค่าเสียง check bill
+    checkbillSound = new QMediaPlayer(this);
+    checkbillAudio = new QAudioOutput(this);
+    checkbillSound->setAudioOutput(checkbillAudio);
+    checkbillSound->setSource(QUrl("qrc:/Sounds/checkBill.mp3"));
+
     QTimer *timer=new QTimer(this);
     connect (timer ,SIGNAL(timeout()),this,SLOT(showTime()));
     timer->start();
 }
+
+void RestuarantManagement::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
+}
+
+void RestuarantManagement::playCheckbillSound()
+{
+    if (checkbillSound->playbackState() == QMediaPlayer::PlayingState) {
+        checkbillSound->setPosition(0);
+    } else {
+        checkbillSound->play();
+    }
+}
+
 
 void  RestuarantManagement::showTime()
 {
@@ -188,7 +221,7 @@ void RestuarantManagement::SetSelectingTable(QString no){
 
 void RestuarantManagement::on_TableBtn_clicked()
 {
-
+    playButtonSound();
     if (ui.Receipt->isVisible() && ui.CheckBills->text() == "Confirm Payment") {
         ui.Receipt->hide();
         ui.CheckBills->setText("Check Bills");
@@ -254,6 +287,8 @@ void RestuarantManagement::updateTablesStatus()
 
 void RestuarantManagement::on_RefreshBtn_clicked()
 {
+    QPushButton* buttonSender = qobject_cast<QPushButton*>(sender()); // retrieve the button you have clicked
+    if(buttonSender->text()=="Refresh") playButtonSound();
     ui.SelectingTable->setText(QString('0'));
     QString table_no = "0";
     ui.Receipt->hide();
@@ -264,6 +299,9 @@ void RestuarantManagement::on_RefreshBtn_clicked()
 
 void RestuarantManagement::on_CheckBills_clicked()
 {
+    // ประกาศตัวแปรก่อนใช้งาน
+    QString currentText = ui.CheckBills->text();
+
     getData();
 
     ui.Receipt_DateTime->setText(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"));
@@ -282,7 +320,7 @@ void RestuarantManagement::on_CheckBills_clicked()
             QMessageBox::warning(this, "No Orders", "No bills found for this table. Please add an order before confirming payment.");
             return;
         }
-
+        playCheckbillSound();
         vector<string> billNames;
         vector<int> billPrices;
         getBills(Bills, restaurantData["Menus"], billNames, billPrices);
@@ -362,7 +400,7 @@ void RestuarantManagement::on_CheckBills_clicked()
 
             ui.Receipt_Total->setText(QString::number(totalAmount) + " Baht");
         }
-
+        playButtonSound();
         ui.CheckBills->setText("Confirm Payment");
     } else {
         ui.CheckBills->setText("Check Bills");
@@ -371,6 +409,7 @@ void RestuarantManagement::on_CheckBills_clicked()
 
 void RestuarantManagement::on_OpenTableBtn_clicked()
 {
+    playButtonSound();
     OpenTableDialog OpenTableDialog;
     OpenTableDialog.setModal(true);
     OpenTableDialog.setWindowTitle("Open Table");
@@ -411,6 +450,7 @@ void RestuarantManagement::Changeseats() //แก้บัค
 
 void RestuarantManagement::on_ReserveBtn_clicked()
 {
+    playButtonSound();
     int tableNo = GetSelectingTableNo();
     if (ui.ReserveBtn->text() == "Unreserve") {
         removeReservation(tableNo);
@@ -475,12 +515,14 @@ void RestuarantManagement::removeReservation(int tableNo) {
 
 void RestuarantManagement::on_Employee_clicked()
 {
+    playButtonSound();
     employee employee(this);
     employee.exec();
 }
 
 void RestuarantManagement::on_Stocks_clicked()
 {
+    playButtonSound();
     StockWindow *stockWin = new StockWindow(this);
 
 
@@ -494,6 +536,7 @@ void RestuarantManagement::on_Stocks_clicked()
 
 void RestuarantManagement::on_EditMenu_clicked()
 {
+    //playButtonSound();
     editmenu editmenu(this);
     editmenu.exec();
 }
@@ -501,6 +544,7 @@ void RestuarantManagement::on_EditMenu_clicked()
 
 void RestuarantManagement::on_Statement_clicked()
 {
+    playButtonSound();
     Statement stateWin(this);
     stateWin.setWindowTitle("Statement");
     stateWin.exec();
@@ -508,6 +552,7 @@ void RestuarantManagement::on_Statement_clicked()
 
 void RestuarantManagement::on_OrderFoodBtn_clicked()
 {
+    playButtonSound();
     int tableNo = GetSelectingTableNo();
 
     json restaurantData;
@@ -612,6 +657,7 @@ void RestuarantManagement::on_Analysis_clicked()
     // if(Data["Statements"].size()<=0&&Data["Menus"].size()<=0) {
     //     showError(".json file data Statements or Menus is empty");
     //     return;}
+    playButtonSound();
     analysis analysis(this);
     analysis.exec();
 }
@@ -636,6 +682,7 @@ void RestuarantManagement::on_backtosetup_clicked()
 
 void RestuarantManagement::on_OrderStock_clicked()
 {
+    playButtonSound();
     OrderStock *orderstock = new OrderStock(this);
     orderstock->setWindowTitle("Order Stock");
     orderstock->exec();

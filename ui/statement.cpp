@@ -50,11 +50,58 @@ Statement::Statement(QWidget *parent)
     connect(Year_Input, &QComboBox::currentTextChanged, this, &Statement::loadData);
 
     loadData();
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
+
+    OpenMenuSound = new QMediaPlayer(this);
+    OpenMenuAudio = new QAudioOutput(this);
+    OpenMenuSound->setAudioOutput(OpenMenuAudio);
+    OpenMenuSound->setSource(QUrl("qrc:/Sounds/OpenCombobox.mp3"));
+
+    SelectSound = new QMediaPlayer(this);
+    SelectAudio = new QAudioOutput(this);
+    SelectSound->setAudioOutput(SelectAudio);
+    SelectSound->setSource(QUrl("qrc:/Sounds/Combobox_click.mp3"));
+
+    connect(ui->Month_ComboBox, &QComboBox::showPopup, this, &Statement::playOpenMenuSound);
+    connect(ui->Month_ComboBox, &QComboBox::activated, this, &Statement::playSelectSound);
+    connect(ui->Year_Input, &QComboBox::showPopup, this, &Statement::playOpenMenuSound);
+    connect(ui->Year_Input, &QComboBox::activated, this, &Statement::playSelectSound);
 }
 
 Statement::~Statement()
 {
     delete ui;
+}
+
+void Statement::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
+}
+
+void Statement::playSelectSound()
+{
+    if (SelectSound->playbackState() == QMediaPlayer::PlayingState) {
+        SelectSound->setPosition(0);
+    } else {
+        SelectSound->play();
+    }
+}
+
+void Statement::playOpenMenuSound()
+{
+    if (OpenMenuSound->playbackState() == QMediaPlayer::PlayingState) {
+        OpenMenuSound->setPosition(0);
+    } else {
+        OpenMenuSound->play();
+    }
 }
 
 void Statement::loadData()
@@ -134,3 +181,15 @@ void Statement::loadData()
     ui->Total_Expense->setText(QLocale(QLocale::English).toString(totalExpense, 'f', 2) + "฿");
     ui->Net_Balance->setText(QLocale(QLocale::English).toString(netProfit, 'f', 2) + "฿");
 }
+
+/*void Statement::on_Month_ComboBox_activated(int index)
+{
+
+}
+
+
+void Statement::on_Year_Input_activated(int index)
+{
+
+}*/
+

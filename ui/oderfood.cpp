@@ -24,7 +24,10 @@ OrderFoodDialog::OrderFoodDialog(QWidget *parent) : QDialog(parent)
     setLayout(layout);
 
     connect(menuComboBox, &QComboBox::currentTextChanged, this, &OrderFoodDialog::updatePrice);
+    connect(confirmButton, &QPushButton::clicked, this, [this](){
+    });
     connect(confirmButton, &QPushButton::clicked, this, &QDialog::accept);
+
 }
 
 QString OrderFoodDialog::getSelectedFood() {
