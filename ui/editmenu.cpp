@@ -204,10 +204,10 @@ void editmenu::on_AddMenuBtn_clicked()
 void editmenu::on_DelMenuBtn_clicked()
 {
     playButtonSound();
-    for(auto *item : menutable->selectedItems()) {
-        //Delete row using iterator for loop
-        int i = item->row(); //Get current row
-        if(i>=0) Menus.erase(i); //Delete from Menus and use i>=0 from handling i == -1 then crash
+    while(menutable->selectedItems().count()>0) {
+        int i = menutable->selectedItems().first()->row();
+        Menus.erase(i);
+        menutable->removeRow(i);
     }
     on_RefreshBtn_clicked(true);
 }
