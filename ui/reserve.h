@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QString>
 
+
 namespace Ui {
 class reserve;
 }
@@ -27,6 +28,7 @@ private slots:
 
 private:
     Ui::reserve *ui;
+
 };
 
 #endif // RESERVE_H

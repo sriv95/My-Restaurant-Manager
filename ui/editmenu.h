@@ -3,6 +3,8 @@
 
 #include "qtablewidget.h"
 #include <QDialog>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class editmenu;
@@ -31,8 +33,14 @@ private slots:
 
     void onMenuTableItemChanged(QTableWidgetItem *);
 
+
 private:
     Ui::editmenu *ui;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    void playButtonSound();
 };
 
 #endif // EDITMENU_H

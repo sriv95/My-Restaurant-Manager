@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include "header/json.h"
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 
 namespace Ui {
 class OrderStock;
@@ -21,6 +24,19 @@ private slots:
 
 private:
     Ui::OrderStock *ui;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    QMediaPlayer *OpenMenuSound;
+    QAudioOutput *OpenMenuAudio;
+
+    QMediaPlayer *SelectSound;
+    QAudioOutput *SelectAudio;
+
+    void playButtonSound();
+    void playOpenMenuSound();
+    void playSelectSound();
 };
 
 #endif // ORDERSTOCK_H

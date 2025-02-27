@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <vector>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 using namespace std;
 
@@ -62,6 +64,25 @@ private:
     vector<QDate> Date_range_now();
 
     void CloseUI();
+
+    QMediaPlayer *AcceptSound;
+    QAudioOutput *AcceptAudio;
+
+    QMediaPlayer *buttonSound;
+    QAudioOutput *buttonAudio;
+
+    QMediaPlayer *OpenMenuSound;
+    QAudioOutput *OpenMenuAudio;
+
+    QMediaPlayer *SelectSound;
+    QAudioOutput *SelectAudio;
+
+    void playButtonSound();
+    void playOpenMenuSound();
+    void playSelectSound();
+    void playAcceptSound();
+
+
 };
 
 #endif // ANALYSIS_H

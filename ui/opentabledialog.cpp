@@ -1,6 +1,7 @@
 #include "opentabledialog.h"
 #include "ui_opentabledialog.h"
 #include <QMessageBox>
+//#include <Qtimer>
 
 OpenTableDialog::OpenTableDialog(QWidget *parent)
     : QDialog(parent)
@@ -12,6 +13,7 @@ OpenTableDialog::OpenTableDialog(QWidget *parent)
     connect(ui->two, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
     connect(ui->three, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
     connect(ui->four, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
+
 }
 
 OpenTableDialog::~OpenTableDialog()
@@ -38,9 +40,11 @@ void OpenTableDialog::on_buttonBox_accepted()
 
     }
     this->close();
+    //QTimer::singleShot(300, this, &OpenTableDialog::close);
 }
 
 void OpenTableDialog::on_buttonBox_rejected() //cansel
 {
     this->close();
+    //QTimer::singleShot(300, this, &OpenTableDialog::close);
 }

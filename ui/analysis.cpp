@@ -21,12 +21,74 @@ analysis::analysis(QWidget *parent)
     this->setWindowTitle("Analysis");
     startUI_setup();
     Show_Chart();
+
+    AcceptSound = new QMediaPlayer(this);
+    AcceptAudio = new QAudioOutput(this);
+    AcceptSound->setAudioOutput(AcceptAudio);
+    AcceptSound->setSource(QUrl("qrc:/Sounds/Accept.mp3"));
+
+    buttonSound = new QMediaPlayer(this);
+    buttonAudio = new QAudioOutput(this);
+    buttonSound->setAudioOutput(buttonAudio);
+    buttonSound->setSource(QUrl("qrc:/Sounds/Button.mp3"));
+
+    OpenMenuSound = new QMediaPlayer(this);
+    OpenMenuAudio = new QAudioOutput(this);
+    OpenMenuSound->setAudioOutput(OpenMenuAudio);
+    OpenMenuSound->setSource(QUrl("qrc:/Sounds/OpenCombobox.mp3"));
+
+    SelectSound = new QMediaPlayer(this);
+    SelectAudio = new QAudioOutput(this);
+    SelectSound->setAudioOutput(SelectAudio);
+    SelectSound->setSource(QUrl("qrc:/Sounds/Combobox_click.mp3"));
+
+    connect(ui->comboBox_search_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
+    connect(ui->comboBox_search_mode, &QComboBox::activated, this, &analysis::playSelectSound);
+    connect(ui->comboBox_Scale_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
+    connect(ui->comboBox_Scale_mode, &QComboBox::activated, this, &analysis::playSelectSound);
 }
 
 analysis::~analysis()
 {
     CloseUI();
     delete ui;
+}
+
+//=================== sound =====================//
+void analysis::playAcceptSound()
+{
+    if (AcceptSound->playbackState() == QMediaPlayer::PlayingState) {
+        AcceptSound->setPosition(0);
+    } else {
+        AcceptSound->play();
+    }
+}
+
+void analysis::playButtonSound()
+{
+    if (buttonSound->playbackState() == QMediaPlayer::PlayingState) {
+        buttonSound->setPosition(0);
+    } else {
+        buttonSound->play();
+    }
+}
+
+void analysis::playSelectSound()
+{
+    if (SelectSound->playbackState() == QMediaPlayer::PlayingState) {
+        SelectSound->setPosition(0);
+    } else {
+        SelectSound->play();
+    }
+}
+
+void analysis::playOpenMenuSound()
+{
+    if (OpenMenuSound->playbackState() == QMediaPlayer::PlayingState) {
+        OpenMenuSound->setPosition(0);
+    } else {
+        OpenMenuSound->play();
+    }
 }
 
 //=================== struct =====================//
@@ -453,6 +515,7 @@ void analysis::on_calendar_end_date_selectionChanged()
 
 void analysis::on_Refresh_clicked()
 {
+    playButtonSound();
     Refresh_calendar();
     Refresh_calendar(); // ต้องมีสองอันเนื่องจากเมื่ออันแรกเปลี่ยนหน้าแล้วถ้าให้ mode : moth และ year อยู่จะทำให้ on_calendar_start_date_currentPageChanged(int year, int month)
                         // ทำงานและเปลี่ยนเป็นวันที่ 1 จึงต้อง Refresh_calendar(); อีกครั้งเพื่อให้วันที่ถูดต้อง
@@ -924,6 +987,7 @@ void analysis::Show_Chart()
 
 void analysis::on_accept_clicked()
 {
+    playAcceptSound();
     Show_Chart();
     Summary();
 
