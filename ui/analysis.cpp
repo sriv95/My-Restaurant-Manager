@@ -22,6 +22,8 @@ analysis::analysis(QWidget *parent)
     startUI_setup();
     Show_Chart();
 
+
+    // ส่วนของการเล่นเสียงเมื่อมีการกดปุ่ม//
     AcceptSound = new QMediaPlayer(this);
     AcceptAudio = new QAudioOutput(this);
     AcceptSound->setAudioOutput(AcceptAudio);
@@ -46,6 +48,7 @@ analysis::analysis(QWidget *parent)
     connect(ui->comboBox_search_mode, &QComboBox::activated, this, &analysis::playSelectSound);
     connect(ui->comboBox_Scale_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
     connect(ui->comboBox_Scale_mode, &QComboBox::activated, this, &analysis::playSelectSound);
+    // ส่วนของการเล่นเสียงเมื่อมีการกดปุ่ม//
 }
 
 analysis::~analysis()
@@ -90,6 +93,11 @@ void analysis::playOpenMenuSound()
         OpenMenuSound->play();
     }
 }
+//=================== sound =====================//
+
+
+
+//vvvvvvvvvvvvvvvvvvvv------- Analysis -------vvvvvvvvvvvvvvvvvvvv//
 
 //=================== struct =====================//
 
@@ -137,38 +145,38 @@ QChartView *chartView;
 
 void analysis::startUI_setup()
 {
-    chartView = 0;
-    Refresh_calendar();
+    chartView = 0; // chartView เป็นตัวแสดงกราฟ pointer ตั้งให้เป็น 0 คือกราฟยังไม่ถูกสร้าง
+    Refresh_calendar(); // ทำการ Refresh ปฏิทินทั้งสองตัว
 
-    ui->calendar_start_date->setEnabled(false);
-    ui->calendar_end_date->setEnabled(false);
+    ui->calendar_start_date->setEnabled(false); // ตั้งไม้ให้เลือกวันในปฏิทินเริ่มต้นได้
+    ui->calendar_end_date->setEnabled(false); // ตั้งไม้ให้เลือกวันในปฏิทินสิ้นสุดได้
 
-    ui->NO_DATA->hide();
+    ui->NO_DATA->hide(); // ซ่อนข้อความว่า "NO DATA"
 
-    getData(menus , "Menus");
-    getData(statement , "Statement");
-
-    //========================================//
-
-    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-
-    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    getData(menus , "Menus"); // ดึงข้อมูลเมนูจากไฟล์ json key "Menus" มาไว้ที่ตัวแปร menus
+    getData(statement , "Statement"); // ดึงข้อมูลเมนูจากไฟล์ json key "Statement" มาไว้ที่ตัวแปร statement
 
     //========================================//
 
-    for (unsigned int i = 0 ; i < menus.size() ; i++)
+    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // ทำให้ตาราง Top_Dished column 0 ขยายตามขนาดของข้อความ
+    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents); // ทำให้ตาราง Top_Dished column 1 ขยายตามขนาดของข้อความ
+
+    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // ทำให้ตาราง Top_Drinks column 0 ขยายตามขนาดของข้อความ
+    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents); // ทำให้ตาราง Top_Drinks column 1 ขยายตามขนาดของข้อความ
+
+    //========================================//
+
+    for (unsigned int i = 0 ; i < menus.size() ; i++) // วนลูปเพื่อเก็บชื่อเมนูอาหารทั้งหมดมาไว้ใน all_Dishes_name และเมนูเครื่องดื่มทั้งหมดมาไว้ใน all_Drinks_name
     {
         if (menus[i][2] == "Dishes") all_Dishes_name.push_back(menus[i][0]);
         else if (menus[i][2] == "Drinks") all_Drinks_name.push_back(menus[i][0]);
     }
 
-    template_Dishes.name = all_Dishes_name;
-    for(unsigned int i = 0 ; i < all_Dishes_name.size() ; i++) template_Dishes.amount.push_back(0);
+    template_Dishes.name = all_Dishes_name; // กำหนดชื่อเมนูอาหารทั้งหมดให้กับ template_Dishes
+    for(unsigned int i = 0 ; i < all_Dishes_name.size() ; i++) template_Dishes.amount.push_back(0); // กำหนดจำนวนเมนูอาหารทั้งหมดให้กับ template_Dishes ให้เป็น 0
 
-    template_Drinks.name = all_Drinks_name;
-    for(unsigned int i = 0 ; i < all_Drinks_name.size() ; i++) template_Drinks.amount.push_back(0);
+    template_Drinks.name = all_Drinks_name; // กำหนดชื่อเมนูเครื่องดื่มทั้งหมดให้กับ template_Drinks
+    for(unsigned int i = 0 ; i < all_Drinks_name.size() ; i++) template_Drinks.amount.push_back(0); // กำหนดจำนวนเมนูเครื่องดื่มทั้งหมดให้กับ template_Drinks ให้เป็น 0
 
     // qDebug() << "template_Dishes";
     // for (int i = 0 ; i < template_Dishes.name.size() ; i++)
@@ -184,7 +192,7 @@ void analysis::startUI_setup()
 
     //========================================//
 
-    for (unsigned int i = 0 ; i < statement.size() ; i++)
+    for (unsigned int i = 0 ; i < statement.size() ; i++) //อ่านข้อมูลจาก statement และนำข้อมูลมาเก็บไว้ในตัวแปร chartData_income , chartData_expenses , chartData_Date , Dishes_data , Drinks_data
     {
         QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]);
         QDateTime Date_ = QDateTime::fromString(String_DateTime , "dd-MM-yyyy HH:mm:ss.zzz"); // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
@@ -201,7 +209,7 @@ void analysis::startUI_setup()
             if (statement[i][2] >= 0) chartData_income[newindex] += abs(double(statement[i][2]));
             else chartData_expenses[newindex] += abs(double(statement[i][2]));
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน chartData_Date , chartData_income , chartData_expenses ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
             Dishes_data.push_back(template_Dishes);
             Drinks_data.push_back(template_Drinks);
@@ -222,7 +230,7 @@ void analysis::startUI_setup()
                     Drinks_data[newindex].amount[index_menus] += amount_menu_i;
                 }
             }
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน Dishes_data , Drinks_data ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
         }
         else
         {
@@ -231,7 +239,7 @@ void analysis::startUI_setup()
             if (statement[i][2] > 0) chartData_income[index] += abs(double(statement[i][2]));
             else chartData_expenses[index] += abs(double(statement[i][2]));
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน chartData_Date , chartData_income , chartData_expenses ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
             string name_menu_i = statement[i][0];
             int amount_menu_i = statement[i][1];
@@ -249,12 +257,12 @@ void analysis::startUI_setup()
                     Drinks_data[index].amount[index_menus] += amount_menu_i;
                 }
             }
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน Dishes_data , Drinks_data ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
         }
     }
 
     //===================================================================//
-
+    // ทำการเรียงข้อมูลหใหม่ ให้เรียงตามวันเวลา เพื่อกันข้อมูลใน statement มีข้อผิดพลาดในการเรียงลำดับเวลา //
     vector<QDateTime> unSort_chartData_Date = ::chartData_Date;
     std::sort(chartData_Date.begin() , chartData_Date.end());
     vector<unsigned int> sorted_index;
@@ -313,7 +321,7 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-
+    // ข้อมูลที่เก็บไปก่อนหน้าจะเก็บข้อมูลละเอียดระดับ ms แต่ตอนแสดงกราฟหากมีข้อมูลมากเกินไปจะดูยาก จึงต้อง scale ความละเอียดของข้อมูลลงเป็นระดับวันที่ //
     vector<QDateTime> Un_mergeData_chartData_Date_scaled_QDate;
 
     for (unsigned int i = 0 ; i < chartData_Date.size() ; i++)
@@ -353,11 +361,11 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-
+    // ตั้งให้ค่าเริ่มต้นของ search_mode เป็น search_mode ลำดับที่ 5 คือโหมด ALL //
     ui->comboBox_search_mode->setCurrentIndex(5);
 }
 
-
+// เนื่องจากมีการ stack กันของข้อมูลเมื่อ ปิด เปิด UI Analysis จึงต้องมีการลบข้อมูลเก่าออกกทุกครั้งที่มีการปิดหน้า UI//
 void analysis::CloseUI()
 {
     Dishes_data.clear();
