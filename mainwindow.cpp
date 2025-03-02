@@ -57,11 +57,11 @@ void SetPalette(bool darkmode_on){
 
 // AddPalettesMap("","#Window","#WindowText","#Base","#Text","#Button","#ButtonText","#Highlight","#HighlightedText","#Dark","#Mid","#AlternateBase");
 
-    AddPalettesMap("light","#f0f0f0","#000000","#ffffff","#000000","#f0f0f0","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
+    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#f0f0f0","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
 
     AddPalettesMap("Dark","#1e1e1e","#ffffff","#2d2d2d","#ffffff","#3c3c3c","#ffffff","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#3c3c3c");
 
-    AddPalettesMap("purple","#716cbf","#000000","#ccd6d8","#000000","#faab1d","#000000","#3ec387","#ffffff","#a0a0a0","#3e4096","#ffffff");
+    AddPalettesMap("Purple","#716cbf","#000000","#ccd6d8","#000000","#faab1d","#000000","#3ec387","#ffffff","#a0a0a0","#3e4096","#ffffff");
 
     AddPalettesMap("Red","#990000","#ffffff","#252728","#ffffff","#d98d16","#ffffff","#2a2979","#eba4a7","#a0a0a0","#a0a0a0","#3c3c3c");
 
@@ -76,7 +76,7 @@ void SetPalette(bool darkmode_on){
     QString theme;
     if(settings->value("theme").toString()!="") theme = settings->value("theme").toString();
     else {
-        if(darkmode_on == false) theme="light"; //Default Light mode
+        if(darkmode_on == false) theme="Light"; //Default Light mode
         else theme="Dark"; //Default Dark mode
     }
 
