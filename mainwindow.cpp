@@ -35,39 +35,49 @@ bool isDarkMode() {
     return isDarkMode;
 }
 
-void AddPalettesMap(QString ThemeName,QString Window,QString WindowText,QString Base,QString Text,QString Button,QString ButtonText,QString Highlight,QString HighlightedText){
+void AddPalettesMap(QString ThemeName,QString Window,QString WindowText,QString Base,QString Text,QString Button,QString ButtonText,QString Highlight,QString HighlightedText,QString Dark,QString Mid,QString AlternateBase){
     QPalette Palette;
     Palette.setColor(QPalette::Window, QColor(Window));
-    Palette.setColor(QPalette::WindowText, QColor(WindowText));
+    Palette.setColor(QPalette::WindowText, QColor(WindowText)); //label
     Palette.setColor(QPalette::Base, QColor(Base));
-    Palette.setColor(QPalette::Text, QColor(Text)); //สีโทนมืดเท่านั้น
+    Palette.setColor(QPalette::Text, QColor(Text)); // สีตัวหนังสือทั่วไปใน Base
     Palette.setColor(QPalette::Button, QColor(Button));
     Palette.setColor(QPalette::ButtonText, QColor(ButtonText));
     Palette.setColor(QPalette::Highlight, QColor(Highlight));
     Palette.setColor(QPalette::HighlightedText, QColor(HighlightedText));
+    Palette.setColor(QPalette::Dark, QColor(Dark)); // ตัวหนังสืออ่อนของปฎิทิน
+    Palette.setColor(QPalette::Mid, QColor(Mid)); // สีขอบ
+    Palette.setColor(QPalette::AlternateBase, QColor(AlternateBase)); //หัวแถวปฎิทิน
     PalettesMap[ThemeName] = Palette;
 }
 
 void SetPalette(bool darkmode_on){
-    AddPalettesMap("Dark","#381136","#ffffff","#ad7b07","#000000","#f77e28","#ffffff","#d9d9d9","#000000");
 
-    AddPalettesMap("Red","#350a0e","#e9c5b5","#3c3c3c","#ffffff","#e1bb3e","#350a0e","#ffffff","#000000");
 
-    AddPalettesMap("CMU","#6b69b1","#000000","#ccd6d8","#000000","#faab1d","#000000","#faab1d","#000000");
 
-    AddPalettesMap("Light","#fe90f8","#ffffff","#f77e28","#000000","#fe90f8","#6b69b1","#ffffff","#000000");
+// AddPalettesMap("","#Window","#WindowText","#Base","#Text","#Button","#ButtonText","#Highlight","#HighlightedText","#Dark","#Mid","#AlternateBase");
 
-    AddPalettesMap("Orange","#d9531e","#442c1d","#fae0c3","#000000","#d9531e","#ffffff","#","#");
+    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#f0f0f0","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
 
-    AddPalettesMap("Mule","#943D2C","#ffffff","#dfd0bb","#474344","#CC7952","#E5BD77","#474344","#CC7952");
+    AddPalettesMap("Dark","#1e1e1e","#ffffff","#2d2d2d","#ffffff","#3c3c3c","#ffffff","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#3c3c3c");
+
+    AddPalettesMap("Purple","#716cbf","#000000","#ccd6d8","#000000","#faab1d","#000000","#3ec387","#ffffff","#a0a0a0","#3e4096","#ffffff");
+
+    AddPalettesMap("Red","#990000","#ffffff","#252728","#ffffff","#d98d16","#ffffff","#2a2979","#eba4a7","#a0a0a0","#a0a0a0","#3c3c3c");
+
+    AddPalettesMap("Green","#00b39b","#ffffff","#263331","#ffffff","#394241","#00b39b","#4e3b99","#ffffff","#a0a0a0","#00e696","#3c3c3c");
+
+    AddPalettesMap("Mule","#943D2C","#000000","#dfd0bb","#474344","#CC7952","#E5BD77","#474344","#CC7952","#a0a0a0","#a0a0a0","#ffffff");
+
+    //AddPalettesMap("Red2","#350a0e","#e9c5b5","#3c3c3c","#ffffff","#e1bb3e","#350a0e","#ffffff","#000000","#a0a0a0","#a0a0a0","#3c3c3c");
 
     // AddPalettesMap("","#","#","#","#","#","#","#","#");
 
     QString theme;
     if(settings->value("theme").toString()!="") theme = settings->value("theme").toString();
     else {
-        if(darkmode_on == false) theme="Red"; //Default Light mode
-        else theme="CMU"; //Default Dark mode
+        if(darkmode_on == false) theme="Light"; //Default Light mode
+        else theme="Dark"; //Default Dark mode
     }
 
     settings->setValue("theme",theme); //save to config
