@@ -22,6 +22,8 @@ analysis::analysis(QWidget *parent)
     startUI_setup();
     Show_Chart();
 
+
+    // ส่วนของการเล่นเสียงเมื่อมีการกดปุ่ม//
     AcceptSound = new QMediaPlayer(this);
     AcceptAudio = new QAudioOutput(this);
     AcceptSound->setAudioOutput(AcceptAudio);
@@ -46,6 +48,7 @@ analysis::analysis(QWidget *parent)
     connect(ui->comboBox_search_mode, &QComboBox::activated, this, &analysis::playSelectSound);
     connect(ui->comboBox_Scale_mode, &QComboBox::showPopup, this, &analysis::playOpenMenuSound);
     connect(ui->comboBox_Scale_mode, &QComboBox::activated, this, &analysis::playSelectSound);
+    // ส่วนของการเล่นเสียงเมื่อมีการกดปุ่ม//
 }
 
 analysis::~analysis()
@@ -90,8 +93,12 @@ void analysis::playOpenMenuSound()
         OpenMenuSound->play();
     }
 }
+//=================== sound =====================//
 
-//=================== struct =====================//
+
+
+//vvvvvvvvvvvvvvvvvvvv------- Analysis -------vvvvvvvvvvvvvvvvvvvv//
+//============================ struct ============================//
 
 struct Dishes
 {
@@ -137,38 +144,38 @@ QChartView *chartView;
 
 void analysis::startUI_setup()
 {
-    chartView = 0;
-    Refresh_calendar();
+    chartView = 0; // chartView เป็นตัวแสดงกราฟ pointer ตั้งให้เป็น 0 คือกราฟยังไม่ถูกสร้าง
+    Refresh_calendar(); // ทำการ Refresh ปฏิทินทั้งสองตัว
 
-    ui->calendar_start_date->setEnabled(false);
-    ui->calendar_end_date->setEnabled(false);
+    ui->calendar_start_date->setEnabled(false); // ตั้งไม้ให้เลือกวันในปฏิทินเริ่มต้นได้
+    ui->calendar_end_date->setEnabled(false); // ตั้งไม้ให้เลือกวันในปฏิทินสิ้นสุดได้
 
-    ui->NO_DATA->hide();
+    ui->NO_DATA->hide(); // ซ่อนข้อความว่า "NO DATA"
 
-    getData(menus , "Menus");
-    getData(statement , "Statement");
-
-    //========================================//
-
-    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-
-    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    getData(menus , "Menus"); // ดึงข้อมูลเมนูจากไฟล์ json key "Menus" มาไว้ที่ตัวแปร menus
+    getData(statement , "Statement"); // ดึงข้อมูลเมนูจากไฟล์ json key "Statement" มาไว้ที่ตัวแปร statement
 
     //========================================//
 
-    for (unsigned int i = 0 ; i < menus.size() ; i++)
+    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // ทำให้ตาราง Top_Dished column 0 ขยายตามขนาดของข้อความ
+    ui->Top_Dished->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents); // ทำให้ตาราง Top_Dished column 1 ขยายตามขนาดของข้อความ
+
+    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // ทำให้ตาราง Top_Drinks column 0 ขยายตามขนาดของข้อความ
+    ui->Top_Drinks->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents); // ทำให้ตาราง Top_Drinks column 1 ขยายตามขนาดของข้อความ
+
+    //========================================//
+
+    for (unsigned int i = 0 ; i < menus.size() ; i++) // วนลูปเพื่อเก็บชื่อเมนูอาหารทั้งหมดมาไว้ใน all_Dishes_name และเมนูเครื่องดื่มทั้งหมดมาไว้ใน all_Drinks_name
     {
         if (menus[i][2] == "Dishes") all_Dishes_name.push_back(menus[i][0]);
         else if (menus[i][2] == "Drinks") all_Drinks_name.push_back(menus[i][0]);
     }
 
-    template_Dishes.name = all_Dishes_name;
-    for(unsigned int i = 0 ; i < all_Dishes_name.size() ; i++) template_Dishes.amount.push_back(0);
+    template_Dishes.name = all_Dishes_name; // กำหนดชื่อเมนูอาหารทั้งหมดให้กับ template_Dishes
+    for(unsigned int i = 0 ; i < all_Dishes_name.size() ; i++) template_Dishes.amount.push_back(0); // กำหนดจำนวนเมนูอาหารทั้งหมดให้กับ template_Dishes ให้เป็น 0
 
-    template_Drinks.name = all_Drinks_name;
-    for(unsigned int i = 0 ; i < all_Drinks_name.size() ; i++) template_Drinks.amount.push_back(0);
+    template_Drinks.name = all_Drinks_name; // กำหนดชื่อเมนูเครื่องดื่มทั้งหมดให้กับ template_Drinks
+    for(unsigned int i = 0 ; i < all_Drinks_name.size() ; i++) template_Drinks.amount.push_back(0); // กำหนดจำนวนเมนูเครื่องดื่มทั้งหมดให้กับ template_Drinks ให้เป็น 0
 
     // qDebug() << "template_Dishes";
     // for (int i = 0 ; i < template_Dishes.name.size() ; i++)
@@ -183,91 +190,92 @@ void analysis::startUI_setup()
     // }
 
     //========================================//
-
-    for (unsigned int i = 0 ; i < statement.size() ; i++)
+    //อ่านข้อมูลจาก statement และนำข้อมูลมาเก็บไว้ในตัวแปร chartData_income , chartData_expenses , chartData_Date , Dishes_data , Drinks_data
+    for (unsigned int i = 0 ; i < statement.size() ; i++) 
     {
-        QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]);
+        QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]); //แปลงข้อมูลวันเวลาจาก statement ให้เป็น QString เพื่อเอาไปแปลงเป็น QDateTime
         QDateTime Date_ = QDateTime::fromString(String_DateTime , "dd-MM-yyyy HH:mm:ss.zzz"); // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
 
-        auto it = std::find(chartData_Date.begin(), chartData_Date.end(), Date_);
-        if (it == chartData_Date.end())
+        auto it = std::find(chartData_Date.begin(), chartData_Date.end(), Date_); // หาว่าวันที่นี้มีข้อมูลอยู่แล้วหรือยัง
+        if (it == chartData_Date.end()) // ถ้าไม่มีจะ == chartData_Date.end() หรือตัวสุดท้าย+1 
         {
-            chartData_Date.push_back(Date_);
-            chartData_income.push_back(0);
-            chartData_expenses.push_back(0);
+            chartData_Date.push_back(Date_); // ทำการเก็บวันที่ลงไปใน chartData_Date
+            chartData_income.push_back(0); // ทำการเก็บรายได้ลงไปใน chartData_income โดยเริ่มต้นเป็น 0
+            chartData_expenses.push_back(0); // ทำการเก็บรายจ่ายลงไปใน chartData_expenses โดยเริ่มต้นเป็น 0
 
-            int newindex = chartData_Date.size() - 1;
+            int newindex = chartData_Date.size() - 1; // หา index ของวันที่ที่เพิ่มเข้ามาใหม่
 
-            if (statement[i][2] >= 0) chartData_income[newindex] += abs(double(statement[i][2]));
-            else chartData_expenses[newindex] += abs(double(statement[i][2]));
+            if (statement[i][2] >= 0) chartData_income[newindex] += abs(double(statement[i][2])); // ถ้าจำนวนเงินมากกว่าหรือเท่ากับ 0 ให้เก็บข้อมูลรายได้ไว้ใน chartData_income (รายรับ)
+            else chartData_expenses[newindex] += abs(double(statement[i][2])); // ถ้าจำนวนเงินน้อยกว่า 0 ให้เก็บข้อมูลรายจ่ายไว้ใน chartData_expenses (รายจ่าย)
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน chartData_Date , chartData_income , chartData_expenses ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
-            Dishes_data.push_back(template_Dishes);
-            Drinks_data.push_back(template_Drinks);
+            Dishes_data.push_back(template_Dishes); // ทำการเก็บข้อมูลเมนูอาหารที่ว่างไว้ไว้ใน Dishes_data
+            Drinks_data.push_back(template_Drinks); // ทำการเก็บข้อมูลเมนูเครื่องดื่มที่ว่างไว้ไว้ใน Drinks_data
 
-            string name_menu_i = statement[i][0];
-            int amount_menu_i = statement[i][1];
+            string name_menu_i = statement[i][0]; // เก็บชื่อเมนูที่เพิ่มเข้ามา
+            int amount_menu_i = statement[i][1]; // เก็บจำนวนเมนูที่เพิ่มเข้ามา
 
-            if (statement[i][2] >= 0)
+            if (statement[i][2] >= 0) // ให้ทำงานเมื่อเป็นรายรับ คือมีการสั่งอาหาร
             {
-                if (std::find(Dishes_data[newindex].name.begin() , Dishes_data[newindex].name.end() , name_menu_i) != Dishes_data[newindex].name.end())
+                if (std::find(Dishes_data[newindex].name.begin() , Dishes_data[newindex].name.end() , name_menu_i) != Dishes_data[newindex].name.end()) // หาว่าชื่อเมนูอาหารนี้มีอยู่ใน Dishes_data หรือไม่ ถ้าไม่แปลว่าเป็นเมนูเครื่องดื่มแล้วให้รัน else
                 {
-                    int index_menus = std::distance(Dishes_data[newindex].name.begin() , std::find(Dishes_data[newindex].name.begin() , Dishes_data[newindex].name.end() , name_menu_i));
-                    Dishes_data[newindex].amount[index_menus] += amount_menu_i;
+                    int index_menus = std::distance(Dishes_data[newindex].name.begin() , std::find(Dishes_data[newindex].name.begin() , Dishes_data[newindex].name.end() , name_menu_i)); // หา index ของเมนูอาหารนี้
+                    Dishes_data[newindex].amount[index_menus] += amount_menu_i; // เพิ่มจำนวนเมนูอาหารนี้
                 }
                 else
                 {
-                    int index_menus = std::distance(Drinks_data[newindex].name.begin() , std::find(Drinks_data[newindex].name.begin() , Drinks_data[newindex].name.end() , name_menu_i));
-                    Drinks_data[newindex].amount[index_menus] += amount_menu_i;
+                    int index_menus = std::distance(Drinks_data[newindex].name.begin() , std::find(Drinks_data[newindex].name.begin() , Drinks_data[newindex].name.end() , name_menu_i)); // หา index ของเมนูเครื่องดื่มนี้
+                    Drinks_data[newindex].amount[index_menus] += amount_menu_i; // เพิ่มจำนวนเมนูเครื่องดื่มนี้
                 }
             }
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน Dishes_data , Drinks_data ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
         }
-        else
+        else // ถ้าเจอว่ามีข้อมูลเวลานั้นอยู่แล้ว หรือเป็นวันเวลาที่เคยเก็บข้อมูลไปแล้ว ให้ทำตามคำสั่งนี้
         {
-            int index = std::distance(chartData_Date.begin() , it);
+            int index = std::distance(chartData_Date.begin() , it); // หา index ของวันที่นั้น
 
-            if (statement[i][2] > 0) chartData_income[index] += abs(double(statement[i][2]));
-            else chartData_expenses[index] += abs(double(statement[i][2]));
+            if (statement[i][2] > 0) chartData_income[index] += abs(double(statement[i][2])); // ถ้าจำนวนเงินมากกว่า 0 ให้เก็บข้อมูลรายได้ไว้ใน chartData_income (รายรับ)
+            else chartData_expenses[index] += abs(double(statement[i][2])); // ถ้าจำนวนเงินน้อยกว่าหรือเท่ากับ 0 ให้เก็บข้อมูลรายจ่ายไว้ใน chartData_expenses (รายจ่าย)
 
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน chartData_Date , chartData_income , chartData_expenses ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
 
-            string name_menu_i = statement[i][0];
-            int amount_menu_i = statement[i][1];
+            string name_menu_i = statement[i][0]; // เก็บชื่อเมนูที่เพิ่มเข้ามา
+            int amount_menu_i = statement[i][1]; // เก็บจำนวนเมนูที่เพิ่มเข้ามา
 
-            if (statement[i][2] >= 0)
+            if (statement[i][2] >= 0) // ให้ทำงานเมื่อเป็นรายรับ คือมีการสั่งอาหาร
             {
-                if (std::find(Dishes_data[index].name.begin() , Dishes_data[index].name.end() , name_menu_i) != Dishes_data[index].name.end())
+                if (std::find(Dishes_data[index].name.begin() , Dishes_data[index].name.end() , name_menu_i) != Dishes_data[index].name.end()) // หาว่าชื่อเมนูอาหารนี้มีอยู่ใน Dishes_data หรือไม่ ถ้าไม่แปลว่าเป็นเมนูเครื่องดื่มแล้วให้รัน else
                 {
-                    int index_menus = std::distance(Dishes_data[index].name.begin() , std::find(Dishes_data[index].name.begin() , Dishes_data[index].name.end() , name_menu_i));
-                    Dishes_data[index].amount[index_menus] += amount_menu_i;
+                    int index_menus = std::distance(Dishes_data[index].name.begin() , std::find(Dishes_data[index].name.begin() , Dishes_data[index].name.end() , name_menu_i)); // หา index ของเมนูอาหารนี้
+                    Dishes_data[index].amount[index_menus] += amount_menu_i; // เพิ่มจำนวนเมนูอาหารนี้
                 }
                 else
                 {
-                    int index_menus = std::distance(Drinks_data[index].name.begin() , std::find(Drinks_data[index].name.begin() , Drinks_data[index].name.end() , name_menu_i));
-                    Drinks_data[index].amount[index_menus] += amount_menu_i;
+                    int index_menus = std::distance(Drinks_data[index].name.begin() , std::find(Drinks_data[index].name.begin() , Drinks_data[index].name.end() , name_menu_i)); // หา index ของเมนูเครื่องดื่มนี้
+                    Drinks_data[index].amount[index_menus] += amount_menu_i; // เพิ่มจำนวนเมนูเครื่องดื่มนี้
                 }
             }
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+            //^^^^^^^^^^^^^^^^^^^^^^^^ ส่วนของการเก็บข้อมูลมาไว้ใน Dishes_data , Drinks_data ^^^^^^^^^^^^^^^^^^^^^^^^^^^//
         }
     }
 
     //===================================================================//
+    // ทำการเรียงข้อมูลหใหม่ ให้เรียงตามวันเวลา เพื่อกันข้อมูลใน statement มีข้อผิดพลาดในการเรียงลำดับเวลา //
+    vector<QDateTime> unSort_chartData_Date = ::chartData_Date; // ทำการเก็บข้อมูล chartData_Date ไว้ใน unSort_chartData_Date
+    std::sort(chartData_Date.begin() , chartData_Date.end()); // เรียงข้อมูลใน chartData_Date ใหม่
+    vector<unsigned int> sorted_index; // สร้าง vector ไว้เก็บ index ของข้อมูลที่เรียงแล้ว
 
-    vector<QDateTime> unSort_chartData_Date = ::chartData_Date;
-    std::sort(chartData_Date.begin() , chartData_Date.end());
-    vector<unsigned int> sorted_index;
-
-    for (unsigned int i = 0 ; i < unSort_chartData_Date.size() ; i++)
+    for (unsigned int i = 0 ; i < unSort_chartData_Date.size() ; i++) // วนลูปเพื่อเรียงข้อมูลใหม่
     {
-        if (std::find(sorted_index.begin() , sorted_index.end() , i) != sorted_index.end()) continue;
+        if (std::find(sorted_index.begin() , sorted_index.end() , i) != sorted_index.end()) continue; // ถ้า index นี้เคยเรียงแล้วให้ข้ามไป
 
-        unsigned int chnaged_index = std::distance(chartData_Date.begin() , std::find(chartData_Date.begin() , chartData_Date.end() , unSort_chartData_Date[i]));
-        if (chnaged_index != i)
+        unsigned int chnaged_index = std::distance(chartData_Date.begin() , std::find(chartData_Date.begin() , chartData_Date.end() , unSort_chartData_Date[i])); // หา index ว่าข้อมูลที่เรียงแล้วไปอยู่ตรงไหน
+        if (chnaged_index != i) // ถ้า index ที่เรียงแล้วไม่ได้อยู่ตรงกับ index ก่อนหน้า ให้ทำการสลับข้อมูล
         {
             // qDebug() << QString::number(chnaged_index);
 
+            // สลับข้อมูลของ chartData_income , chartData_expenses ตามวันที่ที่เรียงแล้วก่อนหน้า
             double swap_income_data = chartData_income[chnaged_index];
             chartData_income[chnaged_index] = chartData_income[i];
             chartData_income[i] = swap_income_data;
@@ -277,7 +285,7 @@ void analysis::startUI_setup()
             chartData_expenses[i] = swap_expenses_data;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-
+            // สลับข้อมูลของ Dishes_data , Drinks_data ตามวันที่ที่เรียงแล้วก่อนหน้า
             Dishes swap_Dishes_data = Dishes_data[chnaged_index];
             Dishes_data[chnaged_index] = Dishes_data[i];
             Dishes_data[i] = swap_Dishes_data;
@@ -287,7 +295,8 @@ void analysis::startUI_setup()
             Drinks_data[i] = swap_Drinks_data;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-
+            
+            // เก็บ index ที่เรียงแล้วไว้
             sorted_index.push_back(i);
             sorted_index.push_back(chnaged_index);
         }
@@ -313,37 +322,37 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-
+    // ข้อมูลที่เก็บไปก่อนหน้าจะเก็บข้อมูลละเอียดระดับ ms แต่ตอนแสดงกราฟหากมีข้อมูลมากเกินไปจะดูยาก จึงต้อง scale ความละเอียดของข้อมูลลงเป็นระดับวันที่ //
     vector<QDateTime> Un_mergeData_chartData_Date_scaled_QDate;
 
-    for (unsigned int i = 0 ; i < chartData_Date.size() ; i++)
+    for (unsigned int i = 0 ; i < chartData_Date.size() ; i++) // ลูปเท่ากับขนาดของ chartData_Date
     {
-        Un_mergeData_chartData_Date_scaled_QDate.push_back(QDateTime(chartData_Date[i].date() , QTime(0,0,0,0)));
+        Un_mergeData_chartData_Date_scaled_QDate.push_back(QDateTime(chartData_Date[i].date() , QTime(0,0,0,0))); // ทำการเก็บข้อมูลวันที่ของ chartData_Date และตัดส่วนของเวลาออกให้เป็น 00:00:00.000 ไว้ใน Un_mergeData_chartData_Date_scaled_QDate
     }
 
-    for (unsigned int i = 0 ; i < Un_mergeData_chartData_Date_scaled_QDate.size() ; i++)
+    for (unsigned int i = 0 ; i < Un_mergeData_chartData_Date_scaled_QDate.size() ; i++) // ลูปเท่ากับขนาดของ Un_mergeData_chartData_Date_scaled_QDate
     {
         QDateTime Date_ = Un_mergeData_chartData_Date_scaled_QDate[i]; // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
-
-        auto it = std::find(chartData_Date_scaled_QDate.begin(), chartData_Date_scaled_QDate.end(), Date_);
-        if (it == chartData_Date_scaled_QDate.end())
+                                                                        // เอาข้อมูลวันที่จาก Un_mergeData_chartData_Date_scaled_QDate มาเก็บไว้ใน Date_
+        auto it = std::find(chartData_Date_scaled_QDate.begin(), chartData_Date_scaled_QDate.end(), Date_); // หาว่าวันที่นี้มีข้อมูลอยู่แล้วหรือยัง และเนื่องจากเราตัดส่วนของเวลา ออกไปแล้วข้อมูลที่ วันที่ตรงกันแต่เวลาไม่ตรงกันจะถือว่าเป็นข้อมูลเดียวกัน
+        if (it == chartData_Date_scaled_QDate.end()) // ถ้าไม่มีจะ == chartData_Date_scaled_QDate.end() หรือตัวสุดท้าย+1
         {
-            chartData_Date_scaled_QDate.push_back(Date_);
-            chartData_income_scaled_QDate.push_back(0);
-            chartData_expenses_scaled_QDate.push_back(0);
+            chartData_Date_scaled_QDate.push_back(Date_); // ทำการเก็บวันที่ลงไปใน chartData_Date_scaled_QDate
+            chartData_income_scaled_QDate.push_back(0); // ทำการเก็บรายได้ลงไปใน chartData_income_scaled_QDate โดยเริ่มต้นเป็น 0
+            chartData_expenses_scaled_QDate.push_back(0); // ทำการเก็บรายจ่ายลงไปใน chartData_expenses_scaled_QDate โดยเริ่มต้นเป็น 0
 
-            int newindex = chartData_Date_scaled_QDate.size() - 1;
+            int newindex = chartData_Date_scaled_QDate.size() - 1; // หา index ของวันที่ที่เพิ่มเข้ามาใหม่
 
-            chartData_income_scaled_QDate[newindex] += abs(double(chartData_income[i]));
-            chartData_expenses_scaled_QDate[newindex] += abs(double(chartData_expenses[i]));
+            chartData_income_scaled_QDate[newindex] += abs(double(chartData_income[i])); // ทำการเก็บข้อมูลรายได้ไว้ใน chartData_income_scaled_QDate (รายรับ)
+            chartData_expenses_scaled_QDate[newindex] += abs(double(chartData_expenses[i])); // ทำการเก็บข้อมูลรายจ่ายไว้ใน chartData_expenses_scaled_QDate (รายจ่าย)
 
         }
-        else
+        else // ถ้าเจอว่ามีข้อมูลเวลานั้นอยู่แล้ว หรือเป็นวันเวลาที่เคยเก็บข้อมูลไปแล้ว ให้ทำตามคำสั่งนี้
         {
-            int index = std::distance(chartData_Date_scaled_QDate.begin() , it);
+            int index = std::distance(chartData_Date_scaled_QDate.begin() , it); // หา index ของวันที่นั้น
 
-            chartData_income_scaled_QDate[index] += abs(double(chartData_income[i]));
-            chartData_expenses_scaled_QDate[index] += abs(double(chartData_expenses[i]));
+            chartData_income_scaled_QDate[index] += abs(double(chartData_income[i])); // ทำการเก็บข้อมูลรายได้ไว้ใน chartData_income_scaled_QDate (รายรับ)
+            chartData_expenses_scaled_QDate[index] += abs(double(chartData_expenses[i])); // ทำการเก็บข้อมูลรายจ่ายไว้ใน chartData_expenses_scaled_QDate (รายจ่าย)
         }
     }
 
@@ -353,12 +362,12 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-
-    ui->comboBox_search_mode->setCurrentIndex(5);
+    
+    ui->comboBox_search_mode->setCurrentIndex(5); // ตั้งให้ค่าเริ่มต้นของ search_mode เป็น search_mode ลำดับที่ 5 คือโหมด ALL //
 }
 
 
-void analysis::CloseUI()
+void analysis::CloseUI() // เนื่องจากมีการ stack กันของข้อมูลเมื่อ ปิด เปิด UI Analysis จึงต้องมีการลบข้อมูลเก่าออกกทุกครั้งที่มีการปิดหน้า UI//
 {
     Dishes_data.clear();
     Drinks_data.clear();
@@ -378,23 +387,23 @@ void analysis::CloseUI()
 }
 
 
-void analysis::Update_Selectable_and_Highlight_DateRange()
+void analysis::Update_Selectable_and_Highlight_DateRange() // function สำหรับ limit วันมากสุดและน้อยสุดที่เลือกได้ และทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้นและวันสิ้นสุด
 {
-    QDate startDate = ui->calendar_start_date->selectedDate();
-    QDate endDate = ui->calendar_end_date->selectedDate();
-    ui->calendar_start_date->setMaximumDate(endDate);
-    ui->calendar_end_date->setMinimumDate(startDate);
+    QDate startDate = ui->calendar_start_date->selectedDate(); // ดึงวันที่เริ่มต้นที่เลือกมา
+    QDate endDate = ui->calendar_end_date->selectedDate(); // ดึงวันที่สิ้นสุดที่เลือกมา
+    ui->calendar_start_date->setMaximumDate(endDate); // ตั้งให้วันที่เริ่มต้นสามารถเลือกได้มากสุดคือวันที่สิ้นสุด
+    ui->calendar_end_date->setMinimumDate(startDate); // ตั้งให้วันที่สิ้นสุดสามารถเลือกได้น้อยสุดคือวันที่เริ่มต้น
 
     // ลบ format เก่าทั้งหมดออก
-    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
+    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat()); 
     ui->calendar_end_date->setDateTextFormat(QDate(), QTextCharFormat());
 
     // สร้าง Format สำหรับไฮไลต์
     QTextCharFormat Highlight_Range_Format;
-    Highlight_Range_Format.setBackground(Qt::green);
-    Highlight_Range_Format.setForeground(Qt::black);
+    Highlight_Range_Format.setBackground(Qt::green); // ตั้งสีพื้นหลังเป็นสีเขียว
+    Highlight_Range_Format.setForeground(Qt::black); // ตั้งสีตัวอักษรเป็นสีดำ
 
-    for (QDate date = startDate.addDays(1) ; date <= endDate; date = date.addDays(1))
+    for (QDate date = startDate.addDays(1) ; date <= endDate; date = date.addDays(1)) // วนลูปเพื่อทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้นและวันที่สิ้นสุดทั้งสองปฏิทิน
     {
         ui->calendar_start_date->setDateTextFormat(date, Highlight_Range_Format);
         ui->calendar_end_date->setDateTextFormat(date.addDays(-1), Highlight_Range_Format);
@@ -837,7 +846,7 @@ void analysis::Show_Chart()
 
     Dot_series_expenses->setMarkerSize(10); // ตั้งค่าขนาดของจุด
     Dot_series_expenses->setColor(Qt::darkRed); // ตั้งค่าสีของจุด
-    Dot_series_expenses->setName("Dot-Expensese");
+    Dot_series_expenses->setName("Dot-Expenses");
 
     //==================================================================================//
 
