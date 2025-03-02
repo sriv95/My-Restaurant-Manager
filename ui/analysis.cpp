@@ -846,7 +846,7 @@ void analysis::Show_Chart()
 
     Dot_series_expenses->setMarkerSize(10); // ตั้งค่าขนาดของจุด
     Dot_series_expenses->setColor(Qt::darkRed); // ตั้งค่าสีของจุด
-    Dot_series_expenses->setName("Dot-Expensese");
+    Dot_series_expenses->setName("Dot-Expenses");
 
     //==================================================================================//
 
