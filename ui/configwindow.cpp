@@ -91,3 +91,9 @@ void configwindow::on_Reset_clicked()
     ui->fontComboBox->setCurrentText("Segoe UI");
 }
 
+
+void configwindow::on_comboBox_currentIndexChanged(int index)
+{
+    settings->setValue("gui_scale",index);
+}
+

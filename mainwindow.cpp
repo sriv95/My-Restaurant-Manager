@@ -698,8 +698,44 @@ void RestuarantManagement::on_Config_clicked()
     config->exec();
     QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
     QApplication::setFont(settings->value("font").value<QFont>());
+    int gui_scale = settings->value("gui_scale",0).toInt();
+    switch (gui_scale) {
+    case 0:
+        resize(1280,960);
+        break;
+    case 1:
+        resize(1024,768);
+        break;
+    case 2:
+        resize(922,692);
+        break;
+    }
 }
 
 void RestuarantManagement::on_Config_returnValue(const QString &data){
     ui.label->setText(data);
 }
+
+// void RestuarantManagement::resizeEvent(QResizeEvent *event){
+//     QSize newSize = event->size();
+
+//     int newWidth = newSize.width();
+//     int newHeight = newSize.height();
+
+//     int perScale = newWidth*100/1024;
+//     double Scale = perScale/100.0;
+
+//     int sizebutton = perScale;
+
+//     for(int i=1;i<=Table_Count;++i){
+//         QString btnName = QString("Table_").append(QString::number(i));
+//         QPushButton *button = this->findChild<QPushButton *>(btnName);
+
+
+//         if(button){
+//             button->setFixedSize(sizebutton,sizebutton);
+//             //button->setFont(font);
+//         }
+//         else  qDebug()<<"Error: Button Not Found (Button Name: "<<btnName<<")";
+//     }
+// }

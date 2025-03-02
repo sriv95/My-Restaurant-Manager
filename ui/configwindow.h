@@ -7,6 +7,7 @@
 #include <QNetworkReply>
 #include <QDesktopServices>
 #include <QSettings>
+#include <QResizeEvent>
 
 extern QSettings* settings;
 
@@ -31,6 +32,8 @@ private slots:
     void on_fontComboBox_currentFontChanged(const QFont &f);
 
     void on_Reset_clicked();
+
+    void on_comboBox_currentIndexChanged(int index);
 
 signals:
     void returnValue(const QString &data);

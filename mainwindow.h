@@ -68,6 +68,8 @@ private slots:
     void on_Config_clicked();
 
     void on_Config_returnValue(const QString &data);
+
+    // void resizeEvent(QResizeEvent *event) override;
 private:
 
     Ui::RestuarantManagementClass ui;
