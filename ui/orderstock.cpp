@@ -10,7 +10,7 @@ OrderStock::OrderStock(QWidget *parent)
     , ui(new Ui::OrderStock)
 {
     ui->setupUi(this);
-    setFixedSize(400,300);
+    setMaximumSize(400,300);
 
     getAllData(Data);
 

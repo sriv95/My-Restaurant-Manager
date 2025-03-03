@@ -7,7 +7,7 @@ reserve::reserve(int tableNo,QWidget *parent)
     : QDialog(parent), ui(new Ui::reserve)
 {
     ui->setupUi(this);
-    setFixedSize(389,430);
+    setMaximumSize(389,430);
 
     ui->TableNum->setText(QString::number(tableNo));
 

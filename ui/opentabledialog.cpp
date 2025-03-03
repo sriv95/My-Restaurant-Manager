@@ -8,7 +8,7 @@ OpenTableDialog::OpenTableDialog(QWidget *parent)
     , ui(new Ui::OpenTableDialog)
 {
     ui->setupUi(this);
-    setFixedSize(400,300);
+    setMaximumSize(400,300);
 
     connect(ui->one, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);
     connect(ui->two, &QPushButton::clicked, this, &OpenTableDialog::on_numBtn_clicked);

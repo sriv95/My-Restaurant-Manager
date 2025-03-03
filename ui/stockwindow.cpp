@@ -11,7 +11,7 @@ StockWindow::StockWindow(QWidget *parent)
     , ui(new Ui::StockWindow)
 {
     ui->setupUi(this);
-    setFixedSize(1073,787);
+    setMaximumSize(1073,787);
 
     ui->tableStocks->verticalHeader()->setVisible(false);
     ui->tableStocks->horizontalHeader()->setSortIndicatorShown(false);

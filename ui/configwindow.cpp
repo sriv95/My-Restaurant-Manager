@@ -13,7 +13,7 @@ configwindow::configwindow(QWidget *parent,QMap<QString,QPalette> Map)
 {
     ui->setupUi(this);
 
-    setFixedSize(400,300);
+    setMaximumSize(400,300);
     //Initial Settings
     currentVersion = settings->value("version").toString();
     currentTheme = settings->value("theme").toString();
