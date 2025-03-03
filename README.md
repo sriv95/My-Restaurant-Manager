@@ -347,8 +347,6 @@ Available via the `🔧` button on the top-right corner of the main UI.
     - `Theme` (choose from a list)
       
     - `Font` (editable; choose from a list)
-
-    - `Mute Sound Effect`: **Checkable box** to enable/disable sound effects.
     
     - ###### **Feature Buttons**:
       - `Reset To Default`: Restores all settings to their original state.
