@@ -67,7 +67,7 @@
         </item>
         <item>
          <property name="text">
-          <string>Not Scale</string>
+          <string>Un-Scale</string>
          </property>
         </item>
        </widget>

@@ -508,7 +508,7 @@ void analysis::on_calendar_start_date_selectionChanged() // เมื่อป�
 }
 
 
-void analysis::on_calendar_end_date_selectionChanged() // เมื่อปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีการเลือกวันที่ใหม่ // ที่เมื่อปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีเงื่อนไขสำหรับโหมดเดียวเพราะ ปฏิทินด้านขวาจะกดเลือกไม่ได้เลยถ้าหากไม่ได้อยู่ในโหมด range
+void analysis::on_calendar_end_date_selectionChanged() // เมื่อปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีการเลือกวันที่ใหม่ // ที่ปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีเงื่อนไขสำหรับโหมดเดียวเพราะ ปฏิทินด้านขวาจะกดเลือกไม่ได้เลยถ้าหากไม่ได้อยู่ในโหมด range
 {
     int searchmode = ui->comboBox_search_mode->currentIndex(); // ดึงค่าของ search_mode ที่เลือกมา
     if (searchmode == 0) // ถ้า search_mode ที่เลือกคือ 0 คือ โหมด range
@@ -568,7 +568,7 @@ void analysis::Refresh_calendar()
 }
 
 
-void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
+void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode) // function ที่จะทำงานเมื่อมีการเลือกโหมดการค้นหาใหม่
 {
     //Refresh_calendar // แต่ถ้าเป็นการเปลี่ยนโหมดจะไม่มีการเปลี่ยนวันที่ที่เลือกไปเป็นวันปัจจุบัน
     // ลบ format ทั้งหมดออก
@@ -580,31 +580,31 @@ void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
     case 0:
         ui->calendar_end_date->setSelectedDate(ui->calendar_start_date->selectedDate()); // ทำการเซ็ตวันที่สิ้นสุดให้เป็นวันที่เริ่มต้น
 
-        ui->calendar_start_date->setEnabled(true);
-        ui->calendar_end_date->setEnabled(true);
+        ui->calendar_start_date->setEnabled(true); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นสามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(true);  // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นสามารถใช้งานได้
         break;
     case 1:
-        ui->calendar_start_date->setEnabled(true);
-        ui->calendar_end_date->setEnabled(false);
+        ui->calendar_start_date->setEnabled(true); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นสามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นไม่สามารถใช้งานได้
         break;
     case 2:
-        ui->calendar_start_date->setEnabled(true);
-        ui->calendar_end_date->setEnabled(false);
-        Update_Highlight_Week();
+        ui->calendar_start_date->setEnabled(true); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นสามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นไม่สามารถใช้งานได้
+        Update_Highlight_Week(); // ทำการเรียก function Update_Highlight_Week() เพื่อทำการ highlight วันที่อยู่ในสัปดาห์นั้นๆ
         break;
     case 3:
-        ui->calendar_start_date->setEnabled(true);
-        ui->calendar_end_date->setEnabled(false);
-        Update_Highlight_Month();
+        ui->calendar_start_date->setEnabled(true); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นสามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นไม่สามารถใช้งานได้
+        Update_Highlight_Month(); // ทำการเรียก function Update_Highlight_Month() เพื่อทำการ highlight วันที่อยู่ในเดือนนั้นๆ
         break;
     case 4:
-        ui->calendar_start_date->setEnabled(true);
-        ui->calendar_end_date->setEnabled(false);
-        Update_Highlight_Year();
+        ui->calendar_start_date->setEnabled(true); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นสามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นไม่สามารถใช้งานได้
+        Update_Highlight_Year(); // ทำการเรียก function Update_Highlight_Year() เพื่อทำการ highlight วันที่อยู่ในปีนั้นๆ
         break;
     case 5:
-        ui->calendar_start_date->setEnabled(false);
-        ui->calendar_end_date->setEnabled(false);
+        ui->calendar_start_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่เริ่มต้นเป็นไม่สามารถใช้งานได้
+        ui->calendar_end_date->setEnabled(false); // ตั้งค่าให้ปฏิทินวันที่สิ้นสุดเป็นไม่สามารถใช้งานได้
         break;
     }
 
@@ -618,67 +618,67 @@ void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
 
 vector<QDate> analysis::Get_Week_Dates(QDate selected_Date)
 {
-    vector<QDate> week_Dates;
+    vector<QDate> week_Dates; // สร้าง vector ของ QDate ชื่อ week_Dates
 
     // หาววันแรกของสัปดา
     int day_Of_Week = selected_Date.dayOfWeek();  // 1 = จันทร์, 7 = อาทิตย์
-    QDate day_start_Of_Week = selected_Date.addDays(-(day_Of_Week - 1));
+    QDate day_start_Of_Week = selected_Date.addDays(-(day_Of_Week - 1)); // หาวันที่เริ่มต้นของสัปดาห์
 
     // เพิ่มวันทั้งอาทิตย์เข้า vector
-    for (int i = 0; i < 7; ++i)
+    for (int i = 0; i < 7; ++i) // วนลูป 7 รอบเพื่อเพิ่มวันทั้งสัปดาห์เข้า vector
     {
-        week_Dates.push_back(day_start_Of_Week.addDays(i));
+        week_Dates.push_back(day_start_Of_Week.addDays(i)); // เพิ่มวันที่เริ่มต้นของสัปดาห์ + i วันเข้า vector
     }
 
-    return week_Dates;
+    return week_Dates; // ส่งค่า vector ของวันที่ในสัปดาห์นั้นๆ ออกไป
 }
 
 
 vector<QDate> analysis::Get_Month_Dates(QDate selected_Date)
 {
-    vector<QDate> month_Dates;
+    vector<QDate> month_Dates; // สร้าง vector ของ QDate ชื่อ month_Dates
 
     // หาววันแรกและวันสุดท้ายของเดือน
     QDate start_Of_Month(selected_Date.year(), selected_Date.month(), 1); // วันที่ 1 ของเดือนที่เลือก
     QDate end_Of_Month = start_Of_Month.addMonths(1).addDays(-1); // จะได้วันที่ 1 ของเดือนถัดไป และลบด้วย 1 วัน จะได้วันสุดท้ายของเดือนที่เลือก
 
      // เพิ่มวันทั้งเดือนเข้า vector
-    for (QDate date = start_Of_Month; date <= end_Of_Month; date = date.addDays(1))
+    for (QDate date = start_Of_Month; date <= end_Of_Month; date = date.addDays(1)) // วนลูปจนกว่าวันที่จะเป็นวันสุดท้ายของเดือน และเพิ่มวันทั้งเดือนเข้า vector
     {
-        month_Dates.push_back(date);
+        month_Dates.push_back(date); // เพิ่มวันที่เป็นวันทั้งเดือนเข้า vector
     }
 
-    return month_Dates;
+    return month_Dates; // ส่งค่า vector ของวันที่ในเดือนนั้นๆ ออกไป
 }
 
 
 vector<QDate> analysis::Get_Year_Dates(QDate selected_Date)
 {
-    vector<QDate> year_Dates;
+    vector<QDate> year_Dates; // สร้าง vector ของ QDate ชื่อ year_Dates
 
     // หาววันแรกและวันสุดท้ายของปี
     QDate start_Of_year(selected_Date.year(), 1, 1); // วันที่ 1 ของปีที่เลือก
     QDate end_Of_year = start_Of_year.addYears(1).addDays(-1); // จะได้วันที่ 1 ของปีถัดไป และลบด้วย 1 วันจะได้วันสุดท้ายของของปีที่เลือก
 
     // เพิ่มวันทั้งเดือนเข้า vector
-    for (QDate date = start_Of_year; date <= end_Of_year; date = date.addDays(1))
+    for (QDate date = start_Of_year; date <= end_Of_year; date = date.addDays(1)) // วนลูปจนกว่าวันที่จะเป็นวันสุดท้ายของปี และเพิ่มวันทั้งปีเข้า vector
     {
-        year_Dates.push_back(date);
+        year_Dates.push_back(date); // เพิ่มวันที่เป็นวันทั้งปีเข้า vector
     }
 
-    return year_Dates;
+    return year_Dates; // ส่งค่า vector ของวันที่ในปีนั้นๆ ออกไป
 }
 
 
-void analysis::on_calendar_start_date_currentPageChanged(int year, int month)
+void analysis::on_calendar_start_date_currentPageChanged(int year, int month) // ทำงานเมื่อหน้าปฏิทินเปลี่ยน
 {
-    int searchmode = ui->comboBox_search_mode->currentIndex();
-    switch (searchmode)
+    int searchmode = ui->comboBox_search_mode->currentIndex(); // ดึงค่าของ search_mode ที่เลือกมา
+    switch (searchmode) // ทำงานเมื่อ search_mode ที่เลือกมีค่าเป็น 3 , 4 คือ โหมด Month และ Year
     {
     case 3:
     case 4:
-        ui->calendar_start_date->setSelectedDate(QDate(year , month , 1));
-        Show_Chart();
+        ui->calendar_start_date->setSelectedDate(QDate(year , month , 1)); // ทำการเซ็ตวันที่เริ่มต้นให้เป็นวันที่ 1 ของเดือนที่เลือก // โดย function นี้จะช่วยให้ทุกครั้งที่ scroll เปลี่ยนหน้าปฏิทินจะตั้งเป็นวันที่ 1 ของเดือนนั้นๆ ให้เองเลย
+        Show_Chart(); // ทำการเรียก function Show_Chart() เพื่อทำการแสดงกราฟ
         break;
     }
 
@@ -688,150 +688,153 @@ void analysis::on_calendar_start_date_currentPageChanged(int year, int month)
 
 vector<QDate> analysis::Date_range_now()
 {
-    vector<QDate> Date_range(2);
-    int searchmode = ui->comboBox_search_mode->currentIndex();
+    vector<QDate> Date_range(2); // สร้าง vector ของ QDate ชื่อ Date_range มีขนาด 2 ช่อง
+    int searchmode = ui->comboBox_search_mode->currentIndex(); // ดึงค่าของ search_mode ที่เลือกมา
     switch (searchmode)
     {
-    case 0:
-        Date_range[0] = ui->calendar_start_date->selectedDate();
-        Date_range[1] = ui->calendar_end_date->selectedDate();
+    case 0: // ถ้า search_mode ที่เลือกคือ 0 คือ โหมด range
+        Date_range[0] = ui->calendar_start_date->selectedDate(); // วันที่เริ่มต้นที่เลือกคือวันในปฏิทินด้านซ้าย
+        Date_range[1] = ui->calendar_end_date->selectedDate(); // วันที่สิ้นสุดที่เลือกคือวันในปฏิทินด้านขวา
         break;
-    case 1:
-        Date_range[0] = ui->calendar_start_date->selectedDate();
-        Date_range[1] = Date_range[0];
+    case 1: // ถ้า search_mode ที่เลือกคือ 1 คือ โหมด day
+        Date_range[0] = ui->calendar_start_date->selectedDate(); // วันที่เริ่มต้นที่เลือกคือวันในปฏิทินด้านซ้าย
+        Date_range[1] = Date_range[0]; // วันที่สิ้นสุดที่เลือกคือวันที่เริ่มต้น
         break;
-    case 2:
-        Date_range[0] = week_dates[0];
-        Date_range[1] = week_dates[week_dates.size()-1];
+    case 2: // ถ้า search_mode ที่เลือกคือ 2 คือ โหมด week
+        Date_range[0] = week_dates[0]; // วันที่เริ่มต้นที่เลือกคือวันแรกของสัปดาห์
+        Date_range[1] = week_dates[week_dates.size()-1]; // วันที่สิ้นสุดที่เลือกคือวันสุดท้ายของสัปดาห์
         break;
-    case 3:
-        Date_range[0] = month_dates[0];
-        Date_range[1] = month_dates[month_dates.size()-1];
+    case 3: // ถ้า search_mode ที่เลือกคือ 3 คือ โหมด month
+        Date_range[0] = month_dates[0]; // วันที่เริ่มต้นที่เลือกคือวันแรกของเดือน
+        Date_range[1] = month_dates[month_dates.size()-1]; // วันที่สิ้นสุดที่เลือกคือวันสุดท้ายของเดือน
         break;
-    case 4:
-        Date_range[0] = year_dates[0];
-        Date_range[1] = year_dates[year_dates.size()-1];
+    case 4: // ถ้า search_mode ที่เลือกคือ 4 คือ โหมด year
+        Date_range[0] = year_dates[0]; // วันที่เริ่มต้นที่เลือกคือวันแรกของปี
+        Date_range[1] = year_dates[year_dates.size()-1]; // วันที่สิ้นสุดที่เลือกคือวันสุดท้ายของปี
         break;
-    case 5:
-        Date_range[0] = QDate::currentDate().addYears(-1000);
-        Date_range[1] = QDate::currentDate().addYears(1000);
+    case 5: // ถ้า search_mode ที่เลือกคือ 5 คือ โหมด all
+        Date_range[0] = QDate::currentDate().addYears(-1000); // วันที่เริ่มต้นที่เลือกคือวันปัจจุบัน-1000 ปี
+        Date_range[1] = QDate::currentDate().addYears(1000); // วันที่สิ้นสุดที่เลือกคือวันปัจจุบัน+1000 ปี
         break;
     }
 
-    return Date_range;
+    return Date_range; // ส่งค่า vector ของวันที่เริ่มต้นและสิ้นสุดออกไป
 }
 
 
 void analysis::Show_Chart()
 {
-    ui->NO_DATA->hide();
+    ui->NO_DATA->hide(); // ซ่อน label ที่บอกว่าไม่มีข้อมูล
 
     //==================================================================================//
 
-    Total_Income_in_selected_range = 0;
-    Total_Expenses_in_selected_range = 0;
+    Total_Income_in_selected_range = 0; // ตั้งค่าให้ Total_Income_in_selected_range เป็น 0 สำหรับนับรวมรายรับในช่วงที่เลือก
+    Total_Expenses_in_selected_range = 0; // ตั้งค่าให้ Total_Expenses_in_selected_range เป็น 0 สำหรับนับรวมรายจ่ายในช่วงที่เลือก
 
     //==================================================================================//
 
-    if (chartView != 0)
+    if (chartView != 0) // ถ้ามี chartView อยู่แล้ว
     {
-        ui->Chart_Layout->removeWidget(chartView);
-        delete chartView;
-        chartView = 0;
+        ui->Chart_Layout->removeWidget(chartView); // ทำการลบ chartView ออกจาก layout
+        delete chartView; // ทำการลบ chartView
+        chartView = 0; // ทำการเซ็ตค่า pointer chartView เป็น 0
     }
 
     //==================================================================================//
 
-    vector<QDate> Date_Range_now = Date_range_now();
-    QDateTime minDate_range = Date_Range_now[0].startOfDay();
-    QDateTime maxDate_range = Date_Range_now[1].endOfDay();
+    vector<QDate> Date_Range_now = Date_range_now(); // ดึงวันที่เริ่มต้นและสิ้นสุดของช่วงที่เลือกมา
+    QDateTime minDate_range = Date_Range_now[0].startOfDay(); // ทำการเซ็ตเวลาเริ่มต้นของวันที่เริ่มต้นให้เป็นเวลา 00:00:00 เพื่อแปลงจาก QDate เป็น QDateTime
+    QDateTime maxDate_range = Date_Range_now[1].endOfDay(); // ทำการเซ็ตเวลาสิ้นสุดของวันที่สิ้นสุดให้เป็นเวลา 23:59:59  เพื่อแปลงจาก QDate เป็น QDateTime
 
-    int count_Day_in_range = Date_Range_now[0].daysTo(Date_Range_now[1]);
+    int count_Day_in_range = Date_Range_now[0].daysTo(Date_Range_now[1]); // นับจำนวนวันในช่วงที่เลือก
 
     //==================================================================================//
 
-    vector<QDateTime> chartData_Date_For_CreateChart;
-    vector<double> chartData_income_For_CreateChart;
-    vector<double> chartData_expenses_For_CreateChart;
+    vector<QDateTime> chartData_Date_For_CreateChart; // สร้าง vector ของ QDateTime ชื่อ chartData_Date_For_CreateChart เพื่อเก็บวันที่ที่จะนำมาสร้างกราฟ
+    vector<double> chartData_income_For_CreateChart; // สร้าง vector ของ double ชื่อ chartData_income_For_CreateChart เพื่อเก็บรายรับที่จะนำมาสร้างกราฟ
+    vector<double> chartData_expenses_For_CreateChart; // สร้าง vector ของ double ชื่อ chartData_expenses_For_CreateChart เพื่อเก็บรายจ่ายที่จะนำมาสร้างกราฟ
 
-    bool Scale_logic;
-    switch (ui->comboBox_Scale_mode->currentIndex())
+    bool Scale_logic; // สร้างตัวแปร Scale_logic เพื่อเก็บค่าว่าจะทำการ scale หรือไม่
+    switch (ui->comboBox_Scale_mode->currentIndex()) // ดึงค่าของ Scale_mode ที่เลือกมา
     {
-        case 0:
-            Scale_logic = count_Day_in_range >= 6;
+        case 0: // ถ้า Scale_mode ที่เลือกคือ 0 คือ โหมด auto
+            Scale_logic = count_Day_in_range >= 6; // ถ้าจำนวนวันในช่วงที่เลือกมามากกว่าหรือเท่ากับ 7 วัน จะทำการ scale
             break;
         case 1:
-            Scale_logic = true;
+            Scale_logic = true; // ถ้า Scale_mode ที่เลือกคือ 1 คือ โหมด scale จะทำการ scale
             break;
         case 2:
-            Scale_logic = false;
+            Scale_logic = false; // ถ้า Scale_mode ที่เลือกคือ 2 คือ โหมด un-scale จะไม่ทำการ scale
             break;
     }
 
-    if (Scale_logic)
+    if (Scale_logic) // ถ้า Scale_logic เป็น true จะทำการ scale
     {
-        chartData_Date_For_CreateChart = chartData_Date_scaled_QDate;
-        chartData_income_For_CreateChart = chartData_income_scaled_QDate;
-        chartData_expenses_For_CreateChart = chartData_expenses_scaled_QDate;
+        chartData_Date_For_CreateChart = chartData_Date_scaled_QDate; // ทำการเซ็ตค่าของ chartData_Date_For_CreateChart ให้เป็น chartData_Date_scaled_QDate ที่เป็น vector ของ QDateTime ที่ scale แล้ว
+        chartData_income_For_CreateChart = chartData_income_scaled_QDate; // ทำการเซ็ตค่าของ chartData_income_For_CreateChart ให้เป็น chartData_income_scaled_QDate ที่เป็น vector ของ double ที่ scale แล้ว
+        chartData_expenses_For_CreateChart = chartData_expenses_scaled_QDate; // ทำการเซ็ตค่าของ chartData_expenses_For_CreateChart ให้เป็น chartData_expenses_scaled_QDate ที่เป็น vector ของ double ที่ scale แล้ว
     }
     else
     {
-        chartData_Date_For_CreateChart = chartData_Date;
-        chartData_income_For_CreateChart = chartData_income;
-        chartData_expenses_For_CreateChart = chartData_expenses;
+        chartData_Date_For_CreateChart = chartData_Date; // ทำการเซ็ตค่าของ chartData_Date_For_CreateChart ให้เป็น chartData_Date ที่เป็น vector ของ QDateTime ที่ยังไม่ได้ scale
+        chartData_income_For_CreateChart = chartData_income; // ทำการเซ็ตค่าของ chartData_income_For_CreateChart ให้เป็น chartData_income ที่เป็น vector ของ double ที่ยังไม่ได้ scale
+        chartData_expenses_For_CreateChart = chartData_expenses; // ทำการเซ็ตค่าของ chartData_expenses_For_CreateChart ให้เป็น chartData_expenses ที่เป็น vector ของ double ที่ยังไม่ได้ scale
     }
 
     //==================================================================================//
 
     // Create a line series
-    QLineSeries *series_income = new QLineSeries; // กราฟเส้น
-    QLineSeries *series_expenses = new QLineSeries;
-    QScatterSeries *Dot_series_income = new QScatterSeries; // กราฟจุด
-    QScatterSeries *Dot_series_expenses = new QScatterSeries;
+    QLineSeries *series_income = new QLineSeries; // กราฟเส้น รายรับ
+    QLineSeries *series_expenses = new QLineSeries; // กราฟเส้น รายจ่าย
+    QScatterSeries *Dot_series_income = new QScatterSeries; // กราฟจุด รายรับ
+    QScatterSeries *Dot_series_expenses = new QScatterSeries; // กราฟจุด รายจ่าย
 
-    int add_count = 0;
-    for (unsigned int i = 0; i < chartData_Date_For_CreateChart.size(); i++)
+    int add_count = 0; // ตัวแปรนับจำนวนวันที่เพิ่มเข้าไปในกราฟ
+    for (unsigned int i = 0; i < chartData_Date_For_CreateChart.size(); i++) // วนลูปเพื่อเพิ่มข้อมูลในกราฟ
     {
-        if (chartData_Date_For_CreateChart[i] < minDate_range or chartData_Date_For_CreateChart[i] > maxDate_range) continue;
+        if (chartData_Date_For_CreateChart[i] < minDate_range or chartData_Date_For_CreateChart[i] > maxDate_range) continue; // ถ้าวันที่ไม่อยู่ในช่วงที่เลือก จะข้ามไป
 
         //---------------total-----------------//
-        Total_Income_in_selected_range += chartData_income_For_CreateChart[i];
-        Total_Expenses_in_selected_range += chartData_expenses_For_CreateChart[i];
+        Total_Income_in_selected_range += chartData_income_For_CreateChart[i]; // นับรวมรายรับรวมในช่วงที่เลือก
+        Total_Expenses_in_selected_range += chartData_expenses_For_CreateChart[i]; // นับรวมรายจ่ายรวมในช่วงที่เลือก
         //---------------total-----------------//
 
-        qint64 xValue = chartData_Date_For_CreateChart[i].toMSecsSinceEpoch();
+        qint64 xValue = chartData_Date_For_CreateChart[i].toMSecsSinceEpoch(); // แปลง QDateTime เป็น qint64 เพื่อให้สามารถใช้เป็นแกน x ในกราฟได้ แปลงให้อยู่ในรูปของ millisecond จุดเริ่มต้นคือ 1 มกราคม 1970 00:00:00 UTC
 
         //---------------line series-----------------//
-        series_income->append(xValue, chartData_income_For_CreateChart[i]);
-        series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]);
+        series_income->append(xValue, chartData_income_For_CreateChart[i]); // เพิ่มข้อมูลรายรับลง series_income โดย series จะเป็นข้อมูลแบบคู่อันดับ x y โดยแกน x คือเวลาและแกน y คือ จำนวนเงิน
+        series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]); // เพิ่มข้อมูลรายจ่ายลง series_expenses โดย series จะเป็นข้อมูลแบบคู่อันดับ x y โดยแกน x คือเวลาและแกน y คือ จำนวนเงิน
         //---------------line series-----------------//
 
         //---------------Dot series-----------------//
-        if (chartData_income_For_CreateChart[i] != 0) Dot_series_income->append(xValue, chartData_income_For_CreateChart[i]);
-        if (chartData_expenses_For_CreateChart[i] != 0) Dot_series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]);
+        if (chartData_income_For_CreateChart[i] != 0) Dot_series_income->append(xValue, chartData_income_For_CreateChart[i]); // ถ้ารายรับไม่เท่ากับ 0 จะเพิ่มจุดลงใน Dot_series_income โดย series จะเป็นข้อมูลแบบคู่อันดับ x y โดยแกน x คือเวลาและแกน y คือ จำนวนเงินแต่อันนี้เป็นข้อมูลสำหรับกราฟแบบจุด
+        if (chartData_expenses_For_CreateChart[i] != 0) Dot_series_expenses->append(xValue, chartData_expenses_For_CreateChart[i]); // ถ้ารายจ่ายไม่เท่ากับ 0 จะเพิ่มจุดลงใน Dot_series_expenses โดย series จะเป็นข้อมูลแบบคู่อันดับ x y โดยแกน x คือเวลาและแกน y คือ จำนวนเงินแต่อันนี้เป็นข้อมูลสำหรับกราฟแบบจุด
         //---------------Dot series-----------------//
-        add_count++;
+        
+        add_count++; // นับจำนวนวันที่เพิ่มเข้าไปในกราฟ
     }
 
     //==================================================================================//
     // qDebug() << add_count;
 
-    QPointF income_ONE_point , expenses_ONE_point;
-    if (add_count == 1)
+    QPointF income_ONE_point , expenses_ONE_point; // สร้างตัวแปร QPointF ชื่อ income_ONE_point , expenses_ONE_point เพื่อเก็บจุดของรายรับและรายจ่ายในวันที่เดียวกัน QPointF เป็นตัวแปรที่เก็บค่าคู่อันดับ x และ y ไว้ในตัวแปรเดียวกัน
+    if (add_count == 1) // ถ้ามีวันที่เพิ่มเข้าไปในกราฟเพียง 1 วัน (มีข้อมูลเพียงวันเดียว)
     {
-        income_ONE_point = series_income->at(0);
-        expenses_ONE_point = series_expenses->at(0);
+        income_ONE_point = series_income->at(0); // นำจุดของรายรับในวันที่เดียวกันมาเก็บไว้ใน income_ONE_point
+        expenses_ONE_point = series_expenses->at(0); // นำจุดของรายจ่ายในวันที่เดียวกันมาเก็บไว้ใน expenses_ONE_point
 
-        series_income->clear();
-        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch()  , 0);
-        series_income->append(income_ONE_point.x() , income_ONE_point.y());
-        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0);
+        series_income->clear(); // ลบข้อมูลใน series_income ทั้งหมด
+        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch()  , 0); // เพิ่มจุดเริ่มต้นของกราฟรายรับให้แกน y เป็น 0
+        series_income->append(income_ONE_point.x() , income_ONE_point.y()); // เพิ่มจุดของรายรับให้แกน y เป็นจำนวนเงิน
+        series_income->append(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0); // เพิ่มจุดสุดท้ายของกราฟรายรับให้แกน y เป็น 0
 
-        series_expenses->clear();
-        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch() , 0);
-        series_expenses->append(expenses_ONE_point.x() , expenses_ONE_point.y());
-        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0);
+        series_expenses->clear(); // ลบข้อมูลใน series_expenses ทั้งหมด
+        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().startOfDay().toMSecsSinceEpoch() , 0); // เพิ่มจุดเริ่มต้นของกราฟรายจ่ายให้แกน y เป็น 0
+        series_expenses->append(expenses_ONE_point.x() , expenses_ONE_point.y()); // เพิ่มจุดของรายจ่ายให้แกน y เป็นจำนวนเงิน
+        series_expenses->append(QDateTime::fromMSecsSinceEpoch(expenses_ONE_point.x()).date().endOfDay().toMSecsSinceEpoch() , 0); // เพิ่มจุดสุดท้ายของกราฟรายจ่ายให้แกน y เป็น 0
     }
+
+    // ที่ต้องเพิ่มข้อมูลแบบนี้เพราะถ้ามีข้อมูลเพียงวันเดียวใน series จะไม่สามารถสร้างกราฟได้
 
     //==========Line===========//
     //==================================================================================//
@@ -851,11 +854,11 @@ void analysis::Show_Chart()
 
     Dot_series_income->setMarkerSize(10); // ตั้งค่าขนาดของจุด
     Dot_series_income->setColor(Qt::darkGreen); // ตั้งค่าสีของจุด
-    Dot_series_income->setName("Dot-Income");
+    Dot_series_income->setName("Dot-Income"); // ชื่อให้กับจุด
 
     Dot_series_expenses->setMarkerSize(10); // ตั้งค่าขนาดของจุด
     Dot_series_expenses->setColor(Qt::darkRed); // ตั้งค่าสีของจุด
-    Dot_series_expenses->setName("Dot-Expenses");
+    Dot_series_expenses->setName("Dot-Expenses"); // ชื่อให้กับจุด
 
     //==================================================================================//
 
@@ -870,41 +873,43 @@ void analysis::Show_Chart()
 
     //==================================================================================//
 
-    connect(Dot_series_income, &QScatterSeries::hovered, this, [=](const QPointF &point, bool state)
+    // เชื่อมต่อกับจุด Dot_series_income บนกราฟ และแสดงข้อมูลเมื่อนำเมาส์ไปวางที่จุด โดยเก็บข้อมูลไว้ในตัวแปร point เก็บสถานะว่าเมาส์วางหรือไม่ในตัวแปร state
+    connect(Dot_series_income, &QScatterSeries::hovered, this, [=](const QPointF &point, bool state) 
         {
-            if (state)
+            if (state) // ถ้าเมาส์วางที่จุด จะแสดงข้อมูลของจุดนั้น
             {
-                QString Income_at_the_cursor_position = QString::number(point.y());
-                QString DateTime_at_the_cursor_position;
-                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
-                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss");
+                QString Income_at_the_cursor_position = QString::number(point.y()); // x คือเวลาและ y คือ จำนวนเงิน นำจำนวนเงินมาเก็บไว้ใน Income_at_the_cursor_position
+                QString DateTime_at_the_cursor_position; // สร้างตัวแปร DateTime_at_the_cursor_position เพื่อเก็บวันที่ที่จุดนั้นอยู่
+                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy"); // นำข้อมูลใน x มาแปลงเป็นวันที่และเก็บไว้ใน DateTime_at_the_cursor_position ถ้า Scale_logic เป็น true จะแสดงเฉพาะวันที่
+                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss");  // นำข้อมูลใน x มาแปลงเป็นวันที่และเก็บไว้ใน DateTime_at_the_cursor_position ถ้า Scale_logic เป็น false จะแสดงวันที่และเวลา
 
-                QString Text_Show_at_the_cursor_position_income = "📅Date: " + DateTime_at_the_cursor_position + "  📈Income: " + Income_at_the_cursor_position;
-                QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_income);
+                QString Text_Show_at_the_cursor_position_income = "📅Date: " + DateTime_at_the_cursor_position + "  📈Income: " + Income_at_the_cursor_position; // ข้อมูลแกน x ที่เป็นเวลาและ y ที่เป็นจำนวนเงิน มา format เป็นข้อความสำหรับแสดงผล
+                QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_income); // แสดงข้อความที่จุดนั้นๆ ที่เมาส์ชี้ไป
             }
-            else
+            else // ถ้าเมาส์ไม่วางที่จุด จะซ่อนข้อความที่แสดง
             {
-                QToolTip::hideText();
+                QToolTip::hideText(); // ซ่อนข้อความที่แสดง
             }
         }
     );
 
+    // เชื่อมต่อกับจุด Dot_series_expenses บนกราฟ และแสดงข้อมูลเมื่อนำเมาส์ไปวางที่จุด โดยเก็บข้อมูลไว้ในตัวแปร point เก็บสถานะว่าเมาส์วางหรือไม่ในตัวแปร state
     connect(Dot_series_expenses, &QScatterSeries::hovered, this, [=](const QPointF &point, bool state)
         {
-            if (state)
+            if (state) // ถ้าเมาส์วางที่จุด จะแสดงข้อมูลของจุดนั้น
             {
-                QString Expenses_at_the_cursor_position = QString::number(point.y());
-                QString DateTime_at_the_cursor_position;
-                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy");
-                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss");
+                QString Expenses_at_the_cursor_position = QString::number(point.y()); // x คือเวลาและ y คือ จำนวนเงิน นำจำนวนเงินมาเก็บไว้ใน Expenses_at_the_cursor_position
+                QString DateTime_at_the_cursor_position; // สร้างตัวแปร DateTime_at_the_cursor_position เพื่อเก็บวันที่ที่จุดนั้นอยู่
+                if (Scale_logic) DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy"); // นำข้อมูลใน x มาแปลงเป็นวันที่และเก็บไว้ใน DateTime_at_the_cursor_position ถ้า Scale_logic เป็น true จะแสดงเฉพาะวันที่
+                else DateTime_at_the_cursor_position = QDateTime::fromMSecsSinceEpoch(point.x()).toString("dd-MM-yyyy HH:mm:ss"); // นำข้อมูลใน x มาแปลงเป็นวันที่และเก็บไว้ใน DateTime_at_the_cursor_position ถ้า Scale_logic เป็น false จะแสดงวันที่และเวลา
 
 
-                QString Text_Show_at_the_cursor_position_Expenses = "📅Date: " + DateTime_at_the_cursor_position + " 📉Expense: " + Expenses_at_the_cursor_position;
-                QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_Expenses);
+                QString Text_Show_at_the_cursor_position_Expenses = "📅Date: " + DateTime_at_the_cursor_position + " 📉Expense: " + Expenses_at_the_cursor_position; // ข้อมูลแกน x ที่เป็นเวลาและ y ที่เป็นจำนวนเงิน มา format เป็นข้อความสำหรับแสดงผล
+                QToolTip::showText(QCursor::pos(), Text_Show_at_the_cursor_position_Expenses); // แสดงข้อความที่จุดนั้นๆ ที่เมาส์ชี้ไป
             }
-            else
+            else // ถ้าเมาส์ไม่วางที่จุด จะซ่อนข้อความที่แสดง
             {
-                QToolTip::hideText();
+                QToolTip::hideText(); // ซ่อนข้อความที่แสดง
             }
         }
     );
@@ -914,71 +919,77 @@ void analysis::Show_Chart()
     //ตั้งค่าแต่ละแกนของกราฟ
     //chart->createDefaultAxes(); //เป็นฟังก์ชันใน Qt Charts ที่ใช้ สร้างแกน X และแกน Y โดยอัตโนมัติ ตามข้อมูลที่เพิ่มเข้าไปในกราฟ
     // ใช้ QDateTimeAxis สำหรับแกน X
-    QDateTimeAxis *axisX = new QDateTimeAxis;
-    axisX->setTitleText("Date");
-    if (Scale_logic)
+    QDateTimeAxis *axisX = new QDateTimeAxis; // สร้าง QDateTimeAxis ชื่อ axisX เพื่อใช้เป็นแกน X
+    axisX->setTitleText("Date"); // ตั้งค่าชื่อแกน X ว่า Date
+    if (Scale_logic) // ถ้า Scale_logic เป็น true จะทำการ scale และจะมีการตั้งค่าแกน x ตามนี้
     {
         axisX->setFormat("dd MMM yy"); // ตั้งค่าการแสดงผลวันที่
-        if (add_count >= 10) axisX->setTickCount(10);
-        else if (add_count < 10 and add_count > 1) axisX->setTickCount(add_count);
-        else if (add_count == 1)
+        if (add_count >= 10) axisX->setTickCount(10); // มีข้อมูลมากกว่าหรือเท่ากับ 10 วัน แกน x จะแบ่งเป็น 10 ช่วง
+        else if (add_count < 10 and add_count > 1) axisX->setTickCount(add_count); // มีข้อมูลน้อยกว่า 10 วัน แกน x จะแบ่งเท่ากับจำนวนข้อมูล
+        else if (add_count == 1) // ถ้ามีข้อมูลเพียงวันเดียว
         {
-            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay());
-            axisX->setTickCount(2);
+            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay()); // ตั้งค่าช่วงของแกน x ให้เป็นวันที่เดียว ตั้งแต่เวลา 00:00:00 ถึง 23:59:59
+            axisX->setTickCount(2); // แกน x จะแบ่งเป็น 2 ช่วง
         }
-        else
+        else // ถ้าไม่มีข้อมูลเลย
         {
-            axisX->setRange(minDate_range , maxDate_range);
-            axisX->setTickCount(2);
+            axisX->setRange(minDate_range , maxDate_range); // ตั้งค่าช่วงของแกน x ให้เป็นช่วงที่เลือกในปฏิทิน
+            axisX->setTickCount(2); // แกน x จะแบ่งเป็น 2 ช่วง
         }
+
+        // ถ้ามีข้อมูลกราฟจะแสดงข้อมูลตั้งแต่วันแรกที่มีข้อมูลถึงวันสุดท้ายที่มีข้อมูล
+        // ถ้าไม่มีข้อมูลจะแสดงวันที่เริ่มต้นและสิ้นสุดของช่วงที่เลือก
     }
-    else
+    else // ถ้า Scale_logic เป็น false จะไม่ทำการ scale และจะมีการตั้งค่าแกน x ตามนี้
     {
-        axisX->setFormat("dd MMM yy HH:mm");
-        if (add_count >= 7) axisX->setTickCount(7);
-        else if (add_count < 7 and add_count > 1) axisX->setTickCount(add_count);
-        else if (add_count == 1)
+        axisX->setFormat("dd MMM yy HH:mm"); // ตั้งค่าการแสดงผลวันที่และเวลา
+        if (add_count >= 7) axisX->setTickCount(7); // มีข้อมูลมากกว่าหรือเท่ากับ 7 วัน แกน x จะแบ่งเป็น 7 ช่วง
+        else if (add_count < 7 and add_count > 1) axisX->setTickCount(add_count); // มีข้อมูลน้อยกว่า 7 วัน แกน x จะแบ่งเท่ากับจำนวนข้อมูล
+        else if (add_count == 1) // ถ้ามีข้อมูลเพียงวันเดียว
         {
-            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay());
-            axisX->setTickCount(2);
+            axisX->setRange(QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().startOfDay() , QDateTime::fromMSecsSinceEpoch(income_ONE_point.x()).date().endOfDay()); // ตั้งค่าช่วงของแกน x ให้เป็นวันที่เดียว ตั้งแต่เวลา 00:00:00 ถึง 23:59:59
+            axisX->setTickCount(2); // แกน x จะแบ่งเป็น 2 ช่วง
         }
         else
         {
-            axisX->setRange(minDate_range , maxDate_range);
-            axisX->setTickCount(2);
+            axisX->setRange(minDate_range , maxDate_range); // ตั้งค่าช่วงของแกน x ให้เป็นช่วงที่เลือกในปฏิทิน
+            axisX->setTickCount(2); // แกน x จะแบ่งเป็น 2 ช่วง
         }
+
+        // ถ้ามีข้อมูลกราฟจะแสดงข้อมูลตั้งแต่วันแรกที่มีข้อมูลถึงวันสุดท้ายที่มีข้อมูล
+        // ถ้าไม่มีข้อมูลจะแสดงวันที่เริ่มต้นและสิ้นสุดของช่วงที่เลือก
     }
 
 
 
-    \
-    vector<long double> max_y(2);
+    // ตั้งค่าแกน Y
+    vector<long double> max_y(2); // สร้าง vector ของ long double ชื่อ max_y เพื่อเก็บค่าสูงสุดของแกน y ของกราฟ
 
-    if (chartData_income_For_CreateChart.size() <= 0) max_y.push_back(0);
-    else max_y.push_back(*max_element(chartData_income_For_CreateChart.begin() , chartData_income_For_CreateChart.end()));
+    if (chartData_income_For_CreateChart.size() <= 0) max_y.push_back(0); // ถ้าไม่มีข้อมูลรายรับ จะเพิ่ม 0 ลงใน max_y
+    else max_y.push_back(*max_element(chartData_income_For_CreateChart.begin() , chartData_income_For_CreateChart.end())); // ถ้ามีข้อมูลรายรับ จะเพิ่มค่าสูงสุดของรายรับลงใน max_y
 
-    if (chartData_expenses_For_CreateChart.size() <= 0) max_y.push_back(0);
-    else max_y.push_back(*max_element(chartData_expenses_For_CreateChart.begin() , chartData_expenses_For_CreateChart.end()));
+    if (chartData_expenses_For_CreateChart.size() <= 0) max_y.push_back(0); // ถ้าไม่มีข้อมูลรายจ่าย จะเพิ่ม 0 ลงใน max_y
+    else max_y.push_back(*max_element(chartData_expenses_For_CreateChart.begin() , chartData_expenses_For_CreateChart.end())); // ถ้ามีข้อมูลรายจ่าย จะเพิ่มค่าสูงสุดของรายจ่ายลงใน max_y
 
     // max_y.push_back(*max_element(chartData_income_For_CreateChart.begin() , chartData_income_For_CreateChart.end()));
     // max_y.push_back(*max_element(chartData_expenses_For_CreateChart.begin() , chartData_expenses_For_CreateChart.end()));
 
-    QValueAxis *axisY = new QValueAxis;
-    axisY->setRange(0, *max_element(max_y.begin() , max_y.end()));
-    axisY->setTickCount(10);
-    axisY->setLabelFormat("%.2f");
-    axisY->setTitleText("Amount (THB)");
+    QValueAxis *axisY = new QValueAxis; // สร้าง QValueAxis ชื่อ axisY เพื่อใช้ตั้งค่าแกน Y
+    axisY->setRange(0, *max_element(max_y.begin() , max_y.end())); // ตั้งค่าช่วงของแกน Y ให้เริ่มต้นที่ 0 ถึงค่าสูงสุดของข้อมูลทั้งหมด
+    axisY->setTickCount(10); // แกน Y จะแบ่งเป็น 10 ช่วง
+    axisY->setLabelFormat("%.2f"); // ตั้งค่าการแสดงผลของแกน Y ให้แสดงเป็นทศนิยม 2 ตำแหน่ง
+    axisY->setTitleText("Amount (THB)"); // ตั้งค่าชื่อแกน Y ว่า Amount (THB)
 
-    chart->addAxis(axisX, Qt::AlignBottom);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    series_income->attachAxis(axisX);
-    series_income->attachAxis(axisY);
-    series_expenses->attachAxis(axisX);
-    series_expenses->attachAxis(axisY);
-    Dot_series_expenses->attachAxis(axisX);
-    Dot_series_expenses->attachAxis(axisY);
-    Dot_series_income->attachAxis(axisX);
-    Dot_series_income->attachAxis(axisY);
+    chart->addAxis(axisX, Qt::AlignBottom); // ตั้งค่าแกน X ให้อยู่ด้านล่างของกราฟ
+    chart->addAxis(axisY, Qt::AlignLeft); // ตั้งค่าแกน Y ให้อยู่ด้านซ้ายของกราฟ
+    series_income->attachAxis(axisX); // ตั้งค่าให้ series_income แสดงผลบนแกน X ตามที่ตั้งค่าไว้
+    series_income->attachAxis(axisY); // ตั้งค่าให้ series_income แสดงผลบนแกน Y ตามที่ตั้งค่าไว้
+    series_expenses->attachAxis(axisX); // ตั้งค่าให้ series_expenses แสดงผลบนแกน X ตามที่ตั้งค่าไว้
+    series_expenses->attachAxis(axisY); // ตั้งค่าให้ series_expenses แสดงผลบนแกน Y ตามที่ตั้งค่าไว้ 
+    Dot_series_expenses->attachAxis(axisX); // ตั้งค่าให้ Dot_series_expenses แสดงผลบนแกน X ตามที่ตั้งค่าไว้
+    Dot_series_expenses->attachAxis(axisY); // ตั้งค่าให้ Dot_series_expenses แสดงผลบนแกน Y ตามที่ตั้งค่าไว้
+    Dot_series_income->attachAxis(axisX); // ตั้งค่าให้ Dot_series_income แสดงผลบนแกน X ตามที่ตั้งค่าไว้
+    Dot_series_income->attachAxis(axisY); // ตั้งค่าให้ Dot_series_income แสดงผลบนแกน Y ตามที่ตั้งค่าไว้
 
     //==================================================================================//
 
@@ -989,37 +1000,38 @@ void analysis::Show_Chart()
     //==================================================================================//
 
     // Add chart view to layout
-    ui->Chart_Layout->addWidget(chartView);
+    ui->Chart_Layout->addWidget(chartView); // เพิ่ม chartView ลงใน layout ของ ui
 
     //==================================================================================//
 
-    if (add_count == 0)
+    if (add_count == 0) // ถ้าไม่มีข้อมูลที่เพิ่มเข้ามา
     {
-        ui->NO_DATA->show();
+        ui->NO_DATA->show(); // แสดงข้อความว่าไม่มีข้อมูล
     }
 
     //😲😲😲😲😲😲//
-    Summary();
+
+    Summary(); // หลังจากสร้างกราฟเสร็จ จะทำการแสดงผลข้อมูลสรุป
 }
 
 
-void analysis::on_accept_clicked()
+void analysis::on_accept_clicked() // function ทำงานเมื่อ click ปุ่ม accept
 {
-    playAcceptSound();
-    Show_Chart();
-    Summary();
+    playAcceptSound(); // เล่นเสียงเมื่อ click ปุ่ม accept
+    Show_Chart(); // แสดงกราฟ
+    Summary(); // แสดงข้อมูลสรุป
 
-    double total = 0;
-    for (int i = 0 ; i < statement.size() ; i++)
+    double total = 0; // สร้างตัวแปร total เพื่อเก็บผลรวมของรายจ่ายทั้งหมด
+    for (unsigned int i = 0 ; i < statement.size() ; i++) // วนลูปเพื่อหาผลรวมของรายจ่ายทั้งหมด
     {
-        if (statement[i][2] > 0) total += double(statement[i][2]);
+        if (statement[i][2] > 0) total += double(statement[i][2]); // ถ้า statement[i][2] มากกว่า 0 จะเพิ่มค่าของ statement[i][2] ลงใน total
     }
 
-    qDebug() << total;
+    qDebug() << total; // แสดงผลรวมของรายจ่ายทั้งหมด
 }
 
 
-void analysis::Summary()
+void analysis::Summary() // function สำหรับสรุปข้อมูลและแสดงข้อมูลอยู่ทางด้านขวาของ กราฟ
 {
     //======================================================================================//
 
