@@ -19,6 +19,7 @@ analysis::analysis(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Analysis");
+    setFixedSize(1491,782);
     startUI_setup();
     Show_Chart();
 
