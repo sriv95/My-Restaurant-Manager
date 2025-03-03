@@ -191,13 +191,13 @@ void analysis::startUI_setup()
 
     //========================================//
     //อ่านข้อมูลจาก statement และนำข้อมูลมาเก็บไว้ในตัวแปร chartData_income , chartData_expenses , chartData_Date , Dishes_data , Drinks_data
-    for (unsigned int i = 0 ; i < statement.size() ; i++) 
+    for (unsigned int i = 0 ; i < statement.size() ; i++)
     {
         QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]); //แปลงข้อมูลวันเวลาจาก statement ให้เป็น QString เพื่อเอาไปแปลงเป็น QDateTime
         QDateTime Date_ = QDateTime::fromString(String_DateTime , "dd-MM-yyyy HH:mm:ss.zzz"); // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
 
         auto it = std::find(chartData_Date.begin(), chartData_Date.end(), Date_); // หาว่าวันที่นี้มีข้อมูลอยู่แล้วหรือยัง
-        if (it == chartData_Date.end()) // ถ้าไม่มีจะ == chartData_Date.end() หรือตัวสุดท้าย+1 
+        if (it == chartData_Date.end()) // ถ้าไม่มีจะ == chartData_Date.end() หรือตัวสุดท้าย+1
         {
             chartData_Date.push_back(Date_); // ทำการเก็บวันที่ลงไปใน chartData_Date
             chartData_income.push_back(0); // ทำการเก็บรายได้ลงไปใน chartData_income โดยเริ่มต้นเป็น 0
@@ -295,7 +295,7 @@ void analysis::startUI_setup()
             Drinks_data[i] = swap_Drinks_data;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-            
+
             // เก็บ index ที่เรียงแล้วไว้
             sorted_index.push_back(i);
             sorted_index.push_back(chnaged_index);
@@ -362,7 +362,7 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-    
+
     ui->comboBox_search_mode->setCurrentIndex(5); // ตั้งให้ค่าเริ่มต้นของ search_mode เป็น search_mode ลำดับที่ 5 คือโหมด ALL //
 }
 
@@ -395,7 +395,7 @@ void analysis::Update_Selectable_and_Highlight_DateRange() // function สำห
     ui->calendar_end_date->setMinimumDate(startDate); // ตั้งให้วันที่สิ้นสุดสามารถเลือกได้น้อยสุดคือวันที่เริ่มต้น
 
     // ลบ format เก่าทั้งหมดออก
-    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat()); 
+    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
     ui->calendar_end_date->setDateTextFormat(QDate(), QTextCharFormat());
 
     // สร้าง Format สำหรับไฮไลต์
@@ -405,15 +405,15 @@ void analysis::Update_Selectable_and_Highlight_DateRange() // function สำห
 
     for (QDate date = startDate.addDays(1) ; date <= endDate; date = date.addDays(1)) // วนลูปเพื่อทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้นและวันที่สิ้นสุดทั้งสองปฏิทิน
     {
-        ui->calendar_start_date->setDateTextFormat(date, Highlight_Range_Format);
-        ui->calendar_end_date->setDateTextFormat(date.addDays(-1), Highlight_Range_Format);
+        ui->calendar_start_date->setDateTextFormat(date, Highlight_Range_Format); // ทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้น+1 และวันที่สิ้นสุด
+        ui->calendar_end_date->setDateTextFormat(date.addDays(-1), Highlight_Range_Format); // ทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้น และวันที่สิ้นสุด-1
     }
 }
 
 
 void analysis::Update_Highlight_Week()
 {
-    week_dates = Get_Week_Dates(ui->calendar_start_date->selectedDate());
+    week_dates = Get_Week_Dates(ui->calendar_start_date->selectedDate()); // จะได้ Vector ของวันที่ในสัปดาห์นั้นๆ มาทั้งหมด
 
     // ลบ format เก่าทั้งหมดออก
     ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
@@ -421,19 +421,19 @@ void analysis::Update_Highlight_Week()
 
     // สร้าง Format สำหรับไฮไลต์
     QTextCharFormat Highlight_Format;
-    Highlight_Format.setBackground(Qt::green);
-    Highlight_Format.setForeground(Qt::black);
+    Highlight_Format.setBackground(Qt::green); // ตั้งสีพื้นหลังเป็นสีเขียว
+    Highlight_Format.setForeground(Qt::black); // ตั้งสีตัวอักษรเป็นสีดำ
 
-    for (unsigned int i = 0 ; i < week_dates.size() ; i++)
+    for (unsigned int i = 0 ; i < week_dates.size() ; i++) // วนลูปเพื่อทำการ highlight วันที่อยู่ในสัปดาห์นั้นๆ
     {
-        if (week_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(week_dates[i], Highlight_Format);
+        if (week_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(week_dates[i], Highlight_Format); // ทำการ highlight วันที่อยู่ในสัปดาห์นั้นๆ โดยไม่ highlight วันที่เลือก
     }
 }
 
 
 void analysis::Update_Highlight_Month()
 {
-    month_dates = Get_Month_Dates(ui->calendar_start_date->selectedDate());
+    month_dates = Get_Month_Dates(ui->calendar_start_date->selectedDate()); // จะได้ Vector ของวันที่ในเดือนนั้นๆ มาทั้งหมด
 
     // ลบ format เก่าทั้งหมดออก
     ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
@@ -441,12 +441,12 @@ void analysis::Update_Highlight_Month()
 
     // สร้าง Format สำหรับไฮไลต์
     QTextCharFormat Highlight_Format;
-    Highlight_Format.setBackground(Qt::green);
-    Highlight_Format.setForeground(Qt::black);
+    Highlight_Format.setBackground(Qt::green); // ตั้งสีพื้นหลังเป็นสีเขียว
+    Highlight_Format.setForeground(Qt::black); // ตั้งสีตัวอักษรเป็นสีดำ
 
-    for (unsigned long int i = 0 ; i < month_dates.size() ; i++)
+    for (unsigned long int i = 0 ; i < month_dates.size() ; i++) // วนลูปเพื่อทำการ highlight วันที่อยู่ในเดือนนั้นๆ
     {
-        if (month_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(month_dates[i], Highlight_Format);
+        if (month_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(month_dates[i], Highlight_Format); // ทำการ highlight วันที่อยู่ในเดือนนั้นๆ โดยไม่ highlight วันที่เลือก
     }
 
     // for (int i = 0 ; i < month_dates.size() ; i++)
@@ -458,7 +458,7 @@ void analysis::Update_Highlight_Month()
 
 void analysis::Update_Highlight_Year()
 {
-    year_dates = Get_Year_Dates(ui->calendar_start_date->selectedDate());
+    year_dates = Get_Year_Dates(ui->calendar_start_date->selectedDate()); // จะได้ Vector ของวันที่ในปีนั้นๆ มาทั้งหมด
 
     // ลบ format เก่าทั้งหมดออก
     ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
@@ -466,12 +466,12 @@ void analysis::Update_Highlight_Year()
 
     // สร้าง Format สำหรับไฮไลต์
     QTextCharFormat Highlight_Format;
-    Highlight_Format.setBackground(Qt::green);
-    Highlight_Format.setForeground(Qt::black);
+    Highlight_Format.setBackground(Qt::green); // ตั้งสีพื้นหลังเป็นสีเขียว
+    Highlight_Format.setForeground(Qt::black); // ตั้งสีตัวอักษรเป็นสีดำ
 
-    for (unsigned long int i = 0 ; i < year_dates.size() ; i++)
+    for (unsigned long int i = 0 ; i < year_dates.size() ; i++) // วนลูปเพื่อทำการ highlight วันที่อยู่ในปีนั้นๆ
     {
-        if (year_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(year_dates[i], Highlight_Format);
+        if (year_dates[i] != ui->calendar_start_date->selectedDate()) ui->calendar_start_date->setDateTextFormat(year_dates[i], Highlight_Format); // ทำการ highlight วันที่อยู่ในปีนั้นๆ โดยไม่ highlight วันที่เลือก
     }
 
     // for (int i = 0 ; i < year_dates.size() ; i++)
@@ -481,50 +481,50 @@ void analysis::Update_Highlight_Year()
 }
 
 
-void analysis::on_calendar_start_date_selectionChanged()
+void analysis::on_calendar_start_date_selectionChanged() // เมื่อปฏิทินวันที่เริ่มต้น(ปฏิทินด้านซ้ายน) มีการเลือกวันที่ใหม่
 {
-    int searchmode = ui->comboBox_search_mode->currentIndex();
-    if (searchmode == 0)
+    int searchmode = ui->comboBox_search_mode->currentIndex(); // ดึงค่าของ search_mode ที่เลือกมา
+    if (searchmode == 0) // ถ้า search_mode ที่เลือกคือ 0 คือ โหมด range
     {
-        QDate startDate = ui->calendar_start_date->selectedDate();
-        QDate endDate = ui->calendar_end_date->selectedDate();
-        if (startDate > endDate) ui->calendar_end_date->setSelectedDate(startDate);
-        Update_Selectable_and_Highlight_DateRange();
+        QDate startDate = ui->calendar_start_date->selectedDate(); // ดึงวันที่เริ่มต้นที่เลือกในปฏิทิน startDate มา
+        QDate endDate = ui->calendar_end_date->selectedDate(); // ดึงวันที่สิ้นสุดที่เลือกในปฏิทิน endDate มา
+        if (startDate > endDate) ui->calendar_end_date->setSelectedDate(startDate); // ถ้าวันที่เริ่มต้นมากกว่าวันที่สิ้นสุดให้ทำการเปลี่ยนวันที่สิ้นสุดให้เป็นวันที่เริ่มต้น
+        Update_Selectable_and_Highlight_DateRange(); // ทำการเรียก function Update_Selectable_and_Highlight_DateRange() เพื่อทำการ limit วันมากสุดและน้อยสุดที่เลือกได้ และทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้นและวันสิ้นสุด
     }
-    else if (searchmode == 2)
+    else if (searchmode == 2) // ถ้า search_mode ที่เลือกคือ 2 คือ โหมด Week
     {
-        Update_Highlight_Week();
+        Update_Highlight_Week(); // ทำการเรียก function Update_Highlight_Week() เพื่อทำการ highlight วันที่อยู่ในสัปดาห์นั้นๆ
     }
-    else if (searchmode == 3)
+    else if (searchmode == 3) // ถ้า search_mode ที่เลือกคือ 3 คือ โหมด Month
     {
-        Update_Highlight_Month();
+        Update_Highlight_Month(); // ทำการเรียก function Update_Highlight_Month() เพื่อทำการ highlight วันที่อยู่ในเดือนนั้นๆ
     }
-    else if (searchmode == 4)
+    else if (searchmode == 4) // ถ้า search_mode ที่เลือกคือ 4 คือ โหมด Year
     {
-        Update_Highlight_Year();
+        Update_Highlight_Year(); // ทำการเรียก function Update_Highlight_Year() เพื่อทำการ highlight วันที่อยู่ในปีนั้นๆ
     }
 
-    Show_Chart();
+    Show_Chart(); // ทำการเรียก function Show_Chart() เพื่อทำการแสดงกราฟ
 }
 
 
-void analysis::on_calendar_end_date_selectionChanged()
+void analysis::on_calendar_end_date_selectionChanged() // เมื่อปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีการเลือกวันที่ใหม่ // ที่เมื่อปฏิทินวันที่สิ้นสุด(ปฏิทินด้านขวา) มีเงื่อนไขสำหรับโหมดเดียวเพราะ ปฏิทินด้านขวาจะกดเลือกไม่ได้เลยถ้าหากไม่ได้อยู่ในโหมด range
 {
-    int searchmode = ui->comboBox_search_mode->currentIndex();
-    if (searchmode == 0)
+    int searchmode = ui->comboBox_search_mode->currentIndex(); // ดึงค่าของ search_mode ที่เลือกมา
+    if (searchmode == 0) // ถ้า search_mode ที่เลือกคือ 0 คือ โหมด range
     {
-        QDate startDate = ui->calendar_start_date->selectedDate();
-        QDate endDate = ui->calendar_end_date->selectedDate();
-        if (startDate > endDate) ui->calendar_start_date->setSelectedDate(endDate);
-        Update_Selectable_and_Highlight_DateRange();
-        Show_Chart();
+        QDate startDate = ui->calendar_start_date->selectedDate(); // ดึงวันที่เริ่มต้นที่เลือกในปฏิทิน startDate มา
+        QDate endDate = ui->calendar_end_date->selectedDate(); // ดึงวันที่สิ้นสุดที่เลือกในปฏิทิน endDate มา
+        if (startDate > endDate) ui->calendar_start_date->setSelectedDate(endDate); // ถ้าวันที่เริ่มต้นมากกว่าวันที่สิ้นสุดให้ทำการเปลี่ยนวันที่เริ่มต้นให้เป็นวันที่สิ้นสุด
+        Update_Selectable_and_Highlight_DateRange(); // ทำการเรียก function Update_Selectable_and_Highlight_DateRange() เพื่อทำการ limit วันมากสุดและน้อยสุดที่เลือกได้ และทำการ highlight วันที่อยู่ระหว่างวันที่เริ่มต้นและวันสิ้นสุด
+        Show_Chart(); // ทำการเรียก function Show_Chart() เพื่อทำการแสดงกราฟ
     }
 }
 
 
-void analysis::on_Refresh_clicked()
+void analysis::on_Refresh_clicked() // เมื่อมีการกดปุ่ม Refresh
 {
-    playButtonSound();
+    playButtonSound(); // เล่นเสียงปุ่ม
     Refresh_calendar();
     Refresh_calendar(); // ต้องมีสองอันเนื่องจากเมื่ออันแรกเปลี่ยนหน้าแล้วถ้าให้ mode : moth และ year อยู่จะทำให้ on_calendar_start_date_currentPageChanged(int year, int month)
                         // ทำงานและเปลี่ยนเป็นวันที่ 1 จึงต้อง Refresh_calendar(); อีกครั้งเพื่อให้วันที่ถูดต้อง
@@ -533,18 +533,18 @@ void analysis::on_Refresh_clicked()
     switch (searchmode) {
     case 0:
     case 1:
-        Show_Chart();
+        Show_Chart(); // ทำการเรียก function Show_Chart() เพื่อทำการแสดงกราฟ
         break;
     case 2:
-        Update_Highlight_Week();
+        Update_Highlight_Week(); // ทำการเรียก function Update_Highlight_Week() เพื่อทำการ highlight วันที่อยู่ในสัปดาห์นั้นๆ
         Show_Chart();
         break;
     case 3:
-        Update_Highlight_Month();
+        Update_Highlight_Month(); // ทำการเรียก function Update_Highlight_Month() เพื่อทำการ highlight วันที่อยู่ในเดือนนั้นๆ
         Show_Chart();
         break;
     case 4:
-        Update_Highlight_Year();
+        Update_Highlight_Year(); // ทำการเรียก function Update_Highlight_Year() เพื่อทำการ highlight วันที่อยู่ในปีนั้นๆ
         Show_Chart();
         break;
     case 5:
@@ -556,11 +556,11 @@ void analysis::on_Refresh_clicked()
 
 void analysis::Refresh_calendar()
 {
-    ui->calendar_start_date->setSelectedDate(QDate::currentDate());
-    ui->calendar_end_date->setSelectedDate(QDate::currentDate());
+    ui->calendar_start_date->setSelectedDate(QDate::currentDate()); // ทำการเซ็ตวันที่เริ่มต้นให้เป็นวันปัจจุบัน
+    ui->calendar_end_date->setSelectedDate(QDate::currentDate()); // ทำการเซ็ตวันที่สิ้นสุดให้เป็นวันปัจจุบัน
 
-    ui->calendar_start_date->setMaximumDate(QDate::currentDate().addYears(1000));
-    ui->calendar_end_date->setMinimumDate(QDate::currentDate().addYears(-1000));
+    ui->calendar_start_date->setMaximumDate(QDate::currentDate().addYears(1000)); // ทำการเซ็ตวันที่เริ่มต้นให้สามารถเลือกได้มากสุดคือวันปัจจุบัน+1000 ปี
+    ui->calendar_end_date->setMinimumDate(QDate::currentDate().addYears(-1000)); // ทำการเซ็ตวันที่สิ้นสุดให้สามารถเลือกได้น้อยสุดคือวันปัจจุบัน-1000 ปี
 
     // ลบ format ทั้งหมดออก
     ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
@@ -570,11 +570,20 @@ void analysis::Refresh_calendar()
 
 void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
 {
-    Refresh_calendar();
+    //Refresh_calendar()
+
+    ui->calendar_start_date->setMaximumDate(QDate::currentDate().addYears(1000)); // ทำการเซ็ตวันที่เริ่มต้นให้สามารถเลือกได้มากสุดคือวันปัจจุบัน+1000 ปี
+    ui->calendar_end_date->setMinimumDate(QDate::currentDate().addYears(-1000)); // ทำการเซ็ตวันที่สิ้นสุดให้สามารถเลือกได้น้อยสุดคือวันปัจจุบัน-1000 ปี
+
+    // ลบ format ทั้งหมดออก
+    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
+    ui->calendar_end_date->setDateTextFormat(QDate(), QTextCharFormat());
 
     switch (searchmode)
     {
     case 0:
+        ui->calendar_end_date->setSelectedDate(ui->calendar_start_date->selectedDate());
+
         ui->calendar_start_date->setEnabled(true);
         ui->calendar_end_date->setEnabled(true);
         break;
