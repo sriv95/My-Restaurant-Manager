@@ -19,6 +19,7 @@ editmenu::editmenu(QWidget *parent)
     ui->setupUi(this);
 
     this->setWindowTitle("Edit Menu");
+    setMaximumSize(1224,682);
 
     //Set Both Variables
     menutable = ui->MenuTable;

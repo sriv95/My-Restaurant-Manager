@@ -19,6 +19,7 @@ analysis::analysis(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Analysis");
+    setMaximumSize(1491,782);
     startUI_setup();
     Show_Chart();
 
@@ -191,13 +192,13 @@ void analysis::startUI_setup()
 
     //========================================//
     //อ่านข้อมูลจาก statement และนำข้อมูลมาเก็บไว้ในตัวแปร chartData_income , chartData_expenses , chartData_Date , Dishes_data , Drinks_data
-    for (unsigned int i = 0 ; i < statement.size() ; i++) 
+    for (unsigned int i = 0 ; i < statement.size() ; i++)
     {
         QString String_DateTime = QString::fromStdString(statement[i][3]) + " " + QString::fromStdString(statement[i][4]); //แปลงข้อมูลวันเวลาจาก statement ให้เป็น QString เพื่อเอาไปแปลงเป็น QDateTime
         QDateTime Date_ = QDateTime::fromString(String_DateTime , "dd-MM-yyyy HH:mm:ss.zzz"); // ถ้าใช้เป็น "dd-MM-yyyy HH:mm:ss:ms" จะไม่สามารถทำงานได้เนื่องจากการเขียนที่ถูกคือ "dd-MM-yyyy HH:mm:ss.zzz" ✅✅✅
 
         auto it = std::find(chartData_Date.begin(), chartData_Date.end(), Date_); // หาว่าวันที่นี้มีข้อมูลอยู่แล้วหรือยัง
-        if (it == chartData_Date.end()) // ถ้าไม่มีจะ == chartData_Date.end() หรือตัวสุดท้าย+1 
+        if (it == chartData_Date.end()) // ถ้าไม่มีจะ == chartData_Date.end() หรือตัวสุดท้าย+1
         {
             chartData_Date.push_back(Date_); // ทำการเก็บวันที่ลงไปใน chartData_Date
             chartData_income.push_back(0); // ทำการเก็บรายได้ลงไปใน chartData_income โดยเริ่มต้นเป็น 0
@@ -295,7 +296,7 @@ void analysis::startUI_setup()
             Drinks_data[i] = swap_Drinks_data;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-            
+
             // เก็บ index ที่เรียงแล้วไว้
             sorted_index.push_back(i);
             sorted_index.push_back(chnaged_index);
@@ -362,7 +363,7 @@ void analysis::startUI_setup()
     // }
 
     //===================================================================//
-    
+
     ui->comboBox_search_mode->setCurrentIndex(5); // ตั้งให้ค่าเริ่มต้นของ search_mode เป็น search_mode ลำดับที่ 5 คือโหมด ALL //
 }
 
@@ -395,7 +396,7 @@ void analysis::Update_Selectable_and_Highlight_DateRange() // function สำห
     ui->calendar_end_date->setMinimumDate(startDate); // ตั้งให้วันที่สิ้นสุดสามารถเลือกได้น้อยสุดคือวันที่เริ่มต้น
 
     // ลบ format เก่าทั้งหมดออก
-    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat()); 
+    ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
     ui->calendar_end_date->setDateTextFormat(QDate(), QTextCharFormat());
 
     // สร้าง Format สำหรับไฮไลต์

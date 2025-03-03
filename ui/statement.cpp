@@ -12,6 +12,7 @@ Statement::Statement(QWidget *parent)
     , ui(new Ui::Statement)
 {
     ui->setupUi(this);
+    setMaximumSize(904,677);
 
     //All Tab Setup
     ui->Statement_Table->verticalHeader()->setVisible(false);

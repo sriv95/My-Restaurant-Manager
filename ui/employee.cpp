@@ -19,6 +19,7 @@ employee::employee(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Employee");
+    setMaximumSize(1174,908);
     Refresh_TableData();
     ui->Table->clearSelection();
 

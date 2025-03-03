@@ -9,6 +9,7 @@ jsoncheck::jsoncheck(QWidget *parent)
     , ui(new Ui::jsoncheck)
 {
     ui->setupUi(this);
+    setMaximumSize(719,621);
     ui->textlabel->setAlignment(Qt::AlignCenter);
     ui->textlabel->setWordWrap(true);
     ui->continueBtn->setVisible(false);
