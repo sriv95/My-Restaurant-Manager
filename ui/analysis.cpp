@@ -1035,23 +1035,23 @@ void analysis::Summary() // function สำหรับสรุปข้อม�
 {
     //======================================================================================//
 
-    vector<QDate> Date_Range_now = Date_range_now();
-    QDateTime minDate_range = Date_Range_now[0].startOfDay();
-    QDateTime maxDate_range = Date_Range_now[1].endOfDay();
+    vector<QDate> Date_Range_now = Date_range_now(); // นำข้อมูลวันที่ที่เลือกในปฏิทินมาเก็บไว้ใน Date_Range_now
+    QDateTime minDate_range = Date_Range_now[0].startOfDay(); // นำวันที่เริ่มต้นของช่วงที่เลือกมาเก็บไว้ใน minDate_range
+    QDateTime maxDate_range = Date_Range_now[1].endOfDay(); // นำวันที่สิ้นสุดของช่วงที่เลือกมาเก็บไว้ใน maxDate_range
 
     //======================================================================================//
 
-    vector<Dishes> Dishes_data_in_range;
-    vector<Drinks> Drinks_data_in_range;
-    vector<QDateTime> Date_in_range;
+    vector<Dishes> Dishes_data_in_range; // สร้าง vector ของ Dishes ชื่อ Dishes_data_in_range เพื่อเก็บข้อมูลเมนูอาหารในช่วงที่เลือก
+    vector<Drinks> Drinks_data_in_range; // สร้าง vector ของ Drinks ชื่อ Drinks_data_in_range เพื่อเก็บข้อมูลเครื่องดื่มในช่วงที่เลือก
+    vector<QDateTime> Date_in_range; // สร้าง vector ของ QDateTime ชื่อ Date_in_range เพื่อเก็บข้อมูลวันที่ในช่วงที่เลือก
 
-    for (unsigned int i = 0; i < chartData_Date.size(); i++)
+    for (unsigned int i = 0; i < chartData_Date.size(); i++) // วนลูปเพื่อเก็บข้อมูลเมนูอาหาร ข้อมูลเครื่องดื่ม และข้อมูลวันที่ในช่วงที่เลือก
     {
-        if (chartData_Date[i] < minDate_range or chartData_Date[i] > maxDate_range) continue;
+        if (chartData_Date[i] < minDate_range or chartData_Date[i] > maxDate_range) continue; // ถ้าข้อมูลวันที่ไม่อยู่ในช่วงที่เลือก จะข้ามข้อมูลนั้น
 
-        Date_in_range.push_back(chartData_Date[i]);
-        Dishes_data_in_range.push_back(Dishes_data[i]);
-        Drinks_data_in_range.push_back(Drinks_data[i]);
+        Date_in_range.push_back(chartData_Date[i]); // เก็บข้อมูลวันที่ในช่วงที่เลือก
+        Dishes_data_in_range.push_back(Dishes_data[i]); // เก็บข้อมูลเมนูอาหารในช่วงที่เลือก
+        Drinks_data_in_range.push_back(Drinks_data[i]); // เก็บข้อมูลเครื่องดื่มในช่วงที่เลือก
     }
 
     //======================================================================================//
@@ -1078,27 +1078,27 @@ void analysis::Summary() // function สำหรับสรุปข้อม�
 
     //======================================================================================//
 
-    Dishes Total_Dishes_data_in_range = template_Dishes;
-    Drinks Total_Drinks_data_in_range = template_Drinks;
+    Dishes Total_Dishes_data_in_range = template_Dishes; // สร้าง Dishes ชื่อ Total_Dishes_data_in_range โดยให้มีข้อมูลเป็น template_Dishes ที่มีข้อมูลเมนูอาหารทั้งหมด และมีจำนวนรวมแต่ละแมนูเป็น 0
+    Drinks Total_Drinks_data_in_range = template_Drinks; // สร้าง Drinks ชื่อ Total_Drinks_data_in_range โดยให้มีข้อมูลเป็น template_Drinks ที่มีข้อมูลเครื่องดื่มทั้งหมด และมีจำนวนรวมแต่ละเครื่องดื่มเป็น 0
 
-    for (unsigned int i = 0 ; i < Date_in_range.size() ; i++)
+    for (unsigned int i = 0 ; i < Date_in_range.size() ; i++) // วนลูปเท่ากับจำนวนวันที่ในช่วงที่เลือก
     {
-        for (unsigned int j = 0 ; j < Dishes_data_in_range[i].name.size() ; j++)
+        for (unsigned int j = 0 ; j < Dishes_data_in_range[i].name.size() ; j++) // วนลูปเท่ากับจำนวนเมนูอาหารทั้งหมด
         {
-            string name_menu = Dishes_data_in_range[i].name[j];
-            int amount = Dishes_data_in_range[i].amount[j];
+            string name_menu = Dishes_data_in_range[i].name[j]; // เก็บชื่อเมนูอาหารไว้ใน name_menu
+            int amount = Dishes_data_in_range[i].amount[j]; // เก็บจำนวนเมนูอาหารไว้ใน amount
 
-            int index_in_count_Dishes = std::distance(Total_Dishes_data_in_range.name.begin() , std::find(Total_Dishes_data_in_range.name.begin() , Total_Dishes_data_in_range.name.end() , name_menu));
-            Total_Dishes_data_in_range.amount[index_in_count_Dishes] += amount;
+            int index_in_count_Dishes = std::distance(Total_Dishes_data_in_range.name.begin() , std::find(Total_Dishes_data_in_range.name.begin() , Total_Dishes_data_in_range.name.end() , name_menu)); // หา index ของ name_menu ใน vector ของ name ของ Total_Dishes_data_in_range
+            Total_Dishes_data_in_range.amount[index_in_count_Dishes] += amount; // เพิ่มจำนวนเมนูอาหารใน index ที่เก็บ name_menu ใน vector ของ amount ของ Total_Dishes_data_in_range
         }
 
-        for (unsigned int j = 0 ; j < Drinks_data_in_range[i].name.size() ; j++)
+        for (unsigned int j = 0 ; j < Drinks_data_in_range[i].name.size() ; j++) // วนลูปเท่ากับจำนวนเครื่องดื่มทั้งหมด
         {
-            string name_menu = Drinks_data_in_range[i].name[j];
-            int amount = Drinks_data_in_range[i].amount[j];
+            string name_menu = Drinks_data_in_range[i].name[j]; // เก็บชื่อเครื่องดื่มไว้ใน name_menu
+            int amount = Drinks_data_in_range[i].amount[j]; // เก็บจำนวนเครื่องดื่มไว้ใน amount
 
-            int index_in_count_Drinks = std::distance(Total_Drinks_data_in_range.name.begin() , std::find(Total_Drinks_data_in_range.name.begin() , Total_Drinks_data_in_range.name.end() , name_menu));
-            Total_Drinks_data_in_range.amount[index_in_count_Drinks] += amount;
+            int index_in_count_Drinks = std::distance(Total_Drinks_data_in_range.name.begin() , std::find(Total_Drinks_data_in_range.name.begin() , Total_Drinks_data_in_range.name.end() , name_menu)); // หา index ของ name_menu ใน vector ของ name ของ Total_Drinks_data_in_range
+            Total_Drinks_data_in_range.amount[index_in_count_Drinks] += amount; // เพิ่มจำนวนเครื่องดื่มใน index ที่เก็บ name_menu ใน vector ของ amount ของ Total_Drinks_data_in_range
         }
     }
 
@@ -1118,58 +1118,58 @@ void analysis::Summary() // function สำหรับสรุปข้อม�
     // }
 
     //======================================================================================//
-    // Sort count_data_in_range //
+    // Sort count_data_in_range // Selection sort
 
-    for(unsigned int i = 0 ; i < Total_Dishes_data_in_range.name.size() ; i++)
+    for(unsigned int i = 0 ; i < Total_Dishes_data_in_range.name.size() ; i++) // วนลูปเท่ากับจำนวนเมนูอาหารทั้งหมด
     {
-        int max = Total_Dishes_data_in_range.amount[i];
-        int index_max = i;
-        for (unsigned int j = i ; j < Total_Dishes_data_in_range.name.size() ; j++)
+        int max = Total_Dishes_data_in_range.amount[i]; // สร้างตัวแปร max เพื่อเก็บจำนวนเมนูอาหารที่มากที่สุด
+        int index_max = i; // สร้างตัวแปร index_max เพื่อเก็บ index ของจำนวนเมนูอาหารที่มากที่สุด
+        for (unsigned int j = i ; j < Total_Dishes_data_in_range.name.size() ; j++) // วนลูปเท่ากับจำนวนเมนูอาหารทั้งหมด
         {
-            if (Total_Dishes_data_in_range.amount[j] > max)
+            if (Total_Dishes_data_in_range.amount[j] > max) // ถ้าจำนวนเมนูอาหารที่ j มากกว่า max
             {
-                max = Total_Dishes_data_in_range.amount[j];
-                index_max = j;
+                max = Total_Dishes_data_in_range.amount[j]; // ให้ max เป็นจำนวนเมนูอาหารที่ j
+                index_max = j; // ให้ index_max เป็น index ของจำนวนเมนูอาหารที่ j
             }
         }
 
         // swap
-        int amount1 = Total_Dishes_data_in_range.amount[i];
-        int amount2 = max;
-        Total_Dishes_data_in_range.amount[i] = amount2;
-        Total_Dishes_data_in_range.amount[index_max] = amount1;
+        int amount1 = Total_Dishes_data_in_range.amount[i]; // สร้างตัวแปร amount1 เพื่อเก็บจำนวนเมนูอาหารที่ i
+        int amount2 = max; // สร้างตัวแปร amount2 เพื่อเก็บจำนวนเมนูอาหารที่ max
+        Total_Dishes_data_in_range.amount[i] = amount2; // ให้จำนวนเมนูอาหารที่ i เป็นจำนวนเมนูอาหารที่ max
+        Total_Dishes_data_in_range.amount[index_max] = amount1; // ให้จำนวนเมนูอาหารที่ max เป็นจำนวนเมนูอาหารที่ i
 
-        string name1 = Total_Dishes_data_in_range.name[i];
-        string name2 = Total_Dishes_data_in_range.name[index_max];
-        Total_Dishes_data_in_range.name[i] = name2;
-        Total_Dishes_data_in_range.name[index_max] = name1;
+        string name1 = Total_Dishes_data_in_range.name[i]; // สร้างตัวแปร name1 เพื่อเก็บชื่อเมนูอาหารที่ i
+        string name2 = Total_Dishes_data_in_range.name[index_max]; // สร้างตัวแปร name2 เพื่อเก็บชื่อเมนูอาหารที่ max
+        Total_Dishes_data_in_range.name[i] = name2; // ให้ชื่อเมนูอาหารที่ i เป็นชื่อเมนูอาหารที่ max
+        Total_Dishes_data_in_range.name[index_max] = name1; // ให้ชื่อเมนูอาหารที่ max เป็นชื่อเมนูอาหารที่ i
 
 
     }
 
-    for(unsigned int i = 0 ; i < Total_Drinks_data_in_range.name.size() ; i++)
+    for(unsigned int i = 0 ; i < Total_Drinks_data_in_range.name.size() ; i++) // วนลูปเท่ากับจำนวนเครื่องดื่มทั้งหมด // เหมือนกับด้านบนแต่เป็นการ sort ของ Drinks
     {
-        int max = Total_Drinks_data_in_range.amount[i];
-        int index_max = i;
-        for (unsigned int j = i ; j < Total_Drinks_data_in_range.name.size() ; j++)
+        int max = Total_Drinks_data_in_range.amount[i]; // สร้างตัวแปร max เพื่อเก็บจำนวนเครื่องดื่มที่มากที่สุด
+        int index_max = i; // สร้างตัวแปร index_max เพื่อเก็บ index ของจำนวนเครื่องดื่มที่มากที่สุด
+        for (unsigned int j = i ; j < Total_Drinks_data_in_range.name.size() ; j++) // วนลูปเท่ากับจำนวนเครื่องดื่มทั้งหมด
         {
-            if (Total_Drinks_data_in_range.amount[j] > max)
+            if (Total_Drinks_data_in_range.amount[j] > max) // ถ้าจำนวนเครื่องดื่มที่ j มากกว่า max
             {
-                max = Total_Drinks_data_in_range.amount[j];
-                index_max = j;
+                max = Total_Drinks_data_in_range.amount[j]; // ให้ max เป็นจำนวนเครื่องดื่มที่ j
+                index_max = j; // ให้ index_max เป็น index ของจำนวนเครื่องดื่มที่ j
             }
         }
 
         // swap
-        int amount1 = Total_Drinks_data_in_range.amount[i];
-        int amount2 = max;
-        Total_Drinks_data_in_range.amount[i] = amount2;
-        Total_Drinks_data_in_range.amount[index_max] = amount1;
+        int amount1 = Total_Drinks_data_in_range.amount[i]; // สร้างตัวแปร amount1 เพื่อเก็บจำนวนเครื่องดื่มที่ i
+        int amount2 = max; // สร้างตัวแปร amount2 เพื่อเก็บจำนวนเครื่องดื่มที่ max
+        Total_Drinks_data_in_range.amount[i] = amount2; // ให้จำนวนเครื่องดื่มที่ i เป็นจำนวนเครื่องดื่มที่ max
+        Total_Drinks_data_in_range.amount[index_max] = amount1; // ให้จำนวนเครื่องดื่มที่ max เป็นจำนวนเครื่องดื่มที่ i
 
-        string name1 = Total_Drinks_data_in_range.name[i];
-        string name2 = Total_Drinks_data_in_range.name[index_max];
-        Total_Drinks_data_in_range.name[i] = name2;
-        Total_Drinks_data_in_range.name[index_max] = name1;
+        string name1 = Total_Drinks_data_in_range.name[i]; // สร้างตัวแปร name1 เพื่อเก็บชื่อเครื่องดื่มที่ i
+        string name2 = Total_Drinks_data_in_range.name[index_max]; // สร้างตัวแปร name2 เพื่อเก็บชื่อเครื่องดื่มที่ max
+        Total_Drinks_data_in_range.name[i] = name2; // ให้ชื่อเครื่องดื่มที่ i เป็นชื่อเครื่องดื่มที่ max
+        Total_Drinks_data_in_range.name[index_max] = name1; // ให้ชื่อเครื่องดื่มที่ max เป็นชื่อเครื่องดื่มที่ i
 
 
     }
@@ -1191,60 +1191,60 @@ void analysis::Summary() // function สำหรับสรุปข้อม�
 
     //======================================================================================//
 
-    ui->Top_Dished->clearContents();
-    for (int i = ui->Top_Dished->rowCount()-1 ; i >= 0  ; i--) ui->Top_Dished->removeRow(i);
+    ui->Top_Dished->clearContents(); // ลบข้อมูลในตาราง Top_Dished ไม่ได้ลบแถวแต่ลบข้อมูลในแต่ละเซลล์
+    for (int i = ui->Top_Dished->rowCount()-1 ; i >= 0  ; i--) ui->Top_Dished->removeRow(i); // ลบแถวในตาราง Top_Dished ทั้งหมดโดยเริ่มจากแถวสุดท้าย ไปจนถึงแถวแรก
 
-    ui->Top_Drinks->clearContents();
-    for (int i = ui->Top_Drinks->rowCount()-1 ; i >= 0  ; i--) ui->Top_Drinks->removeRow(i);
+    ui->Top_Drinks->clearContents(); // ลบข้อมูลในตาราง Top_Drinks ไม่ได้ลบแถวแต่ลบข้อมูลในแต่ละเซลล์
+    for (int i = ui->Top_Drinks->rowCount()-1 ; i >= 0  ; i--) ui->Top_Drinks->removeRow(i); // ลบแถวในตาราง Top_Drinks ทั้งหมดโดยเริมจากแถวสุดท้าย ไปจนถึงแถวแรก
 
     //--------total_order----------//
-    int total_order = 0;
+    int total_order = 0; // สร้างตัวแปร total_order เพื่อเก็บจำนวนรวมของรายการทั้งหมด
     //--------total_order----------//
 
-    for (unsigned int i = 0 ; i < Total_Dishes_data_in_range.name.size() ; i++)
+    for (unsigned int i = 0 ; i < Total_Dishes_data_in_range.name.size() ; i++) // วนลูปเท่ากับจำนวนเมนูอาหารทั้งหมด
     {
-        ui->Top_Dished->insertRow(ui->Top_Dished->rowCount());
-        ui->Top_Dished->setItem(i , 0 , new QTableWidgetItem(QString::fromStdString(Total_Dishes_data_in_range.name[i])));
-        ui->Top_Dished->setItem(i , 1 , new QTableWidgetItem(QString::number(Total_Dishes_data_in_range.amount[i])));
+        ui->Top_Dished->insertRow(ui->Top_Dished->rowCount()); // เพิ่มแถวในตาราง Top_Dished
+        ui->Top_Dished->setItem(i , 0 , new QTableWidgetItem(QString::fromStdString(Total_Dishes_data_in_range.name[i]))); // ใส่ชื่อเมนูอาหารลงในเซลล์ที่ 0 ของแถวที่ i ในตาราง Top_Dished
+        ui->Top_Dished->setItem(i , 1 , new QTableWidgetItem(QString::number(Total_Dishes_data_in_range.amount[i]))); // ใส่จำนวนเมนูอาหารลงในเซลล์ที่ 1 ของแถวที่ i ในตาราง Top_Dished
 
         //--------total_order----------//
-        total_order += Total_Dishes_data_in_range.amount[i];
+        total_order += Total_Dishes_data_in_range.amount[i]; // เพิ่มจำนวนเมนูอาหารใน index ที่ i ใน vector ของ amount ของ Total_Dishes_data_in_range ลงใน total_order
         //--------total_order----------//
     }
 
-    for (unsigned int i = 0 ; i < Total_Drinks_data_in_range.name.size() ; i++)
+    for (unsigned int i = 0 ; i < Total_Drinks_data_in_range.name.size() ; i++) // วนลูปเท่ากับจำนวนเครื่องดื่มทั้งหมด // เหมือนกับด้านบนแต่เป็นการแสดงข้อมูลของ Drinks
     {
-        ui->Top_Drinks->insertRow(ui->Top_Drinks->rowCount());
-        ui->Top_Drinks->setItem(i , 0 , new QTableWidgetItem(QString::fromStdString(Total_Drinks_data_in_range.name[i])));
-        ui->Top_Drinks->setItem(i , 1 , new QTableWidgetItem(QString::number(Total_Drinks_data_in_range.amount[i])));
+        ui->Top_Drinks->insertRow(ui->Top_Drinks->rowCount()); // เพิ่มแถวในตาราง Top_Drinks
+        ui->Top_Drinks->setItem(i , 0 , new QTableWidgetItem(QString::fromStdString(Total_Drinks_data_in_range.name[i]))); // ใส่ชื่อเครื่องดื่มลงในเซลล์ที่ 0 ของแถวที่ i ในตาราง Top_Drinks
+        ui->Top_Drinks->setItem(i , 1 , new QTableWidgetItem(QString::number(Total_Drinks_data_in_range.amount[i]))); // ใส่จำนวนเครื่องดื่มลงในเซลล์ที่ 1 ของแถวที่ i ในตาราง Top_Drinks
 
         //--------total_order----------//
-        total_order += Total_Drinks_data_in_range.amount[i];
+        total_order += Total_Drinks_data_in_range.amount[i]; // เพิ่มจำนวนเครื่องดื่มใน index ที่ i ใน vector ของ amount ของ Total_Drinks_data_in_range ลงใน total_order
         //--------total_order----------//
     }
 
     //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000//
     //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000//
 
-    QFont Format_Fonnt_Bold_Center_16;
-    Format_Fonnt_Bold_Center_16.setBold(true);
-    Format_Fonnt_Bold_Center_16.setPointSize(16);
+    QFont Format_Fonnt_Bold_Center_16; // สร้าง QFont ชื่อ Format_Fonnt_Bold_Center_16 เพื่อใช้ตั้งค่า font ให้เป็น Bold และ Center ขนาด 16
+    Format_Fonnt_Bold_Center_16.setBold(true); // ตั้งค่าให้ font เป็น Bold
+    Format_Fonnt_Bold_Center_16.setPointSize(16); // ตั้งค่าขนาด font เป็น 16
 
-    ui->Income_in_range->setText(QString::number(Total_Income_in_selected_range , 'f' ,2));
-    ui->Income_in_range->setFont(Format_Fonnt_Bold_Center_16);
-    ui->Income_in_range->setAlignment(Qt::AlignCenter);
+    ui->Income_in_range->setText(QString::number(Total_Income_in_selected_range , 'f' ,2)); // แสดงรายรับทั้งหมดในช่วงที่เลือก
+    ui->Income_in_range->setFont(Format_Fonnt_Bold_Center_16); // ตั้งค่า font ของ Income_in_range ให้เป็น Format_Fonnt_Bold_Center_16
+    ui->Income_in_range->setAlignment(Qt::AlignCenter); // ตั้งค่าการจัดวางของข้อความใน Income_in_range ให้เป็น Center
 
-    ui->Expenses_in_range->setText(QString::number(Total_Expenses_in_selected_range , 'f' ,2));
-    ui->Expenses_in_range->setFont(Format_Fonnt_Bold_Center_16);
-    ui->Expenses_in_range->setAlignment(Qt::AlignCenter);
+    ui->Expenses_in_range->setText(QString::number(Total_Expenses_in_selected_range , 'f' ,2)); // แสดงรายจ่ายทั้งหมดในช่วงที่เลือก
+    ui->Expenses_in_range->setFont(Format_Fonnt_Bold_Center_16); // ตั้งค่า font ของ Expenses_in_range ให้เป็น Format_Fonnt_Bold_Center_16
+    ui->Expenses_in_range->setAlignment(Qt::AlignCenter); // ตั้งค่าการจัดวางของข้อความใน Expenses_in_range ให้เป็น Center
 
     //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000//
     //00000000000000000000000000000000000000000000000000000000000000000000000000000000000000//
 
 
-    ui->Total_Order_in_range->setText(QString::number(total_order));
-    ui->Total_Order_in_range->setFont(Format_Fonnt_Bold_Center_16);
-    ui->Total_Order_in_range->setAlignment(Qt::AlignCenter);
+    ui->Total_Order_in_range->setText(QString::number(total_order)); // แสดงจำนวนรายการทั้งหมดในช่วงที่เลือก
+    ui->Total_Order_in_range->setFont(Format_Fonnt_Bold_Center_16); // ตั้งค่า font ของ Total_Order_in_range ให้เป็น Format_Fonnt_Bold_Center_16
+    ui->Total_Order_in_range->setAlignment(Qt::AlignCenter); // ตั้งค่าการจัดวางของข้อความใน Total_Order_in_range ให้เป็น Center
 
 
 }
