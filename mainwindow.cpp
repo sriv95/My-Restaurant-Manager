@@ -105,6 +105,7 @@ RestuarantManagement::RestuarantManagement(QWidget *parent)
 
 {
     ui.setupUi(this);
+    setFixedSize(1280,960);
     SetPalette(isDarkMode());
     QApplication::setFont(settings->value("font").value<QFont>());
     on_backtosetup_clicked();
@@ -568,7 +569,7 @@ void RestuarantManagement::on_OrderFoodBtn_clicked()
     json restaurantData;
     getAllData(restaurantData);
 
-    
+
     json &tableData = restaurantData["Tables"][tableNo - 1];
 
     // added 15/2/25
