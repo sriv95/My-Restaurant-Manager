@@ -570,11 +570,7 @@ void analysis::Refresh_calendar()
 
 void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
 {
-    //Refresh_calendar()
-
-    ui->calendar_start_date->setMaximumDate(QDate::currentDate().addYears(1000)); // ทำการเซ็ตวันที่เริ่มต้นให้สามารถเลือกได้มากสุดคือวันปัจจุบัน+1000 ปี
-    ui->calendar_end_date->setMinimumDate(QDate::currentDate().addYears(-1000)); // ทำการเซ็ตวันที่สิ้นสุดให้สามารถเลือกได้น้อยสุดคือวันปัจจุบัน-1000 ปี
-
+    //Refresh_calendar // แต่ถ้าเป็นการเปลี่ยนโหมดจะไม่มีการเปลี่ยนวันที่ที่เลือกไปเป็นวันปัจจุบัน
     // ลบ format ทั้งหมดออก
     ui->calendar_start_date->setDateTextFormat(QDate(), QTextCharFormat());
     ui->calendar_end_date->setDateTextFormat(QDate(), QTextCharFormat());
@@ -582,7 +578,7 @@ void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
     switch (searchmode)
     {
     case 0:
-        ui->calendar_end_date->setSelectedDate(ui->calendar_start_date->selectedDate());
+        ui->calendar_end_date->setSelectedDate(ui->calendar_start_date->selectedDate()); // ทำการเซ็ตวันที่สิ้นสุดให้เป็นวันที่เริ่มต้น
 
         ui->calendar_start_date->setEnabled(true);
         ui->calendar_end_date->setEnabled(true);
@@ -611,6 +607,10 @@ void analysis::on_comboBox_search_mode_currentIndexChanged(int searchmode)
         ui->calendar_end_date->setEnabled(false);
         break;
     }
+
+    ui->calendar_start_date->setMaximumDate(QDate::currentDate().addYears(1000)); // ทำการเซ็ตวันที่เริ่มต้นให้สามารถเลือกได้มากสุดคือวันปัจจุบัน+1000 ปี
+    ui->calendar_end_date->setMinimumDate(QDate::currentDate().addYears(-1000)); // ทำการเซ็ตวันที่สิ้นสุดให้สามารถเลือกได้น้อยสุดคือวันปัจจุบัน-1000 ปี
+
 
     Show_Chart();
 }
