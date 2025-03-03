@@ -705,6 +705,7 @@ void RestuarantManagement::on_Config_clicked()
     configwindow *config = new configwindow(this,PalettesMap);
     config->setWindowTitle("Configuration");
     connect(config, &configwindow::returnValue, this, &RestuarantManagement::on_Config_returnValue);
+    updateTablesStatus();
     config->exec();
     QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
     QApplication::setFont(settings->value("font").value<QFont>());
