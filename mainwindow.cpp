@@ -338,6 +338,8 @@ void RestuarantManagement::on_CheckBills_clicked()
         QString currentDate = QDateTime::currentDateTime().toString("dd-MM-yyyy");
         QString currentTime = QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 
+        unordered_map<string, pair<int, int>> combinedBills;
+        
         for (size_t i = 0; i < billNames.size(); ++i) {
             json statementItem = json::array();
             statementItem.push_back(billNames[i]);
