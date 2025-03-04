@@ -57,7 +57,7 @@ void SetPalette(bool darkmode_on){
 
 // AddPalettesMap("","#Window","#WindowText","#Base","#Text","#Button","#ButtonText","#Highlight","#HighlightedText","#Dark","#Mid","#AlternateBase");
 
-    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#f0f0f0","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
+    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#dfdfdf","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
 
     AddPalettesMap("Dark","#1e1e1e","#ffffff","#2d2d2d","#ffffff","#3c3c3c","#ffffff","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#3c3c3c");
 
@@ -711,7 +711,6 @@ void RestuarantManagement::on_Config_clicked()
         QString btnName = QString("Table_").append(QString::number(i));
         QPushButton *button = this->findChild<QPushButton *>(btnName);
 
-        //button->setStyle(qApp->style());
         button->setPalette(QPalette());
     }
 
