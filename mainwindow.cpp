@@ -702,10 +702,6 @@ void RestuarantManagement::on_OrderStock_clicked()
 
 void RestuarantManagement::on_Config_clicked()
 {
-    ui.SelectingTable->setText(QString('0'));
-    QString table_no = "0";
-    ui.Receipt->hide();
-    ui.CheckBills->setText("Check Bills");
     for(int i =1 ; i <=Table_Count ; i++)
     {
         QString btnName = QString("Table_").append(QString::number(i));
@@ -713,11 +709,6 @@ void RestuarantManagement::on_Config_clicked()
 
         button->setPalette(QPalette());
     }
-
-    ui.SelectingTable->setText(QString('0'));
-    ui.OrderFoodBtn->hide();
-    setMainBtnVisible(false);
-
 
     configwindow *config = new configwindow(this,PalettesMap);
     config->setWindowTitle("Configuration");
