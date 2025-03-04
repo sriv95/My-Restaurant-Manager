@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {    QApplication a(argc, argv);
 
     settings = new QSettings(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
-    settings->setValue("version","v2.0");
+    settings->setValue("version","v2.1.1");
 
     RestuarantManagement w;
     w.setWindowTitle("My Restaurant Manager "+settings->value("version").toString());
