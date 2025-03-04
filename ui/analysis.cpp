@@ -379,6 +379,10 @@ void analysis::CloseUI() // เนื่องจากมีการ stack ก
     chartData_expenses.clear();
     chartData_Date.clear();
 
+    chartData_income_scaled_QDate.clear();
+    chartData_expenses_scaled_QDate.clear();
+    chartData_Date_scaled_QDate.clear();
+
     week_dates.clear();
     month_dates.clear();
     year_dates.clear();
