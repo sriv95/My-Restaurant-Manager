@@ -57,7 +57,7 @@ void SetPalette(bool darkmode_on){
 
 // AddPalettesMap("","#Window","#WindowText","#Base","#Text","#Button","#ButtonText","#Highlight","#HighlightedText","#Dark","#Mid","#AlternateBase");
 
-    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#f0f0f0","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
+    AddPalettesMap("Light","#f0f0f0","#000000","#ffffff","#000000","#dfdfdf","#000000","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#f5f5f5");
 
     AddPalettesMap("Dark","#1e1e1e","#ffffff","#2d2d2d","#ffffff","#3c3c3c","#ffffff","#0078d7","#ffffff","#a0a0a0","#a0a0a0","#3c3c3c");
 
@@ -702,9 +702,18 @@ void RestuarantManagement::on_OrderStock_clicked()
 
 void RestuarantManagement::on_Config_clicked()
 {
+    for(int i =1 ; i <=Table_Count ; i++)
+    {
+        QString btnName = QString("Table_").append(QString::number(i));
+        QPushButton *button = this->findChild<QPushButton *>(btnName);
+
+        button->setPalette(QPalette());
+    }
+
     configwindow *config = new configwindow(this,PalettesMap);
     config->setWindowTitle("Configuration");
     connect(config, &configwindow::returnValue, this, &RestuarantManagement::on_Config_returnValue);
+    updateTablesStatus();
     config->exec();
     QApplication::setPalette(PalettesMap[settings->value("theme").toString()]);
     QApplication::setFont(settings->value("font").value<QFont>());
